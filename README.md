@@ -2,6 +2,8 @@
 
 Easily add icons to Navigation Block items in WordPress.
 
+**Recommended Companion Plugin:** Use the [Icon Block](https://wordpress.org/plugins/icon-block/) plugin to add custom icon sets and expand your icon library options. Icon Block is a powerful companion that allows you to register additional icon libraries for use with Enable Navigation Icons.
+
 ## Features
 
 ### Icon Selection
