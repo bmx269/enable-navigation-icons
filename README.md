@@ -117,6 +117,10 @@ npm start
 npm run build
 ```
 
+## Acknowledgments
+
+This plugin was inspired by and incorporates code and ideas from the [enable-button-icons](https://github.com/ndiego/enable-button-icons) project. Special thanks to [@ndiego](https://github.com/ndiego) for his excellent work on button icon functionality, which served as a foundation for implementing navigation icon features.
+
 ## License
 
 GPLv2 or later. See [LICENSE](LICENSE) for details.
