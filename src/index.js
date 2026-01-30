@@ -55,6 +55,45 @@ import { bolt as defaultIcon } from './icons/bolt';
  * @return {Object} Modified block settings.
  */
 function addAttributes( settings ) {
+	// Add global default icon settings to the Navigation block
+	if ( settings.name === 'core/navigation' ) {
+		const globalIconAttributes = {
+			defaultIconSize: {
+				type: 'string',
+			},
+			defaultIconSpacing: {
+				type: 'string',
+			},
+			defaultIconColor: {
+				type: 'string',
+			},
+			defaultCustomIconColor: {
+				type: 'string',
+			},
+			defaultIconPositionLeft: {
+				type: 'boolean',
+				default: false,
+			},
+			defaultJustifySpaceBetween: {
+				type: 'boolean',
+				default: false,
+			},
+			defaultHasNoIconFill: {
+				type: 'boolean',
+				default: false,
+			},
+		};
+
+		return {
+			...settings,
+			attributes: {
+				...settings.attributes,
+				...globalIconAttributes,
+			},
+		};
+	}
+
+	// Add per-item icon attributes to navigation-link and navigation-submenu
 	if ( settings.name !== 'core/navigation-link' && settings.name !== 'core/navigation-submenu' ) {
 		return settings;
 	}
@@ -92,6 +131,10 @@ function addAttributes( settings ) {
 		},
 		iconSpacing: {
 			type: 'string',
+		},
+		useDefaultIconSettings: {
+			type: 'boolean',
+			default: true,
 		},
 	};
 
@@ -140,12 +183,112 @@ function GetAllowedMimeTypes() {
  */
 const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
+		// Handle Navigation block (parent) - add default icon settings
+		if ( props.name === 'core/navigation' ) {
+			const { attributes, setAttributes } = props;
+			const {
+				defaultIconSize,
+				defaultIconSpacing,
+				defaultCustomIconColor,
+				defaultIconPositionLeft,
+				defaultJustifySpaceBetween,
+				defaultHasNoIconFill,
+			} = attributes;
+
+			const colorGradientSettings = useMultipleOriginColorsAndGradients();
+
+			return (
+				<>
+					<BlockEdit { ...props } />
+					<InspectorControls>
+						<PanelBody
+							title={ __( 'Default Icon Settings', 'enable-navigation-icons' ) }
+							initialOpen={ false }
+						>
+							<PanelRow>
+								<p className="description">
+									{ __( 'Set default icon settings for all navigation items. Individual items can override these settings.', 'enable-navigation-icons' ) }
+								</p>
+							</PanelRow>
+							<DimensionControl
+								label={ __( 'Icon size', 'enable-navigation-icons' ) }
+								value={ defaultIconSize || '' }
+								onChange={ ( value ) => {
+									setAttributes( { defaultIconSize: value } );
+								} }
+								units={ [ 'px', 'em', 'rem' ] }
+							/>
+							<DimensionControl
+								label={ __( 'Icon spacing', 'enable-navigation-icons' ) }
+								value={ defaultIconSpacing || '' }
+								onChange={ ( value ) => {
+									setAttributes( { defaultIconSpacing: value } );
+								} }
+								units={ [ 'px', 'em', 'rem' ] }
+							/>
+							<PanelRow>
+								<ToggleControl
+									label={ __( 'Show icons on left', 'enable-navigation-icons' ) }
+									checked={ defaultIconPositionLeft }
+									onChange={ () => {
+										setAttributes( {
+											defaultIconPositionLeft: ! defaultIconPositionLeft,
+										} );
+									} }
+								/>
+							</PanelRow>
+							<PanelRow>
+								<ToggleControl
+									label={ __( 'Justify space between', 'enable-navigation-icons' ) }
+									checked={ defaultJustifySpaceBetween }
+									onChange={ () => {
+										setAttributes( {
+											defaultJustifySpaceBetween: ! defaultJustifySpaceBetween,
+										} );
+									} }
+								/>
+							</PanelRow>
+							<PanelRow>
+								<ToggleControl
+									label={ __( 'No icon fill (stroke only)', 'enable-navigation-icons' ) }
+									checked={ defaultHasNoIconFill }
+									onChange={ () => {
+										setAttributes( {
+											defaultHasNoIconFill: ! defaultHasNoIconFill,
+										} );
+									} }
+								/>
+							</PanelRow>
+						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="color">
+						<ColorGradientSettingsDropdown
+							panelId={ props.clientId }
+							settings={ [
+								{
+									label: __( 'Default Icon Color', 'enable-navigation-icons' ),
+									colorValue: defaultCustomIconColor || undefined,
+									onColorChange: ( value ) => {
+										setAttributes( {
+											defaultCustomIconColor: value,
+										} );
+									},
+								},
+							] }
+							{ ...colorGradientSettings }
+						/>
+					</InspectorControls>
+				</>
+			);
+		}
+
+		// Handle navigation items (children)
 		if ( props.name !== 'core/navigation-link' && props.name !== 'core/navigation-submenu' ) {
 			return <BlockEdit { ...props } />;
 		}
 
 		const { attributes, iconColor, setIconColor, setAttributes, style, clientId } = props;
-		const { icon, iconName, iconPositionLeft, customIconColor, justifySpaceBetween, iconSize, iconSpacing } = attributes;
+		const { icon, iconName, iconPositionLeft, customIconColor, justifySpaceBetween, iconSize, iconSpacing, useDefaultIconSettings } = attributes;
 		const { allowedMimeTypes } = GetAllowedMimeTypes();
 		const isSVGUploadAllowed = allowedMimeTypes
 			? Object.values( allowedMimeTypes ).includes( 'image/svg+xml' )
@@ -306,79 +449,103 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 							<PanelRow>
 								<ToggleControl
 									label={ __(
-										'Show icon on left',
-										'enable-button-icons'
+										'Use default icon settings',
+										'enable-navigation-icons'
 									) }
-									checked={ iconPositionLeft }
+									help={ __(
+										'When enabled, this item will use the default settings from the Navigation block.',
+										'enable-navigation-icons'
+									) }
+									checked={ useDefaultIconSettings }
 									onChange={ () => {
 										setAttributes( {
-											iconPositionLeft:
-												! iconPositionLeft,
+											useDefaultIconSettings: ! useDefaultIconSettings,
 										} );
 									} }
 								/>
 							</PanelRow>
-							<PanelRow>
-								<ToggleControl
-									label={ __(
-										'Justify space between',
-										'enable-button-icons'
-									) }
-									checked={ justifySpaceBetween }
-									onChange={ () => {
-										setAttributes( {
-											justifySpaceBetween: ! justifySpaceBetween,
-										} );
-									} }
-								/>
-							</PanelRow>
-							<DimensionControl
-								label={ __(
-									'Icon size',
-									'enable-navigation-icons'
-								) }
-								value={ iconSize || '' }
-								onChange={ ( value ) => {
-									setAttributes( {
-										iconSize: value,
-									} );
-								} }
-								units={ [ 'px', 'em', 'rem' ] }
-							/>
-							<DimensionControl
-								label={ __(
-									'Icon spacing',
-									'enable-navigation-icons'
-								) }
-								value={ iconSpacing || '' }
-								onChange={ ( value ) => {
-									setAttributes( {
-										iconSpacing: value,
-									} );
-								} }
-								units={ [ 'px', 'em', 'rem' ] }
-							/>
+							{ ! useDefaultIconSettings && (
+								<>
+									<PanelRow>
+										<ToggleControl
+											label={ __(
+												'Show icon on left',
+												'enable-button-icons'
+											) }
+											checked={ iconPositionLeft }
+											onChange={ () => {
+												setAttributes( {
+													iconPositionLeft:
+														! iconPositionLeft,
+												} );
+											} }
+										/>
+									</PanelRow>
+									<PanelRow>
+										<ToggleControl
+											label={ __(
+												'Justify space between',
+												'enable-button-icons'
+											) }
+											checked={ justifySpaceBetween }
+											onChange={ () => {
+												setAttributes( {
+													justifySpaceBetween: ! justifySpaceBetween,
+												} );
+											} }
+										/>
+									</PanelRow>
+									<DimensionControl
+										label={ __(
+											'Icon size',
+											'enable-navigation-icons'
+										) }
+										value={ iconSize || '' }
+										onChange={ ( value ) => {
+											setAttributes( {
+												iconSize: value,
+											} );
+										} }
+										units={ [ 'px', 'em', 'rem' ] }
+									/>
+									<DimensionControl
+										label={ __(
+											'Icon spacing',
+											'enable-navigation-icons'
+										) }
+										value={ iconSpacing || '' }
+										onChange={ ( value ) => {
+											setAttributes( {
+												iconSpacing: value,
+											} );
+										} }
+										units={ [ 'px', 'em', 'rem' ] }
+									/>
+								</>
+							) }
 						</PanelBody>
 					</InspectorControls>
-					<InspectorControls group="color">
-						<ColorGradientSettingsDropdown
-							panelId={ clientId }
-							settings={ [
-								{
-									label: 'Icon',
-									colorValue: validColorValue,
-									onColorChange: ( value ) => {
-										setIconColor( value );
-			
-										setAttributes( {
-											customIconColor: value
-										} );
+					{ ! useDefaultIconSettings && (
+						<InspectorControls group="color">
+							<ColorGradientSettingsDropdown
+								panelId={ clientId }
+								settings={ [
+									{
+										label: 'Icon',
+										colorValue: validColorValue,
+										onColorChange: ( value ) => {
+											setIconColor( value );
+
+											setAttributes( {
+												customIconColor: value
+											} );
+										}
 									}
-								}
-							]}
-							{ ...colorGradientSettings }
-						/>
-					</InspectorControls>
+								]}
+								{ ...colorGradientSettings }
+							/>
+						</InspectorControls>
+					) }
 					</>
 				) }
 				<InserterModal
@@ -414,7 +581,7 @@ addFilter(
  */
 function addClasses( BlockListBlock ) {
 	return ( props ) => {
-		const { name, attributes } = props;
+		const { name, attributes, clientId } = props;
 
 		if (
 			( name !== 'core/navigation-link' && name !== 'core/navigation-submenu' ) ||
@@ -422,6 +589,40 @@ function addClasses( BlockListBlock ) {
 		) {
 			return <BlockListBlock { ...props } />;
 		}
+
+		// Get parent Navigation block's default settings
+		const parentNavigationDefaults = useSelect( ( select ) => {
+			const { getBlockParentsByBlockName, getBlockAttributes } = select( 'core/block-editor' );
+			const navigationParents = getBlockParentsByBlockName( clientId, 'core/navigation' );
+
+			if ( navigationParents && navigationParents.length > 0 ) {
+				const parentId = navigationParents[ 0 ];
+				return getBlockAttributes( parentId );
+			}
+
+			return {};
+		}, [ clientId ] );
+
+		// Determine effective settings based on useDefaultIconSettings
+		const useDefaults = attributes?.useDefaultIconSettings !== false; // Default to true
+		const effectiveIconSize = useDefaults && parentNavigationDefaults?.defaultIconSize
+			? parentNavigationDefaults.defaultIconSize
+			: attributes?.iconSize;
+		const effectiveIconSpacing = useDefaults && parentNavigationDefaults?.defaultIconSpacing
+			? parentNavigationDefaults.defaultIconSpacing
+			: attributes?.iconSpacing;
+		const effectiveIconPositionLeft = useDefaults && parentNavigationDefaults?.defaultIconPositionLeft !== undefined
+			? parentNavigationDefaults.defaultIconPositionLeft
+			: attributes?.iconPositionLeft;
+		const effectiveCustomIconColor = useDefaults && parentNavigationDefaults?.defaultCustomIconColor
+			? parentNavigationDefaults.defaultCustomIconColor
+			: attributes?.customIconColor;
+		const effectiveJustifySpaceBetween = useDefaults && parentNavigationDefaults?.defaultJustifySpaceBetween !== undefined
+			? parentNavigationDefaults.defaultJustifySpaceBetween
+			: attributes?.justifySpaceBetween;
+		const effectiveHasNoIconFill = useDefaults && parentNavigationDefaults?.defaultHasNoIconFill !== undefined
+			? parentNavigationDefaults.defaultHasNoIconFill
+			: attributes?.hasNoIconFill;
 
 		const id = useInstanceId( BlockListBlock );
 		const selectorPrefix = `wp-block-navigation-item-has-icon-`;
@@ -435,20 +636,20 @@ function addClasses( BlockListBlock ) {
 			selector,
 			icon: attributes?.icon,
 			iconName: attributes?.iconName,
-			iconPositionLeft: attributes?.iconPositionLeft,
-			customIconColor: attributes?.customIconColor,
+			iconPositionLeft: effectiveIconPositionLeft,
+			customIconColor: effectiveCustomIconColor,
 			style: attributes?.style,
-			iconSize: attributes?.iconSize,
-			iconSpacing: attributes?.iconSpacing,
+			iconSize: effectiveIconSize,
+			iconSpacing: effectiveIconSpacing,
 			hasBlockGapSupport: true,
 		} );
 
 		const classes = classnames( props?.className, {
 			[ `has-icon__${ attributes?.iconName }` ]: attributes?.iconName,
 			'has-icon__custom': attributes?.icon && ! attributes?.iconName,
-			'has-icon-position__left': attributes?.iconPositionLeft,
-			'has-justified-space-between': attributes?.justifySpaceBetween,
-			'has-no-icon-fill': attributes?.hasNoIconFill,
+			'has-icon-position__left': effectiveIconPositionLeft,
+			'has-justified-space-between': effectiveJustifySpaceBetween,
+			'has-no-icon-fill': effectiveHasNoIconFill,
 			[ `${ selectorClassname }` ]: true,
 		} );
 

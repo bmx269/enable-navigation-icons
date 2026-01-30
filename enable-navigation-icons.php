@@ -103,27 +103,58 @@ add_action( 'init', 'enable_navigation_icons_block_styles_submenu' );
  * @since 0.1.0
  * @param string $block_content The block content.
  * @param array  $block         The block data.
+ * @param object $instance      The block instance.
  * @return string Modified block content with icon.
  */
-function enable_navigation_icons_render_block_navigation( $block_content, $block ) {
+function enable_navigation_icons_render_block_navigation( $block_content, $block, $instance ) {
 	if ( ! isset( $block['attrs']['icon'] ) && ! isset( $block['attrs']['iconName'] ) ) {
 		return $block_content;
 	}
 
-	$icon                 = isset( $block['attrs']['icon'] ) ? $block['attrs']['icon'] : '';
-	$icon_name            = isset( $block['attrs']['iconName'] ) ? $block['attrs']['iconName'] : 'custom';
-	$position_left        = isset( $block['attrs']['iconPositionLeft'] ) ? $block['attrs']['iconPositionLeft'] : false;
-	$justify_space_between = isset( $block['attrs']['justifySpaceBetween'] ) ? $block['attrs']['justifySpaceBetween'] : false;
-	$has_no_icon_fill     = isset( $block['attrs']['hasNoIconFill'] ) ? $block['attrs']['hasNoIconFill'] : false;
-	$icon_size            = isset( $block['attrs']['iconSize'] ) ? $block['attrs']['iconSize'] : '';
-	$icon_spacing         = isset( $block['attrs']['iconSpacing'] ) ? $block['attrs']['iconSpacing'] : '';
+	$icon      = isset( $block['attrs']['icon'] ) ? $block['attrs']['icon'] : '';
+	$icon_name = isset( $block['attrs']['iconName'] ) ? $block['attrs']['iconName'] : 'custom';
+
+	// Check if we should use default settings from the parent Navigation block.
+	$use_default_settings = ! isset( $block['attrs']['useDefaultIconSettings'] ) || $block['attrs']['useDefaultIconSettings'] === true;
+
+	// Get parent Navigation block's default settings if they exist.
+	$parent_defaults = array();
+	if ( $use_default_settings ) {
+		$parent_defaults = enable_navigation_icons_get_parent_defaults( $block );
+	}
+
+	// Determine effective settings (use defaults if enabled, otherwise use item-specific settings).
+	$position_left = $use_default_settings && isset( $parent_defaults['defaultIconPositionLeft'] )
+		? $parent_defaults['defaultIconPositionLeft']
+		: ( isset( $block['attrs']['iconPositionLeft'] ) ? $block['attrs']['iconPositionLeft'] : false );
+
+	$justify_space_between = $use_default_settings && isset( $parent_defaults['defaultJustifySpaceBetween'] )
+		? $parent_defaults['defaultJustifySpaceBetween']
+		: ( isset( $block['attrs']['justifySpaceBetween'] ) ? $block['attrs']['justifySpaceBetween'] : false );
+
+	$has_no_icon_fill = $use_default_settings && isset( $parent_defaults['defaultHasNoIconFill'] )
+		? $parent_defaults['defaultHasNoIconFill']
+		: ( isset( $block['attrs']['hasNoIconFill'] ) ? $block['attrs']['hasNoIconFill'] : false );
+
+	$icon_size = $use_default_settings && ! empty( $parent_defaults['defaultIconSize'] )
+		? $parent_defaults['defaultIconSize']
+		: ( isset( $block['attrs']['iconSize'] ) ? $block['attrs']['iconSize'] : '' );
+
+	$icon_spacing = $use_default_settings && ! empty( $parent_defaults['defaultIconSpacing'] )
+		? $parent_defaults['defaultIconSpacing']
+		: ( isset( $block['attrs']['iconSpacing'] ) ? $block['attrs']['iconSpacing'] : '' );
+
+	// Determine effective custom icon color.
+	$custom_icon_color = $use_default_settings && ! empty( $parent_defaults['defaultCustomIconColor'] )
+		? $parent_defaults['defaultCustomIconColor']
+		: ( isset( $block['attrs']['customIconColor'] ) ? $block['attrs']['customIconColor'] : '' );
 
 	$icon_color_class = '';
 	$icon_color       = '';
 	if ( isset( $block['attrs']['iconColor'] ) ) {
 		$icon_color_class = ' has-' . sanitize_html_class( $block['attrs']['iconColor'] ) . '-color';
-	} elseif ( isset( $block['attrs']['customIconColor'] ) ) {
-		$icon_color = 'style="color:' . esc_attr( $block['attrs']['customIconColor'] ) . ';"';
+	} elseif ( $custom_icon_color ) {
+		$icon_color = 'style="color:' . esc_attr( $custom_icon_color ) . ';"';
 	}
 
 	// Build inline styles for icon size and color.
@@ -137,8 +168,8 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	if ( $icon_spacing ) {
 		$link_styles[] = '--icon-spacing:' . esc_attr( $icon_spacing );
 	}
-	if ( isset( $block['attrs']['customIconColor'] ) ) {
-		$icon_styles[] = 'color:' . esc_attr( $block['attrs']['customIconColor'] );
+	if ( $custom_icon_color ) {
+		$icon_styles[] = 'color:' . esc_attr( $custom_icon_color );
 	}
 
 	$icon_style_attr = ! empty( $icon_styles ) ? ' style="' . esc_attr( implode( ';', $icon_styles ) ) . '"' : '';
@@ -251,5 +282,67 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 
 	return $block_content;
 }
-add_filter( 'render_block_core/navigation-link', 'enable_navigation_icons_render_block_navigation', 10, 2 );
-add_filter( 'render_block_core/navigation-submenu', 'enable_navigation_icons_render_block_navigation', 10, 2 );
+add_filter( 'render_block_core/navigation-link', 'enable_navigation_icons_render_block_navigation', 10, 3 );
+add_filter( 'render_block_core/navigation-submenu', 'enable_navigation_icons_render_block_navigation', 10, 3 );
+
+/**
+ * Capture Navigation block attributes when processing block data.
+ * Uses a stack to handle multiple/nested Navigation blocks.
+ *
+ * @since 0.1.0
+ * @param array $parsed_block The parsed block data.
+ * @return array Unmodified block data.
+ */
+function enable_navigation_icons_capture_nav_defaults( $parsed_block ) {
+	if ( 'core/navigation' === $parsed_block['blockName'] ) {
+		global $enable_navigation_icons_nav_stack;
+
+		if ( ! isset( $enable_navigation_icons_nav_stack ) ) {
+			$enable_navigation_icons_nav_stack = array();
+		}
+
+		// Push Navigation attributes onto the stack.
+		$nav_attrs = isset( $parsed_block['attrs'] ) ? $parsed_block['attrs'] : array();
+		array_push( $enable_navigation_icons_nav_stack, $nav_attrs );
+	}
+
+	return $parsed_block;
+}
+add_filter( 'render_block_data', 'enable_navigation_icons_capture_nav_defaults', 5, 1 );
+
+/**
+ * Clean up Navigation stack after block finishes rendering.
+ *
+ * @since 0.1.0
+ * @param string $block_content The rendered block content.
+ * @param array  $block         The block data.
+ * @return string Unmodified block content.
+ */
+function enable_navigation_icons_cleanup_nav_defaults( $block_content, $block ) {
+	global $enable_navigation_icons_nav_stack;
+
+	if ( isset( $enable_navigation_icons_nav_stack ) && ! empty( $enable_navigation_icons_nav_stack ) ) {
+		array_pop( $enable_navigation_icons_nav_stack );
+	}
+
+	return $block_content;
+}
+add_filter( 'render_block_core/navigation', 'enable_navigation_icons_cleanup_nav_defaults', 1000, 2 );
+
+/**
+ * Get parent Navigation block's default icon settings from the stack.
+ *
+ * @since 0.1.0
+ * @param array $block The current block data.
+ * @return array Parent Navigation block's default settings.
+ */
+function enable_navigation_icons_get_parent_defaults( $block ) {
+	global $enable_navigation_icons_nav_stack;
+
+	// Return the most recent Navigation block's attributes from the stack.
+	if ( isset( $enable_navigation_icons_nav_stack ) && ! empty( $enable_navigation_icons_nav_stack ) ) {
+		return end( $enable_navigation_icons_nav_stack );
+	}
+
+	return array();
+}
