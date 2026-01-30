@@ -7,7 +7,7 @@
  * Requires at least:   6.3
  * Requires PHP:        7.4
  * Author:              Trent Stromkins
- * Author URI:          https://github.com/bmx269/enable-navigation-icons
+ * Author URI:          https://smallrobot.co
  * License:             GPLv2
  * License URI:         https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Text Domain:         enable-navigation-icons
