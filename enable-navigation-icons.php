@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name:         Enable Navigation Icons
- * Plugin URI:          https://www.smallrobot.co
+ * Plugin URI:          https://github.com/bmx269/enable-navigation-icons
  * Description:         Easily add icons to Navigation Block items.
  * Version:             0.0.1
  * Requires at least:   6.3
  * Requires PHP:        7.4
  * Author:              Trent Stromkins
- * Author URI:          https://www.smallrobot.co
+ * Author URI:          https://github.com/bmx269/enable-navigation-icons
  * License:             GPLv2
  * License URI:         https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Text Domain:         enable-navigation-icons
@@ -30,7 +30,8 @@ function enable_navigation_icons_enqueue_block_editor_assets() {
 		'enable-navigation-icons-editor-scripts',
 		plugin_dir_url( __FILE__ ) . 'build/index.js',
 		$asset_file['dependencies'],
-		$asset_file['version']
+		$asset_file['version'],
+		true
 	);
 
 	wp_set_script_translations(
@@ -53,7 +54,9 @@ function enable_navigation_icons_enqueue_block_assets() {
 
 		wp_enqueue_style(
 			'enable-navigation-icons-editor-styles',
-			plugin_dir_url( __FILE__ ) . 'build/editor.css'
+			plugin_dir_url( __FILE__ ) . 'build/editor.css',
+			array(),
+			$asset_file['version']
 		);
 	}
 }
