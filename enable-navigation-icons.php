@@ -98,6 +98,25 @@ function enable_navigation_icons_block_styles_submenu() {
 add_action( 'init', 'enable_navigation_icons_block_styles_submenu' );
 
 /**
+ * Enqueue block styles for Ollie mega-menu block.
+ * (Applies to both frontend and Editor)
+ *
+ * @since 0.1.0
+ */
+function enable_navigation_icons_block_styles_ollie_mega_menu() {
+	wp_enqueue_block_style(
+		'ollie/mega-menu',
+		array(
+			'handle' => 'enable-navigation-icons-block-styles-ollie-mega-menu',
+			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
+			'ver'    => wp_get_theme()->get( 'Version' ),
+			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
+		)
+	);
+}
+add_action( 'init', 'enable_navigation_icons_block_styles_ollie_mega_menu' );
+
+/**
  * Render icons on the frontend for navigation items.
  *
  * @since 0.1.0
@@ -284,6 +303,7 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 }
 add_filter( 'render_block_core/navigation-link', 'enable_navigation_icons_render_block_navigation', 10, 3 );
 add_filter( 'render_block_core/navigation-submenu', 'enable_navigation_icons_render_block_navigation', 10, 3 );
+add_filter( 'render_block_ollie/mega-menu', 'enable_navigation_icons_render_block_navigation', 10, 3 );
 
 /**
  * Capture Navigation block attributes when processing block data.

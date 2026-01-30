@@ -32,6 +32,7 @@ This feature streamlines icon management for large navigation menus by eliminati
 - `core/navigation` - Navigation block (for setting default icon settings)
 - `core/navigation-link` - Standard navigation links
 - `core/navigation-submenu` - Submenu/dropdown navigation items
+- `ollie/mega-menu` - Ollie Menu Designer dropdown menu items
 
 ## Requirements
 

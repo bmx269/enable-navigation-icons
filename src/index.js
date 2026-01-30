@@ -93,8 +93,8 @@ function addAttributes( settings ) {
 		};
 	}
 
-	// Add per-item icon attributes to navigation-link and navigation-submenu
-	if ( settings.name !== 'core/navigation-link' && settings.name !== 'core/navigation-submenu' ) {
+	// Add per-item icon attributes to navigation-link, navigation-submenu, and ollie/mega-menu
+	if ( settings.name !== 'core/navigation-link' && settings.name !== 'core/navigation-submenu' && settings.name !== 'ollie/mega-menu' ) {
 		return settings;
 	}
 
@@ -283,7 +283,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 		}
 
 		// Handle navigation items (children)
-		if ( props.name !== 'core/navigation-link' && props.name !== 'core/navigation-submenu' ) {
+		if ( props.name !== 'core/navigation-link' && props.name !== 'core/navigation-submenu' && props.name !== 'ollie/mega-menu' ) {
 			return <BlockEdit { ...props } />;
 		}
 
@@ -584,7 +584,7 @@ function addClasses( BlockListBlock ) {
 		const { name, attributes, clientId } = props;
 
 		if (
-			( name !== 'core/navigation-link' && name !== 'core/navigation-submenu' ) ||
+			( name !== 'core/navigation-link' && name !== 'core/navigation-submenu' && name !== 'ollie/mega-menu' ) ||
 			! ( attributes?.icon || attributes?.iconName )
 		) {
 			return <BlockListBlock { ...props } />;
