@@ -28,11 +28,17 @@ Set default icon settings at the Navigation block level that apply to all child 
 
 This feature streamlines icon management for large navigation menus by eliminating repetitive configuration while maintaining flexibility for individual items.
 
+### Ollie Menu Designer Integration
+Full support for the Ollie Menu Designer plugin's mega menu dropdown items:
+- **Mega Menu Compatibility** - Add icons to Ollie mega menu dropdown navigation items
+- **Consistent Experience** - Same icon selection and styling options as standard navigation items
+- **Theme Integration** - Works seamlessly with Ollie themes and the Menu Designer plugin
+
 ### Supported Blocks
 - `core/navigation` - Navigation block (for setting default icon settings)
 - `core/navigation-link` - Standard navigation links
 - `core/navigation-submenu` - Submenu/dropdown navigation items
-- `ollie/mega-menu` - Ollie Menu Designer dropdown menu items
+- `ollie/mega-menu` - Ollie Menu Designer dropdown menu items (requires Ollie Menu Designer plugin)
 
 ## Requirements
 
@@ -86,6 +92,17 @@ Individual navigation items can override Navigation block defaults:
 4. Configure custom settings for this specific item
 
 When "Use default icon settings" is enabled (default), the item inherits all settings from the parent Navigation block. When disabled, the item uses its own custom settings.
+
+### Using with Ollie Menu Designer
+
+If you're using the Ollie Menu Designer plugin for mega menus:
+
+1. Add an Ollie mega menu dropdown block to your navigation
+2. Select the mega menu dropdown item
+3. Click **Add icon** in the block toolbar (same as standard navigation items)
+4. Configure icon settings in the block sidebar
+
+Ollie mega menu items work exactly like standard navigation items and fully support all icon features including default settings inheritance from the parent Navigation block.
 
 ## Development
 
