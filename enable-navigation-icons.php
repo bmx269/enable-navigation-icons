@@ -129,9 +129,9 @@ add_action( 'init', 'enable_navigation_icons_block_styles_ollie_mega_menu' );
  * @return string Modified block content with icon.
  */
 function enable_navigation_icons_render_block_navigation( $block_content, $block, $instance ) {
-	// Only render icons on the frontend, not in the editor.
-	// The editor handles icon rendering via JavaScript.
-	if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+	// Skip rendering during REST API requests to prevent icon HTML from being saved.
+	// This allows rendering in the editor preview iframe so users can see icon changes.
+	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
 		return $block_content;
 	}
 
