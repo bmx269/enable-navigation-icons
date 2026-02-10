@@ -129,6 +129,12 @@ add_action( 'init', 'enable_navigation_icons_block_styles_ollie_mega_menu' );
  * @return string Modified block content with icon.
  */
 function enable_navigation_icons_render_block_navigation( $block_content, $block, $instance ) {
+	// Only render icons on the frontend, not in the editor.
+	// The editor handles icon rendering via JavaScript.
+	if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+		return $block_content;
+	}
+
 	if ( ! isset( $block['attrs']['icon'] ) && ! isset( $block['attrs']['iconName'] ) ) {
 		return $block_content;
 	}
@@ -290,6 +296,11 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 			'stroke' => true,
 		),
 	);
+
+	// Check if icon is already present in the block content to avoid duplicates.
+	if ( strpos( $block_content, 'wp-block-navigation-item__icon' ) !== false ) {
+		return $block_content;
+	}
 
 	// Sanitize the icon SVG.
 	$sanitized_icon = wp_kses( $icon, $allowed_svg_tags );
