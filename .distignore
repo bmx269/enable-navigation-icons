@@ -1,0 +1,25 @@
+# Development files
+/.claude
+/.github
+/.wordpress-org
+/node_modules
+/src
+/vendor
+
+# Config files
+.distignore
+.editorconfig
+.gitattributes
+.gitignore
+CLAUDE.md
+README.md
+deploy.sh
+package.json
+package-lock.json
+webpack.config.js
+
+# OS files
+.DS_Store
+
+# Misc
+*.log
