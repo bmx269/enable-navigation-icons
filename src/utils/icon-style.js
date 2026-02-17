@@ -1,4 +1,4 @@
-import React from 'react';
+import { isValidElement } from '@wordpress/element';
 import ReactDOMServer from 'react-dom/server';
 
 import { flattenIconsArray } from './icon-functions';
@@ -38,14 +38,13 @@ function svgToDataUri( svg ) {
  * Generate icon styles for the block editor.
  *
  * @since 0.1.0
- * @param {Object}  params                 Function parameters.
- * @param {string}  params.selector        CSS selector for the icon.
- * @param {string}  params.icon            Icon SVG string.
- * @param {string}  params.iconName        Icon name from library.
- * @param {string}  params.customIconColor Custom icon color.
- * @param {Object}  params.style           Block style object.
- * @param {string}  params.iconSize        Icon size value.
- * @param {string}  params.iconSpacing     Icon spacing value.
+ * @param {Object} params                 Function parameters.
+ * @param {string} params.selector        CSS selector for the icon.
+ * @param {string} params.icon            Icon SVG string.
+ * @param {string} params.iconName        Icon name from library.
+ * @param {string} params.customIconColor Custom icon color.
+ * @param {string} params.iconSize        Icon size value.
+ * @param {string} params.iconSpacing     Icon spacing value.
  * @return {string} CSS string for the icon.
  */
 export function getIconStyle( {
@@ -53,7 +52,6 @@ export function getIconStyle( {
 	icon,
 	iconName,
 	customIconColor,
-	style,
 	iconSize,
 	iconSpacing,
 } ) {
@@ -66,7 +64,7 @@ export function getIconStyle( {
 		const iconsAll = flattenIconsArray( getIcons() );
 		const namedIcon = iconsAll.filter( ( i ) => i.name === iconName );
 		if ( namedIcon.length > 0 ) {
-			if ( React.isValidElement( namedIcon[ 0 ].icon ) ) {
+			if ( isValidElement( namedIcon[ 0 ].icon ) ) {
 				svg = ReactDOMServer.renderToString( namedIcon[ 0 ].icon );
 			} else {
 				svg = namedIcon[ 0 ].icon;

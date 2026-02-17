@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 // Icons
 $arrow_left: "data:image/svg+xml;utf8,<svg width='16' height='11' xmlns='http://www.w3.org/2000/svg'><polygon points='16 4.7 2.88198758 4.7 6.55900621 1 5.56521739 0 0 5.5 5.56521739 11 6.55900621 10 2.88198758 6.3 16 6.3'></polygon></svg>";
 $arrow_right: "data:image/svg+xml;utf8,<svg width='16' height='11' xmlns='http://www.w3.org/2000/svg'><polygon points='0 4.7 13.1180124 4.7 9.44099379 1 10.4347826 0 16 5.5 10.4347826 11 9.44099379 10 13.1180124 6.3 0 6.3'></polygon></svg>";
@@ -65,16 +66,8 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 		}
 	}
 
-	// Support for stroke-based icons (e.g., Lucide) - no fill in editor
-	&.has-no-icon-fill {
-		.wp-block-navigation-item__content {
-			&::after,
-			&::before {
-				// For stroke-based icons, ensure proper rendering
-				// The mask will handle the icon shape
-			}
-		}
-	}
+	// Support for stroke-based icons (e.g., Lucide) - no fill in editor.
+	// The mask handles the icon shape; no additional styles needed.
 
 	&.has-icon__arrow-left {
 
@@ -363,7 +356,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 	.navigation-icon-picker__settings {
 		flex-wrap: wrap;
 		gap: 16px;
-		
+
 		.components-toggle-control {
 			flex-basis: 100%;
 			margin-bottom: 0;
@@ -371,19 +364,21 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 	}
 }
 
-// Adjust z-order of the dropdown popover so it appears under the meiad upload modal.
-.components-popover.enable-button-icon-dropdown-content{
+// Adjust z-order of the dropdown popover so it appears
+// under the media upload modal.
+.components-popover.enable-button-icon-dropdown-content {
 	z-index: 159000;
 }
 
 // Style for the icon library modal.
 .wp-block-outermost-icon-inserter__modal {
+
 	.components-modal__content {
 		flex: 1 1 0%;
 		overflow: auto;
-		padding: 0px;
+		padding: 0;
 
-		&:before {
+		&::before {
 			margin-bottom: 0;
 		}
 	}
@@ -432,7 +427,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 				text-align: left;
 				text-transform: capitalize;
 
-				&>span {
+				> span {
 					opacity: 0.5;
 				}
 			}
@@ -468,7 +463,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 				align-items: center;
 				margin-right: 6px;
 
-				&>span {
+				> span {
 					font-size: 11px;
 					font-weight: 500;
 					line-height: 1.4;
@@ -514,6 +509,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 			}
 
 			.icons-list__item {
+
 				&.is-active {
 					background-color: var(--wp-admin-theme-color);
 					color: rgb(255 255 255 / 80%);
@@ -527,6 +523,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 					}
 
 					&.has-no-icon-fill {
+
 						svg {
 							color: #fff;
 							fill: none;
@@ -552,16 +549,17 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 // Styles for the custom SVG inserter modal.
 .wp-block-outermost-icon-custom-inserter__modal {
+
 	.components-modal__content {
 		flex: 1 1 0%;
 		overflow: auto;
-		padding: 0px;
+		padding: 0;
 
-		&> div:nth-child(2) {
+		> div:nth-child(2) {
 			height: 100%;
 		}
 
-		&:before {
+		&::before {
 			margin-bottom: 0;
 		}
 	}
@@ -589,7 +587,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 		.components-base-control,
 		.components-base-control__field,
 		.components-textarea-control__input {
-			height: 100%
+			height: 100%;
 		}
 
 		textarea {
@@ -618,8 +616,9 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 			overflow: scroll;
 
 			&.is-default {
+
 				svg {
-					opacity: .3;
+					opacity: 0.3;
 				}
 			}
 
@@ -638,7 +637,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 			display: flex;
 			align-items: center;
 
-			&>span {
+			> span {
 				font-size: 11px;
 				font-weight: 500;
 				line-height: 1.4;

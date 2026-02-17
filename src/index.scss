@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 .wp-block-navigation-item[class*="has-icon__"] {
 
 	.wp-block-navigation-item__content {
@@ -34,17 +35,18 @@
 		&.has-text-align-center {
 			justify-content: center;
 		}
-	
+
 		&.has-text-align-right {
 			justify-content: flex-end;
 		}
-	
+
 		&.has-text-align-left {
 			justify-content: flex-start;
 		}
 	}
 
 	&.has-justified-space-between {
+
 		.wp-block-navigation-item__content {
 			justify-content: space-between;
 		}
@@ -52,8 +54,11 @@
 
 	// Support for stroke-based icons (e.g., Lucide)
 	&.has-no-icon-fill {
+
 		.wp-block-navigation-item__content {
+
 			span {
+
 				svg {
 					fill: none;
 				}
