@@ -308,10 +308,10 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	// Add the SVG icon either to the left or right of the navigation item text.
 	$icon_markup = '<span class="wp-block-navigation-item__icon' . $icon_color_class . '" aria-hidden="true"' . $icon_style_attr . '>' . $sanitized_icon . '</span>';
 
-	// Inject icon inside the <a> tag
+	// Inject icon inside the <a> tag (limit to first match to avoid leaking into child items).
 	$block_content = $position_left
-		? preg_replace( '/(<a[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/a>)/i', '$1' . $icon_markup . '$2$3', $block_content )
-		: preg_replace( '/(<a[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/a>)/i', '$1$2' . $icon_markup . '$3', $block_content );
+		? preg_replace( '/(<a[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/a>)/i', '$1' . $icon_markup . '$2$3', $block_content, 1 )
+		: preg_replace( '/(<a[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/a>)/i', '$1$2' . $icon_markup . '$3', $block_content, 1 );
 
 	return $block_content;
 }
