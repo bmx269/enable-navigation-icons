@@ -32,7 +32,9 @@ export default function CustomInserterModal( props ) {
 		setAttributes,
 	} = props;
 	const { icon, iconName } = attributes;
-	const [ customIcon, setCustomIcon ] = useState( ! iconName ? ( icon || '' ) : '' );
+	const [ customIcon, setCustomIcon ] = useState(
+		! iconName ? icon || '' : ''
+	);
 	const [ iconSize, setIconSize ] = useState( 100 );
 
 	// If a SVG icon is inserted from the Media Library, we need to update
