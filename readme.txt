@@ -4,7 +4,7 @@ Tags: navigation, icons, menu, block editor, gutenberg
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -99,6 +99,12 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 == Changelog ==
 
+= 0.1.1 =
+* Fix submenu icon not appearing on parent item when children have their own icons
+* Fix icon injection for submenu items rendered as button elements (click-to-open mode)
+* Fix icon styles leaking from parent submenu into child navigation items in editor and frontend
+* Fix block error when adding custom icon to navigation item with no existing icon
+
 = 0.1.0 =
 * Initial release
 * Icon selection (library, media, custom SVG)
@@ -109,6 +115,9 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 * Support for Ollie Menu Designer mega menu blocks
 
 == Upgrade Notice ==
+
+= 0.1.1 =
+Bug fixes for submenu icon rendering and custom icon insertion.
 
 = 0.1.0 =
 Initial release of Enable Navigation Icons.
