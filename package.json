@@ -20,6 +20,14 @@
     "plugin-zip": "wp-scripts plugin-zip"
   },
   "dependencies": {
+    "@wordpress/block-editor": "^15.14.0",
+    "@wordpress/components": "^32.3.0",
+    "@wordpress/compose": "^7.41.0",
+    "@wordpress/data": "^10.41.0",
+    "@wordpress/element": "^6.41.0",
+    "@wordpress/hooks": "^4.41.0",
+    "@wordpress/i18n": "^6.14.0",
+    "@wordpress/primitives": "^4.41.0",
     "classnames": "^2.3.2",
     "html-react-parser": "^5.1.12",
     "lodash": "^4.17.21",
