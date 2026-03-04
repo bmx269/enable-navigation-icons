@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@wordpress/icons": "^9.35.0",
-    "@wordpress/scripts": "^26.15.0",
+    "@wordpress/scripts": "^31.6.0",
     "webpack-remove-empty-scripts": "^0.8.4"
   }
 }
