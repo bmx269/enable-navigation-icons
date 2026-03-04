@@ -297,9 +297,13 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		),
 	);
 
-	// Check if icon is already present in the block content to avoid duplicates.
-	if ( strpos( $block_content, 'wp-block-navigation-item__icon' ) !== false ) {
-		return $block_content;
+	// Check if the first navigation content element already has an icon to avoid duplicates.
+	// Only check the first matching element, not the entire block content, so that
+	// child items with their own icons don't prevent the parent from getting its icon.
+	if ( preg_match( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', $block_content, $first_element ) ) {
+		if ( strpos( $first_element[0], 'wp-block-navigation-item__icon' ) !== false ) {
+			return $block_content;
+		}
 	}
 
 	// Sanitize the icon SVG.
@@ -308,10 +312,12 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	// Add the SVG icon either to the left or right of the navigation item text.
 	$icon_markup = '<span class="wp-block-navigation-item__icon' . $icon_color_class . '" aria-hidden="true"' . $icon_style_attr . '>' . $sanitized_icon . '</span>';
 
-	// Inject icon inside the <a> tag (limit to first match to avoid leaking into child items).
+	// Inject icon inside the first element with wp-block-navigation-item__content class.
+	// Handles both <a> (hover mode) and <button> (click mode) tags.
+	// Limit to first match to avoid leaking into child navigation items.
 	$block_content = $position_left
-		? preg_replace( '/(<a[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/a>)/i', '$1' . $icon_markup . '$2$3', $block_content, 1 )
-		: preg_replace( '/(<a[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/a>)/i', '$1$2' . $icon_markup . '$3', $block_content, 1 );
+		? preg_replace( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', '$1' . $icon_markup . '$2$3', $block_content, 1 )
+		: preg_replace( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', '$1$2' . $icon_markup . '$3', $block_content, 1 );
 
 	return $block_content;
 }

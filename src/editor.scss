@@ -24,7 +24,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 // Add icons to Button blocks and style appropriately.
 .wp-block-navigation-item[class*="has-icon__"] {
 
-	.wp-block-navigation-item__content {
+	> .wp-block-navigation-item__content {
 
 		// Styles the icon using pseudo-elements
 		&::after,
@@ -53,7 +53,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon-position__left {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			// When positioned left, icon appears before the text
 			&::after {
@@ -71,7 +71,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__arrow-left {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -85,7 +85,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__arrow-right {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -99,7 +99,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__chevron-right-small {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -113,7 +113,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__chevron-left {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -127,7 +127,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__chevron-left-small {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -141,7 +141,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__cloud {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -155,7 +155,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__cloud-upload {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -169,7 +169,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__comment-author-avatar {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -183,7 +183,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__download {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -197,7 +197,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__external {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -211,7 +211,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__external-arrow {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -225,7 +225,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__help {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -239,7 +239,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__info {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -253,7 +253,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__lock-outline {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -267,7 +267,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__login {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -281,7 +281,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__next {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -295,7 +295,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__previous {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -309,7 +309,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__shuffle {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {
@@ -323,7 +323,7 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 
 	&.has-icon__wordpress {
 
-		.wp-block-navigation-item__content {
+		> .wp-block-navigation-item__content {
 
 			&::after,
 			&::before {

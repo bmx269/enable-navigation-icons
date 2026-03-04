@@ -710,7 +710,7 @@ function addClasses( BlockListBlock ) {
 		const id = useInstanceId( BlockListBlock );
 		const selectorPrefix = `wp-block-navigation-item-has-icon-`;
 		const selectorClassname = `${ selectorPrefix }${ id }`;
-		const selector = `.${ selectorClassname } .wp-block-navigation-item__content::before, .${ selectorClassname } .wp-block-navigation-item__content::after`;
+		const selector = `.${ selectorClassname } > .wp-block-navigation-item__content::before, .${ selectorClassname } > .wp-block-navigation-item__content::after`;
 
 		// Get CSS string for the current icon.
 		// The CSS and `style` element is only output if it is not empty.
