@@ -11,6 +11,10 @@ import ReactDOMServer from 'react-dom/server';
  * @return {Object}     The icons as a React object.
  */
 export function parseIcon( icon ) {
+	if ( ! icon || typeof icon !== 'string' ) {
+		return null;
+	}
+
 	const newIcon = icon.trim();
 
 	const parseOptions = {
