@@ -10,7 +10,10 @@
 	"steps": [
 		{
 			"step": "installPlugin",
-			"pluginZipUrl": "https://github.com/bmx269/enable-navigation-icons/archive/refs/heads/main.zip"
+			"pluginData": {
+				"resource": "url",
+				"url": "https://github.com/bmx269/enable-navigation-icons/archive/refs/heads/main.zip"
+			}
 		},
 		{
 			"step": "login",
