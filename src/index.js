@@ -27,6 +27,7 @@ import {
 	NavigableMenu,
 	PanelBody,
 	PanelRow,
+	SelectControl,
 	ToggleControl,
 	ToolbarButton,
 	__experimentalGrid as Grid, // eslint-disable-line
@@ -92,6 +93,12 @@ function addAttributes( settings ) {
 				type: 'boolean',
 				default: false,
 			},
+			defaultIconVerticalAlign: {
+				type: 'string',
+			},
+			defaultIconOffset: {
+				type: 'string',
+			},
 		};
 
 		return {
@@ -150,6 +157,12 @@ function addAttributes( settings ) {
 			type: 'boolean',
 			default: true,
 		},
+		iconVerticalAlign: {
+			type: 'string',
+		},
+		iconOffset: {
+			type: 'string',
+		},
 	};
 
 	const newSettings = {
@@ -207,6 +220,8 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 				defaultIconPositionLeft,
 				defaultJustifySpaceBetween,
 				defaultHasNoIconFill,
+				defaultIconVerticalAlign,
+				defaultIconOffset,
 			} = attributes;
 
 			const colorGradientSettings = useMultipleOriginColorsAndGradients();
@@ -299,6 +314,37 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 									} }
 								/>
 							</PanelRow>
+							<SelectControl
+								label={ __(
+									'Icon vertical alignment',
+									'enable-navigation-icons'
+								) }
+								value={ defaultIconVerticalAlign || 'center' }
+								options={ [
+									{ label: __( 'Top', 'enable-navigation-icons' ), value: 'top' },
+									{ label: __( 'Center', 'enable-navigation-icons' ), value: 'center' },
+									{ label: __( 'Bottom', 'enable-navigation-icons' ), value: 'bottom' },
+								] }
+								onChange={ ( value ) => {
+									setAttributes( {
+										defaultIconVerticalAlign: value,
+									} );
+								} }
+							/>
+							<DimensionControl
+								label={ __(
+									'Icon offset',
+									'enable-navigation-icons'
+								) }
+								value={ defaultIconOffset || '' }
+								onChange={ ( value ) => {
+									setAttributes( {
+										defaultIconOffset: value,
+									} );
+								} }
+								units={ [ 'px', '%', 'em', 'rem' ] }
+								min={ -100 }
+							/>
 						</PanelBody>
 					</InspectorControls>
 					<InspectorControls group="color">
@@ -346,6 +392,8 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 			iconSize,
 			iconSpacing,
 			useDefaultIconSettings,
+			iconVerticalAlign,
+			iconOffset,
 		} = attributes;
 		const { allowedMimeTypes } = GetAllowedMimeTypes();
 		const isSVGUploadAllowed = allowedMimeTypes
@@ -586,6 +634,37 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 											} }
 											units={ [ 'px', 'em', 'rem' ] }
 										/>
+										<SelectControl
+											label={ __(
+												'Icon vertical alignment',
+												'enable-navigation-icons'
+											) }
+											value={ iconVerticalAlign || 'center' }
+											options={ [
+												{ label: __( 'Top', 'enable-navigation-icons' ), value: 'top' },
+												{ label: __( 'Center', 'enable-navigation-icons' ), value: 'center' },
+												{ label: __( 'Bottom', 'enable-navigation-icons' ), value: 'bottom' },
+											] }
+											onChange={ ( value ) => {
+												setAttributes( {
+													iconVerticalAlign: value,
+												} );
+											} }
+										/>
+										<DimensionControl
+											label={ __(
+												'Icon offset',
+												'enable-navigation-icons'
+											) }
+											value={ iconOffset || '' }
+											onChange={ ( value ) => {
+												setAttributes( {
+													iconOffset: value,
+												} );
+											} }
+											units={ [ 'px', '%', 'em', 'rem' ] }
+											min={ -100 }
+										/>
 									</>
 								) }
 							</PanelBody>
@@ -706,6 +785,14 @@ function addClasses( BlockListBlock ) {
 			parentNavigationDefaults?.defaultHasNoIconFill !== undefined
 				? parentNavigationDefaults.defaultHasNoIconFill
 				: attributes?.hasNoIconFill;
+		const effectiveIconVerticalAlign =
+			useDefaults && parentNavigationDefaults?.defaultIconVerticalAlign
+				? parentNavigationDefaults.defaultIconVerticalAlign
+				: attributes?.iconVerticalAlign;
+		const effectiveIconOffset =
+			useDefaults && parentNavigationDefaults?.defaultIconOffset
+				? parentNavigationDefaults.defaultIconOffset
+				: attributes?.iconOffset;
 
 		const id = useInstanceId( BlockListBlock );
 		const selectorPrefix = `wp-block-navigation-item-has-icon-`;
@@ -721,6 +808,8 @@ function addClasses( BlockListBlock ) {
 			customIconColor: effectiveCustomIconColor,
 			iconSize: effectiveIconSize,
 			iconSpacing: effectiveIconSpacing,
+			iconVerticalAlign: effectiveIconVerticalAlign,
+			iconOffset: effectiveIconOffset,
 		} );
 
 		const classes = classnames( props?.className, {
@@ -729,6 +818,8 @@ function addClasses( BlockListBlock ) {
 			'has-icon-position__left': effectiveIconPositionLeft,
 			'has-justified-space-between': effectiveJustifySpaceBetween,
 			'has-no-icon-fill': effectiveHasNoIconFill,
+			'has-icon-align__top': effectiveIconVerticalAlign === 'top',
+			'has-icon-align__bottom': effectiveIconVerticalAlign === 'bottom',
 			[ `${ selectorClassname }` ]: true,
 		} );
 

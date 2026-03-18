@@ -1,6 +1,6 @@
 {
   "name": "enable-navigation-icons",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Easily add icons to Navigation Block items.",
   "author": "Trent Stromkins",
   "license": "GPL-2.0-or-later",
@@ -17,7 +17,8 @@
     "start": "wp-scripts start",
     "packages-update": "wp-scripts packages-update",
     "update-pot": "wp i18n make-pot . languages/enable-navigation-icons.pot --exclude=src",
-    "plugin-zip": "wp-scripts plugin-zip"
+    "plugin-zip": "wp-scripts plugin-zip",
+    "playground": "npx @wp-playground/cli@latest server --blueprint=blueprint.json --auto-mount"
   },
   "dependencies": {
     "@wordpress/block-editor": "^15.14.0",

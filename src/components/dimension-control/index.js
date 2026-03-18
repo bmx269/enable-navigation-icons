@@ -34,7 +34,7 @@ const RANGE_CONTROL_CUSTOM_SETTINGS = {
 	rem: { max: 50, step: 0.1 },
 };
 
-export default function DimensionControl( { onChange, label, units, value } ) {
+export default function DimensionControl( { onChange, label, units, value, min = 0 } ) {
 	const customRangeValue = parseFloat( value );
 	const themeJsonUnits = useSettings( 'spacing.units' )[ 0 ];
 
@@ -66,7 +66,7 @@ export default function DimensionControl( { onChange, label, units, value } ) {
 		// Prevent the unit from getting returned if there is no actual value set.
 		const [ newValue, newUnit ] = // eslint-disable-line
 			parseQuantityAndUnitFromRawValue( unitValue );
-		if ( newValue ) {
+		if ( newValue !== undefined && newValue !== '' ) {
 			onChange( unitValue );
 		}
 	};
@@ -107,7 +107,7 @@ export default function DimensionControl( { onChange, label, units, value } ) {
 						units={ availableUnits }
 						onChange={ handleChange }
 						onUnitChange={ handleUnitChange }
-						min={ 0 }
+						min={ min }
 						size={ '__unstable-large' }
 					/>
 				</FlexItem>
@@ -115,7 +115,7 @@ export default function DimensionControl( { onChange, label, units, value } ) {
 					<Spacer marginX={ 2 } marginBottom={ 0 }>
 						<RangeControl
 							value={ customRangeValue }
-							min={ 0 }
+							min={ min }
 							max={
 								RANGE_CONTROL_CUSTOM_SETTINGS[ selectedUnit ]
 									?.max ?? 100

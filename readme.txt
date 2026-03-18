@@ -4,7 +4,7 @@ Tags: navigation, icons, menu, block editor, gutenberg
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.1.1
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -13,6 +13,8 @@ Easily add icons to Navigation Block items in WordPress.
 == Description ==
 
 Enable Navigation Icons makes it simple to add and customize icons for your WordPress Navigation Block items. Whether you're building a simple menu or complex mega menu navigation, this plugin provides intuitive controls for adding beautiful icons to your navigation links.
+
+**[Try it in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bmx269/enable-navigation-icons/main/blueprint.json)** — test the plugin instantly in your browser, no installation required.
 
 **Recommended Companion Plugin:** Use the [Icon Block](https://wordpress.org/plugins/icon-block/) plugin to add custom icon sets and expand your icon library options. Icon Block is a powerful companion that allows you to register additional icon libraries for use with Enable Navigation Icons.
 
@@ -26,7 +28,8 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 **Icon Positioning**
 * Position icons before or after navigation link text (left/right)
 * Space between justification for full-width layouts
-* Flexible alignment options
+* Vertical alignment options (top, center, bottom) for multi-line menu items
+* Fine-tune icon position with vertical offset (supports px, %, em, rem units)
 
 **Icon Styling**
 * Adjust icon dimensions with a slider control (supports px, em, rem units)
@@ -36,7 +39,7 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 
 **Navigation Block Default Settings**
 Set default icon settings at the Navigation block level that apply to all child navigation items:
-* Configure size, spacing, color, position, and styling once for the entire navigation
+* Configure size, spacing, color, position, vertical alignment, offset, and styling once for the entire navigation
 * Individual navigation items can inherit defaults or use custom settings
 * Works seamlessly with multiple and nested Navigation blocks
 * Applies to both inline navigation items and dynamically loaded WordPress menus
@@ -99,6 +102,13 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 == Changelog ==
 
+= 0.2.0 =
+* Add icon vertical alignment option (top, center, bottom) for multi-line menu items
+* Add icon vertical offset for fine-tuning icon position (supports px, %, em, rem units)
+* Add WordPress Playground support for local development and testing
+* Fix icon size and spacing not applying to submenu/dropdown items rendered as button elements
+* Update Node.js to 22 LTS and update npm dependencies
+
 = 0.1.1 =
 * Fix submenu icon not appearing on parent item when children have their own icons
 * Fix icon injection for submenu items rendered as button elements (click-to-open mode)
@@ -115,6 +125,9 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 * Support for Ollie Menu Designer mega menu blocks
 
 == Upgrade Notice ==
+
+= 0.2.0 =
+New icon vertical alignment and offset controls for multi-line menu items. Fixes submenu icon sizing.
 
 = 0.1.1 =
 Bug fixes for submenu icon rendering and custom icon insertion.

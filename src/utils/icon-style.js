@@ -54,6 +54,8 @@ export function getIconStyle( {
 	customIconColor,
 	iconSize,
 	iconSpacing,
+	iconVerticalAlign,
+	iconOffset,
 } ) {
 	let output = '';
 	const rules = [];
@@ -90,6 +92,11 @@ export function getIconStyle( {
 		rules.push( `color: ${ customIconColor };` );
 	}
 
+	if ( iconOffset ) {
+		rules.push( `position: relative !important;` );
+		rules.push( `top: ${ iconOffset } !important;` );
+	}
+
 	if ( rules.length ) {
 		output = `${ appendSelectors( selector ) } {
 			${ rules.join( ' ' ) };
@@ -101,6 +108,16 @@ export function getIconStyle( {
 		const linkSelector = selector.split( '::' )[ 0 ];
 		output += `\n${ linkSelector } {
 			gap: ${ iconSpacing } !important;
+		}`;
+	}
+
+	// Add vertical alignment if not center (center is the CSS default).
+	if ( iconVerticalAlign && iconVerticalAlign !== 'center' ) {
+		const alignValue =
+			iconVerticalAlign === 'top' ? 'flex-start' : 'flex-end';
+		const linkSelector = selector.split( '::' )[ 0 ];
+		output += `\n${ linkSelector } {
+			align-items: ${ alignValue } !important;
 		}`;
 	}
 

@@ -3,7 +3,7 @@
  * Plugin Name:         Enable Navigation Icons
  * Plugin URI:          https://github.com/bmx269/enable-navigation-icons
  * Description:         Easily add icons to Navigation Block items.
- * Version:             0.1.1
+ * Version:             0.2.0
  * Requires at least:   6.3
  * Requires PHP:        7.4
  * Author:              Trent Stromkins
@@ -172,6 +172,14 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		? $parent_defaults['defaultIconSpacing']
 		: ( isset( $block['attrs']['iconSpacing'] ) ? $block['attrs']['iconSpacing'] : '' );
 
+	$icon_vertical_align = $use_default_settings && ! empty( $parent_defaults['defaultIconVerticalAlign'] )
+		? $parent_defaults['defaultIconVerticalAlign']
+		: ( isset( $block['attrs']['iconVerticalAlign'] ) ? $block['attrs']['iconVerticalAlign'] : '' );
+
+	$icon_offset = $use_default_settings && ! empty( $parent_defaults['defaultIconOffset'] )
+		? $parent_defaults['defaultIconOffset']
+		: ( isset( $block['attrs']['iconOffset'] ) ? $block['attrs']['iconOffset'] : '' );
+
 	// Determine effective custom icon color.
 	$custom_icon_color = $use_default_settings && ! empty( $parent_defaults['defaultCustomIconColor'] )
 		? $parent_defaults['defaultCustomIconColor']
@@ -199,6 +207,10 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	if ( $custom_icon_color ) {
 		$icon_styles[] = 'color:' . esc_attr( $custom_icon_color );
 	}
+	if ( $icon_offset ) {
+		$icon_styles[] = 'position:relative';
+		$icon_styles[] = 'top:' . esc_attr( $icon_offset );
+	}
 
 	$icon_style_attr = ! empty( $icon_styles ) ? ' style="' . esc_attr( implode( ';', $icon_styles ) ) . '"' : '';
 
@@ -217,22 +229,26 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		if ( $position_left ) {
 			$p->add_class( 'has-icon-position__left' );
 		}
+		if ( $icon_vertical_align && 'center' !== $icon_vertical_align ) {
+			$p->add_class( 'has-icon-align__' . sanitize_html_class( $icon_vertical_align ) );
+		}
 	}
 	$block_content = $p->get_updated_html();
 
-	// Now apply custom properties to the <a> tag with class wp-block-navigation-item__content
-	$p = new WP_HTML_Tag_Processor( $block_content );
+	// Now apply custom properties to the element with class wp-block-navigation-item__content.
+	// This can be an <a> tag (navigation-link) or a <button> tag (navigation-submenu).
 	if ( ! empty( $link_styles ) ) {
-		// Find the anchor tag within the navigation item
-		while ( $p->next_tag( 'a' ) ) {
+		$p     = new WP_HTML_Tag_Processor( $block_content );
+		$found = false;
+
+		while ( $p->next_tag() && ! $found ) {
 			$class_attr = $p->get_attribute( 'class' );
-			// Check if this is the navigation item content link
 			if ( $class_attr && strpos( $class_attr, 'wp-block-navigation-item__content' ) !== false ) {
 				$existing_style = $p->get_attribute( 'style' );
 				$new_styles     = esc_attr( implode( ';', $link_styles ) );
 				$final_style    = $existing_style ? $existing_style . ';' . $new_styles : $new_styles;
 				$p->set_attribute( 'style', $final_style );
-				break;
+				$found = true;
 			}
 		}
 		$block_content = $p->get_updated_html();

@@ -52,6 +52,20 @@
 		}
 	}
 
+	&.has-icon-align__top {
+
+		> .wp-block-navigation-item__content {
+			align-items: flex-start;
+		}
+	}
+
+	&.has-icon-align__bottom {
+
+		> .wp-block-navigation-item__content {
+			align-items: flex-end;
+		}
+	}
+
 	// Support for stroke-based icons (e.g., Lucide)
 	&.has-no-icon-fill {
 

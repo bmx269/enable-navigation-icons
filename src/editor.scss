@@ -66,6 +66,20 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 		}
 	}
 
+	&.has-icon-align__top {
+
+		> .wp-block-navigation-item__content {
+			align-items: flex-start;
+		}
+	}
+
+	&.has-icon-align__bottom {
+
+		> .wp-block-navigation-item__content {
+			align-items: flex-end;
+		}
+	}
+
 	// Support for stroke-based icons (e.g., Lucide) - no fill in editor.
 	// The mask handles the icon shape; no additional styles needed.
 

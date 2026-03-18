@@ -1,0 +1,21 @@
+{
+	"landingPage": "/wp-admin/site-editor.php",
+	"preferredVersions": {
+		"wp": "latest",
+		"php": "8.3"
+	},
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginZipUrl": "https://github.com/bmx269/enable-navigation-icons/archive/refs/heads/main.zip"
+		},
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		}
+	]
+}

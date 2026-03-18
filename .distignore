@@ -17,6 +17,8 @@ deploy.sh
 package.json
 package-lock.json
 webpack.config.js
+blueprint.json
+.nvmrc
 
 # OS files
 .DS_Store
