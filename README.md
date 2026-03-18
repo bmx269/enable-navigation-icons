@@ -2,6 +2,8 @@
 
 Easily add icons to Navigation Block items in WordPress.
 
+**[Try it in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bmx269/enable-navigation-icons/main/blueprint.json)** — test the plugin instantly in your browser, no installation required.
+
 **Recommended Companion Plugin:** Use the [Icon Block](https://wordpress.org/plugins/icon-block/) plugin to add custom icon sets and expand your icon library options. Icon Block is a powerful companion that allows you to register additional icon libraries for use with Enable Navigation Icons.
 
 ## Features
@@ -14,6 +16,8 @@ Easily add icons to Navigation Block items in WordPress.
 ### Icon Positioning
 - **Left/Right Placement** - Position icons before or after navigation link text
 - **Space Between** - Justify content with space between icon and text for full-width layouts
+- **Vertical Alignment** - Align icons to top, center, or bottom for multi-line menu items
+- **Vertical Offset** - Fine-tune icon position with a vertical offset (supports px, %, em, rem units)
 
 ### Icon Styling
 - **Icon Size** - Adjust icon dimensions with a slider control (supports px, em, rem units)
@@ -23,7 +27,7 @@ Easily add icons to Navigation Block items in WordPress.
 
 ### Navigation Block Default Settings
 Set default icon settings at the Navigation block level that apply to all child navigation items:
-- **Global Defaults** - Configure size, spacing, color, position, and styling once for the entire navigation
+- **Global Defaults** - Configure size, spacing, color, position, vertical alignment, offset, and styling once for the entire navigation
 - **Item-Level Overrides** - Individual navigation items can inherit defaults or use custom settings
 - **Nested Support** - Works seamlessly with multiple and nested Navigation blocks
 - **Menu Support** - Applies to both inline navigation items and dynamically loaded WordPress menus
@@ -66,6 +70,7 @@ Full support for the Ollie Menu Designer plugin's mega menu dropdown items:
    - Toggle icon position (left/right)
    - Enable space between justification
    - Set icon size and spacing
+   - Set vertical alignment and offset
    - Choose icon color
    - Enable "No icon fill" for stroke-based icons
 
@@ -80,6 +85,8 @@ To apply consistent icon settings across all navigation items:
    - Set default icon spacing
    - Choose default icon color
    - Set default icon position (left/right)
+   - Set default vertical alignment (top/center/bottom)
+   - Set default vertical offset
    - Enable default space between justification
    - Enable "No icon fill" for stroke-based icons by default
 4. All navigation items will inherit these settings automatically
@@ -117,6 +124,9 @@ npm start
 
 # Build for production
 npm run build
+
+# Launch WordPress Playground with plugin
+npm run playground
 ```
 
 ## Acknowledgments
