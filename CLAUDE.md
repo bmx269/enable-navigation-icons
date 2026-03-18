@@ -18,6 +18,7 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 ├── languages/                    # Translation files
 ├── .wordpress-org/               # WP.org assets (banners, icons, screenshots)
 ├── .github/workflows/            # CI and deployment automation
+├── blueprint.json                # WordPress Playground blueprint (hosted + local)
 └── webpack.config.js             # Custom webpack config
 ```
 
@@ -29,6 +30,7 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 - `npm run lint:js:src:fix` — Auto-fix JS lint issues
 - `npm run plugin-zip` — Create distribution zip
 - `npm run update-pot` — Generate translation POT file
+- `npm run playground` — Launch WordPress Playground with plugin auto-mounted
 
 ## Development Standards
 - Follow WordPress Coding Standards (WPCS) for PHP, JS, and CSS
@@ -48,3 +50,6 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 - Parent Navigation block stores default icon settings; child items inherit or override
 - Navigation block defaults use a global stack (`$enable_navigation_icons_nav_stack`) to handle nested navigation blocks
 - REST API requests are skipped to prevent icon HTML from being saved to post content
+- Icon vertical alignment (top/center/bottom) uses CSS `align-items` on the flex container via classes
+- Icon vertical offset uses `position: relative; top` on the icon element for alignment-independent shifting
+- `blueprint.json` supports both hosted Playground (installs from GitHub) and local dev (`--auto-mount`)
