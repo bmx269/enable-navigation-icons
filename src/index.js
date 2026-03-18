@@ -321,9 +321,27 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 								) }
 								value={ defaultIconVerticalAlign || 'center' }
 								options={ [
-									{ label: __( 'Top', 'enable-navigation-icons' ), value: 'top' },
-									{ label: __( 'Center', 'enable-navigation-icons' ), value: 'center' },
-									{ label: __( 'Bottom', 'enable-navigation-icons' ), value: 'bottom' },
+									{
+										label: __(
+											'Top',
+											'enable-navigation-icons'
+										),
+										value: 'top',
+									},
+									{
+										label: __(
+											'Center',
+											'enable-navigation-icons'
+										),
+										value: 'center',
+									},
+									{
+										label: __(
+											'Bottom',
+											'enable-navigation-icons'
+										),
+										value: 'bottom',
+									},
 								] }
 								onChange={ ( value ) => {
 									setAttributes( {
@@ -639,11 +657,31 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 												'Icon vertical alignment',
 												'enable-navigation-icons'
 											) }
-											value={ iconVerticalAlign || 'center' }
+											value={
+												iconVerticalAlign || 'center'
+											}
 											options={ [
-												{ label: __( 'Top', 'enable-navigation-icons' ), value: 'top' },
-												{ label: __( 'Center', 'enable-navigation-icons' ), value: 'center' },
-												{ label: __( 'Bottom', 'enable-navigation-icons' ), value: 'bottom' },
+												{
+													label: __(
+														'Top',
+														'enable-navigation-icons'
+													),
+													value: 'top',
+												},
+												{
+													label: __(
+														'Center',
+														'enable-navigation-icons'
+													),
+													value: 'center',
+												},
+												{
+													label: __(
+														'Bottom',
+														'enable-navigation-icons'
+													),
+													value: 'bottom',
+												},
 											] }
 											onChange={ ( value ) => {
 												setAttributes( {

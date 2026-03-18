@@ -34,7 +34,13 @@ const RANGE_CONTROL_CUSTOM_SETTINGS = {
 	rem: { max: 50, step: 0.1 },
 };
 
-export default function DimensionControl( { onChange, label, units, value, min = 0 } ) {
+export default function DimensionControl( {
+	onChange,
+	label,
+	units,
+	value,
+	min = 0,
+} ) {
 	const customRangeValue = parseFloat( value );
 	const themeJsonUnits = useSettings( 'spacing.units' )[ 0 ];
 
