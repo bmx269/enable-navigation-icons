@@ -2,9 +2,9 @@
 Contributors: bmx269
 Tags: navigation, icons, menu, block editor, gutenberg
 Requires at least: 6.3
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -102,6 +102,11 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 == Changelog ==
 
+= 0.2.1 =
+* Confirm compatibility with WordPress 7.0
+* Update npm dependencies
+* Remove legacy WordPress 6.1 fallback code (minimum version is 6.3)
+
 = 0.2.0 =
 * Add icon vertical alignment option (top, center, bottom) for multi-line menu items
 * Add icon vertical offset for fine-tuning icon position (supports px, %, em, rem units)
@@ -125,6 +130,9 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 * Support for Ollie Menu Designer mega menu blocks
 
 == Upgrade Notice ==
+
+= 0.2.1 =
+Confirmed compatibility with WordPress 7.0.
 
 = 0.2.0 =
 New icon vertical alignment and offset controls for multi-line menu items. Fixes submenu icon sizing.
