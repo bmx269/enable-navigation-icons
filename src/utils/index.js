@@ -10,3 +10,11 @@ export {
 } from './parse-media';
 export { displayMessages } from './display-messages';
 export { getIconStyle } from './icon-style';
+export {
+	CORE_ICON_TYPE_PREFIX,
+	getCoreIconContent,
+	getCoreIconRegistryLabel,
+	getIconClassSuffix,
+	isCoreIconName,
+	useCoreIcons,
+} from './use-core-icons';

@@ -14,7 +14,7 @@ import { useState, useEffect, useMemo, useCallback } from '@wordpress/element';
  * Internal dependencies
  */
 import getIcons from './../../icons';
-import { flattenIconsArray, getIconTypes } from './../../utils';
+import { flattenIconsArray, getIconTypes, useCoreIcons } from './../../utils';
 import ContentHeader from './content-header';
 import IconGrid from './icon-grid';
 import Sidebar from './sidebar';
@@ -22,7 +22,17 @@ import { parseIconComponent } from '../../utils/parse-icon';
 export default function InserterModal( props ) {
 	const { isInserterOpen, setInserterOpen, attributes, setAttributes } =
 		props;
-	const iconsByType = getIcons();
+	const bundledIconsByType = getIcons();
+
+	// Icons registered with the WordPress Icon API (WP 7.1+), exposed as
+	// additional types alongside the plugin's bundled icons. Resolves to an
+	// empty array on older versions, leaving the inserter unchanged.
+	const { coreIconTypes } = useCoreIcons();
+
+	const iconsByType = useMemo(
+		() => [ ...bundledIconsByType, ...coreIconTypes ],
+		[ bundledIconsByType, coreIconTypes ]
+	);
 	const iconTypes = getIconTypes( iconsByType );
 
 	// Get the default type, and if there is none, get the first type.
@@ -91,7 +101,21 @@ export default function InserterModal( props ) {
 		return null;
 	}
 
-	function updateIconAtts( renderedIcon, name, hasNoIconFill ) {
+	function updateIconAtts( renderedIcon, name, hasNoIconFill, iconObject ) {
+		// Icons from the WordPress Icon API are stored by their namespaced
+		// registry name only. The SVG is resolved server-side by wp_get_icon(),
+		// which keeps the markup out of post content and lets a re-registered
+		// icon update everywhere at once.
+		if ( iconObject?.coreName ) {
+			setAttributes( {
+				icon: undefined,
+				iconName: iconObject.coreName,
+				hasNoIconFill,
+			} );
+			setInserterOpen( false );
+			return;
+		}
+
 		if ( typeof renderedIcon !== 'string' ) {
 			renderedIcon = parseIconComponent( renderedIcon );
 		}

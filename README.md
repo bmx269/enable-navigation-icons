@@ -10,6 +10,7 @@ Easily add icons to Navigation Block items in WordPress.
 
 ### Icon Selection
 - **Icon Library** - Browse and select from a curated collection of WordPress icons
+- **WordPress Icon API** - On WordPress 7.1+, browse icons registered with core's SVG Icon API, including core's own set and any collection added by your theme or other plugins
 - **Media Library** - Upload and use custom SVG icons from your media library
 - **Custom SVG** - Paste custom SVG code directly for complete flexibility
 
@@ -23,11 +24,22 @@ Easily add icons to Navigation Block items in WordPress.
 - **Icon Size** - Adjust icon dimensions with a slider control (supports px, em, rem units)
 - **Icon Spacing** - Control the gap between icon and text (supports px, em, rem units)
 - **Icon Color** - Choose from theme colors or set a custom color
+- **Icon Rotation** - Rotate icons in 15 degree steps
 - **No Fill Option** - Support for stroke-based icons (e.g., Lucide icons)
+
+### WordPress Icon API (WordPress 7.1+)
+
+The plugin integrates with core's SVG Icon API in both directions:
+
+- Icons registered with the Icon API appear in the icon library alongside the plugin's bundled icons
+- Icons chosen from the registry are stored by name and rendered server-side, so no SVG markup is written into your post content
+- The plugin's own icon set is published as an `enable-navigation-icons` collection, making it available to the core Icon block, to other plugins, and over the REST API
+
+This is entirely additive. Existing navigation icons keep working with no migration, and the plugin still runs normally on WordPress 6.3 through 7.0.
 
 ### Navigation Block Default Settings
 Set default icon settings at the Navigation block level that apply to all child navigation items:
-- **Global Defaults** - Configure size, spacing, color, position, vertical alignment, offset, and styling once for the entire navigation
+- **Global Defaults** - Configure size, spacing, color, position, vertical alignment, offset, rotation, and styling once for the entire navigation
 - **Item-Level Overrides** - Individual navigation items can inherit defaults or use custom settings
 - **Nested Support** - Works seamlessly with multiple and nested Navigation blocks
 - **Menu Support** - Applies to both inline navigation items and dynamically loaded WordPress menus

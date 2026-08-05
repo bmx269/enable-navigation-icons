@@ -3,7 +3,7 @@
  * Plugin Name:         Enable Navigation Icons
  * Plugin URI:          https://github.com/bmx269/enable-navigation-icons
  * Description:         Easily add icons to Navigation Block items.
- * Version:             0.2.1
+ * Version:             0.3.0
  * Requires at least:   6.3
  * Requires PHP:        7.4
  * Author:              Trent Stromkins
@@ -17,6 +17,143 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+/**
+ * Collection slug used when publishing this plugin's icons to the WordPress
+ * Icon API registry (WordPress 7.1+).
+ *
+ * @since 0.3.0
+ */
+const ENABLE_NAVIGATION_ICONS_COLLECTION = 'enable-navigation-icons';
+
+/**
+ * Determine whether the WordPress Icon API is available.
+ *
+ * The registration and rendering helpers landed in WordPress 7.1. Every call
+ * site guards on this so the plugin keeps working unchanged on 6.3 - 7.0.
+ *
+ * @since 0.3.0
+ * @return bool True when the Icon API can be used.
+ */
+function enable_navigation_icons_has_icon_api() {
+	return function_exists( 'wp_get_icon' )
+		&& function_exists( 'wp_register_icon' )
+		&& function_exists( 'wp_register_icon_collection' );
+}
+
+/**
+ * Determine whether an icon name refers to the WordPress Icon API registry.
+ *
+ * Registry names are always namespaced as `collection/icon-name`, while the
+ * plugin's own historical names are bare slugs such as `wordpress-github`. The
+ * slash is therefore an unambiguous discriminator, which is what allows content
+ * created by earlier versions to keep rendering with no migration at all.
+ *
+ * @since 0.3.0
+ * @param string $icon_name The stored iconName attribute.
+ * @return bool True when the name refers to the icon registry.
+ */
+function enable_navigation_icons_is_registry_icon( $icon_name ) {
+	return is_string( $icon_name ) && false !== strpos( $icon_name, '/' );
+}
+
+/**
+ * Build the `has-icon__*` class suffix for an icon name.
+ *
+ * Slashes in namespaced registry names are converted to hyphens so the result
+ * is a valid CSS class (`core/plus` becomes `core-plus`). Bare legacy names are
+ * unaffected, so theme CSS targeting classes such as
+ * `has-icon__wordpress-github` continues to match.
+ *
+ * Must stay in sync with `getIconClassSuffix()` in src/utils/use-core-icons.js.
+ *
+ * @since 0.3.0
+ * @param string $icon_name The stored iconName attribute.
+ * @return string The sanitized class suffix.
+ */
+function enable_navigation_icons_icon_class_suffix( $icon_name ) {
+	if ( ! is_string( $icon_name ) ) {
+		return '';
+	}
+
+	return sanitize_html_class( str_replace( '/', '-', $icon_name ) );
+}
+
+/**
+ * Resolve the SVG markup for an icon stored by registry name.
+ *
+ * @since 0.3.0
+ * @param string $icon_name The namespaced icon name.
+ * @return string The SVG markup, or an empty string when unavailable.
+ */
+function enable_navigation_icons_get_registry_icon( $icon_name ) {
+	if ( ! enable_navigation_icons_is_registry_icon( $icon_name ) ) {
+		return '';
+	}
+
+	if ( ! enable_navigation_icons_has_icon_api() ) {
+		return '';
+	}
+
+	// `size => null` preserves the icon's own dimensions so the plugin's CSS
+	// custom properties stay in control of sizing.
+	return (string) wp_get_icon( $icon_name, array( 'size' => null ) );
+}
+
+/**
+ * Publish this plugin's bundled icons to the WordPress Icon API registry.
+ *
+ * This makes the icon set available to the core Icon block, to other plugins,
+ * and over the REST API - not just inside navigation items.
+ *
+ * @since 0.3.0
+ */
+function enable_navigation_icons_register_icons() {
+	if ( ! enable_navigation_icons_has_icon_api() ) {
+		return;
+	}
+
+	$manifest_path = plugin_dir_path( __FILE__ ) . 'build/icon-manifest.php';
+
+	if ( ! file_exists( $manifest_path ) ) {
+		return;
+	}
+
+	$manifest = include $manifest_path;
+
+	if ( ! is_array( $manifest ) || empty( $manifest ) ) {
+		return;
+	}
+
+	$registered = wp_register_icon_collection(
+		ENABLE_NAVIGATION_ICONS_COLLECTION,
+		array(
+			'label'       => __( 'Navigation Icons', 'enable-navigation-icons' ),
+			'description' => __( 'Icons bundled with the Enable Navigation Icons plugin.', 'enable-navigation-icons' ),
+		)
+	);
+
+	if ( ! $registered ) {
+		return;
+	}
+
+	foreach ( $manifest as $name => $icon ) {
+		if ( empty( $icon['content'] ) ) {
+			continue;
+		}
+
+		wp_register_icon(
+			ENABLE_NAVIGATION_ICONS_COLLECTION . '/' . $name,
+			array(
+				'label'   => isset( $icon['label'] ) ? $icon['label'] : $name,
+				'content' => $icon['content'],
+			)
+		);
+	}
+}
+// Priority 11 so core has finished registering its own collections (init 0)
+// and icons (init 10) first.
+add_action( 'init', 'enable_navigation_icons_register_icons', 11 );
 
 /**
  * Enqueue Editor scripts.
@@ -142,6 +279,23 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	$icon      = isset( $block['attrs']['icon'] ) ? $block['attrs']['icon'] : '';
 	$icon_name = isset( $block['attrs']['iconName'] ) ? $block['attrs']['iconName'] : 'custom';
 
+	// Icons chosen from the WordPress Icon API store only their registry name,
+	// so resolve the markup now. Content created by earlier plugin versions
+	// still carries its own SVG in the `icon` attribute and takes precedence,
+	// which is why no migration is needed.
+	$is_registry_icon = '' === $icon && enable_navigation_icons_is_registry_icon( $icon_name );
+
+	if ( $is_registry_icon ) {
+		$icon = enable_navigation_icons_get_registry_icon( $icon_name );
+
+		// The icon is no longer registered, or this WordPress version has no
+		// Icon API. Leave the markup untouched rather than emitting an empty
+		// icon wrapper.
+		if ( '' === $icon ) {
+			return $block_content;
+		}
+	}
+
 	// Check if we should use default settings from the parent Navigation block.
 	$use_default_settings = ! isset( $block['attrs']['useDefaultIconSettings'] ) || $block['attrs']['useDefaultIconSettings'] === true;
 
@@ -175,6 +329,10 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	$icon_vertical_align = $use_default_settings && ! empty( $parent_defaults['defaultIconVerticalAlign'] )
 		? $parent_defaults['defaultIconVerticalAlign']
 		: ( isset( $block['attrs']['iconVerticalAlign'] ) ? $block['attrs']['iconVerticalAlign'] : '' );
+
+	$icon_rotate = $use_default_settings && ! empty( $parent_defaults['defaultIconRotate'] )
+		? $parent_defaults['defaultIconRotate']
+		: ( isset( $block['attrs']['iconRotate'] ) ? $block['attrs']['iconRotate'] : 0 );
 
 	$icon_offset = $use_default_settings && ! empty( $parent_defaults['defaultIconOffset'] )
 		? $parent_defaults['defaultIconOffset']
@@ -211,6 +369,11 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		$icon_styles[] = 'position:relative';
 		$icon_styles[] = 'top:' . esc_attr( $icon_offset );
 	}
+	// Rotation is applied to the icon wrapper, so it is independent of where
+	// the icon came from and works for bundled, custom and registry icons.
+	if ( ! empty( $icon_rotate ) && is_numeric( $icon_rotate ) ) {
+		$icon_styles[] = 'transform:rotate(' . (int) $icon_rotate . 'deg)';
+	}
 
 	$icon_style_attr = ! empty( $icon_styles ) ? ' style="' . esc_attr( implode( ';', $icon_styles ) ) . '"' : '';
 
@@ -219,7 +382,7 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 
 	// Find the <li> tag (navigation item container)
 	if ( $p->next_tag( 'li' ) ) {
-		$p->add_class( 'has-icon__' . sanitize_html_class( $icon_name ) );
+		$p->add_class( 'has-icon__' . enable_navigation_icons_icon_class_suffix( $icon_name ) );
 		if ( $justify_space_between ) {
 			$p->add_class( 'has-justified-space-between' );
 		}
@@ -322,8 +485,11 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		}
 	}
 
-	// Sanitize the icon SVG.
-	$sanitized_icon = wp_kses( $icon, $allowed_svg_tags );
+	// Sanitize the icon SVG. Markup that came from the Icon API registry was
+	// already sanitized by core at registration and again by wp_get_icon(), so
+	// it is used as-is; running it through this allowlist would only risk
+	// stripping attributes core deliberately adds.
+	$sanitized_icon = $is_registry_icon ? $icon : wp_kses( $icon, $allowed_svg_tags );
 
 	// Add the SVG icon either to the left or right of the navigation item text.
 	$icon_markup = '<span class="wp-block-navigation-item__icon' . $icon_color_class . '" aria-hidden="true"' . $icon_style_attr . '>' . $sanitized_icon . '</span>';

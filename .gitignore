@@ -1,6 +1,9 @@
 # Build output
 build/
 
+# Intermediate icon-manifest bundle (removed at the end of the build)
+.build-tmp/
+
 # Dependencies
 node_modules/
 vendor/

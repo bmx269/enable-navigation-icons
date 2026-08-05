@@ -1,7 +1,7 @@
 {
 	"landingPage": "/wp-admin/site-editor.php",
 	"preferredVersions": {
-		"wp": "latest",
+		"wp": "nightly",
 		"php": "8.3"
 	},
 	"features": {

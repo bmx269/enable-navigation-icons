@@ -3,8 +3,10 @@
 /.github
 /.wordpress-org
 /node_modules
+/scripts
 /src
 /vendor
+.build-tmp
 
 # Config files
 .distignore

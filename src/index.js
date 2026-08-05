@@ -27,6 +27,7 @@ import {
 	NavigableMenu,
 	PanelBody,
 	PanelRow,
+	RangeControl,
 	SelectControl,
 	ToggleControl,
 	ToolbarButton,
@@ -49,7 +50,13 @@ import {
 	DimensionControl,
 	InserterModal,
 } from './components';
-import { parseUploadedMediaAndSetIcon, getIconStyle } from './utils';
+import {
+	getCoreIconContent,
+	getIconClassSuffix,
+	getIconStyle,
+	parseUploadedMediaAndSetIcon,
+	useCoreIcons,
+} from './utils';
 import { bolt as defaultIcon } from './icons/bolt';
 
 /**
@@ -98,6 +105,10 @@ function addAttributes( settings ) {
 			},
 			defaultIconOffset: {
 				type: 'string',
+			},
+			defaultIconRotate: {
+				type: 'number',
+				default: 0,
 			},
 		};
 
@@ -163,6 +174,10 @@ function addAttributes( settings ) {
 		iconOffset: {
 			type: 'string',
 		},
+		iconRotate: {
+			type: 'number',
+			default: 0,
+		},
 	};
 
 	const newSettings = {
@@ -214,6 +229,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 				defaultHasNoIconFill,
 				defaultIconVerticalAlign,
 				defaultIconOffset,
+				defaultIconRotate,
 			} = attributes;
 
 			const colorGradientSettings = useMultipleOriginColorsAndGradients();
@@ -355,6 +371,28 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 								units={ [ 'px', '%', 'em', 'rem' ] }
 								min={ -100 }
 							/>
+							<RangeControl
+								label={ __(
+									'Icon rotation',
+									'enable-navigation-icons'
+								) }
+								help={ __(
+									'Rotate icons clockwise, in degrees.',
+									'enable-navigation-icons'
+								) }
+								value={ defaultIconRotate ?? 0 }
+								onChange={ ( value ) => {
+									setAttributes( {
+										defaultIconRotate: value ?? 0,
+									} );
+								} }
+								min={ -180 }
+								max={ 180 }
+								step={ 15 }
+								allowReset
+								resetFallbackValue={ 0 }
+								__nextHasNoMarginBottom
+							/>
 						</PanelBody>
 					</InspectorControls>
 					<InspectorControls group="color">
@@ -404,6 +442,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 			useDefaultIconSettings,
 			iconVerticalAlign,
 			iconOffset,
+			iconRotate,
 		} = attributes;
 		const { allowedMimeTypes } = GetAllowedMimeTypes();
 		const isSVGUploadAllowed = allowedMimeTypes
@@ -695,6 +734,28 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 											units={ [ 'px', '%', 'em', 'rem' ] }
 											min={ -100 }
 										/>
+										<RangeControl
+											label={ __(
+												'Icon rotation',
+												'enable-navigation-icons'
+											) }
+											help={ __(
+												'Rotate the icon clockwise, in degrees.',
+												'enable-navigation-icons'
+											) }
+											value={ iconRotate ?? 0 }
+											onChange={ ( value ) => {
+												setAttributes( {
+													iconRotate: value ?? 0,
+												} );
+											} }
+											min={ -180 }
+											max={ 180 }
+											step={ 15 }
+											allowReset
+											resetFallbackValue={ 0 }
+											__nextHasNoMarginBottom
+										/>
 									</>
 								) }
 							</PanelBody>
@@ -823,6 +884,18 @@ function addClasses( BlockListBlock ) {
 			useDefaults && parentNavigationDefaults?.defaultIconOffset
 				? parentNavigationDefaults.defaultIconOffset
 				: attributes?.iconOffset;
+		const effectiveIconRotate =
+			useDefaults && parentNavigationDefaults?.defaultIconRotate
+				? parentNavigationDefaults.defaultIconRotate
+				: attributes?.iconRotate;
+
+		// Icons stored by registry name have no SVG in the block attributes, so
+		// the preview resolves their markup from the Icon API instead.
+		const { coreIconTypes } = useCoreIcons();
+		const coreIconContent = getCoreIconContent(
+			coreIconTypes,
+			attributes?.iconName
+		);
 
 		const id = useInstanceId( BlockListBlock );
 		const selectorPrefix = `wp-block-navigation-item-has-icon-`;
@@ -840,10 +913,13 @@ function addClasses( BlockListBlock ) {
 			iconSpacing: effectiveIconSpacing,
 			iconVerticalAlign: effectiveIconVerticalAlign,
 			iconOffset: effectiveIconOffset,
+			coreIconContent,
+			iconRotate: effectiveIconRotate,
 		} );
 
 		const classes = classnames( props?.className, {
-			[ `has-icon__${ attributes?.iconName }` ]: attributes?.iconName,
+			[ `has-icon__${ getIconClassSuffix( attributes?.iconName ) }` ]:
+				attributes?.iconName,
 			'has-icon__custom': attributes?.icon && ! attributes?.iconName,
 			'has-icon-position__left': effectiveIconPositionLeft,
 			'has-justified-space-between': effectiveJustifySpaceBetween,

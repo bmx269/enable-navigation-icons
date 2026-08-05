@@ -2,9 +2,9 @@
 Contributors: bmx269
 Tags: navigation, icons, menu, block editor, gutenberg
 Requires at least: 6.3
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -22,6 +22,7 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 
 **Icon Selection**
 * Browse and select from a curated collection of WordPress icons
+* Browse icons registered with the WordPress Icon API on WordPress 7.1+, including core's icon set and any collection added by your theme or other plugins
 * Upload and use custom SVG icons from your media library
 * Paste custom SVG code directly for complete flexibility
 
@@ -35,11 +36,12 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 * Adjust icon dimensions with a slider control (supports px, em, rem units)
 * Control the gap between icon and text (supports px, em, rem units)
 * Choose from theme colors or set a custom color
+* Rotate icons in 15 degree steps
 * Support for stroke-based icons with "No Fill" option (e.g., Lucide icons)
 
 **Navigation Block Default Settings**
 Set default icon settings at the Navigation block level that apply to all child navigation items:
-* Configure size, spacing, color, position, vertical alignment, offset, and styling once for the entire navigation
+* Configure size, spacing, color, position, vertical alignment, offset, rotation, and styling once for the entire navigation
 * Individual navigation items can inherit defaults or use custom settings
 * Works seamlessly with multiple and nested Navigation blocks
 * Applies to both inline navigation items and dynamically loaded WordPress menus
@@ -51,6 +53,14 @@ Full support for the Ollie Menu Designer plugin's mega menu dropdown items:
 * Add icons to Ollie mega menu dropdown navigation items
 * Same icon selection and styling options as standard navigation items
 * Works seamlessly with Ollie themes and the Menu Designer plugin
+
+**WordPress Icon API Support (WordPress 7.1+)**
+On WordPress 7.1 and later the plugin integrates with the new SVG Icon API in both directions:
+* Icons registered with the Icon API appear in the icon library alongside the plugin's bundled icons
+* Icons chosen from the registry are stored by name and rendered server-side, so no SVG markup is written into your post content
+* The plugin's own icon set is published as an `enable-navigation-icons` collection, making it available to the core Icon block, to other plugins, and over the REST API
+
+All of this is additive. Existing navigation icons keep working exactly as before, with no migration required, and the plugin continues to run normally on WordPress 6.3 through 7.0.
 
 = Supported Blocks =
 
@@ -102,6 +112,15 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 == Changelog ==
 
+= 0.3.0 =
+* Add support for the WordPress Icon API introduced in WordPress 7.1
+* Browse icons from core and from any registered icon collection directly in the icon library
+* Icons chosen from the registry are stored by name and rendered server-side, keeping SVG markup out of post content
+* Publish the plugin's bundled icon set as an `enable-navigation-icons` icon collection for use elsewhere in WordPress
+* Add icon rotation control, available per item and as a Navigation block default
+* Confirm compatibility with WordPress 7.1
+* Existing icons are unaffected and require no migration
+
 = 0.2.1 =
 * Confirm compatibility with WordPress 7.0
 * Update npm dependencies
@@ -130,6 +149,9 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 * Support for Ollie Menu Designer mega menu blocks
 
 == Upgrade Notice ==
+
+= 0.3.0 =
+Adds WordPress 7.1 Icon API support and a new icon rotation control. Existing icons are unaffected and no migration is needed.
 
 = 0.2.1 =
 Confirmed compatibility with WordPress 7.0.

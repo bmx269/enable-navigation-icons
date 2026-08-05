@@ -46,7 +46,9 @@ export default function IconGrid( props ) {
 							'icons-list__item',
 							'block-editor-block-types-list__item',
 							{
-								'is-active': icon.name === attributes?.iconName,
+								'is-active':
+									( icon?.coreName ?? icon.name ) ===
+									attributes?.iconName,
 								'has-no-icon-fill': icon?.hasNoIconFill,
 							}
 						) }
@@ -54,7 +56,8 @@ export default function IconGrid( props ) {
 							updateIconAtts(
 								icon.icon,
 								icon.name,
-								icon?.hasNoIconFill
+								icon?.hasNoIconFill,
+								icon
 							)
 						}
 					>

@@ -45,6 +45,10 @@ function svgToDataUri( svg ) {
  * @param {string} params.customIconColor Custom icon color.
  * @param {string} params.iconSize        Icon size value.
  * @param {string} params.iconSpacing     Icon spacing value.
+ * @param {string} params.coreIconContent SVG markup resolved from the WordPress
+ *                                        Icon API registry, when the icon comes
+ *                                        from there rather than being bundled.
+ * @param {number} params.iconRotate      Icon rotation in degrees.
  * @return {string} CSS string for the icon.
  */
 export function getIconStyle( {
@@ -56,10 +60,12 @@ export function getIconStyle( {
 	iconSpacing,
 	iconVerticalAlign,
 	iconOffset,
+	coreIconContent,
+	iconRotate,
 } ) {
 	let output = '';
 	const rules = [];
-	let svg = icon;
+	let svg = icon || coreIconContent;
 
 	// If we don't have the icon SVG string but we have an iconName, look it up.
 	if ( ! svg && iconName ) {
@@ -95,6 +101,14 @@ export function getIconStyle( {
 	if ( iconOffset ) {
 		rules.push( `position: relative !important;` );
 		rules.push( `top: ${ iconOffset } !important;` );
+	}
+
+	// Rotation is applied to the icon itself, so it is independent of the
+	// icon's source and works for bundled, custom and registry icons alike.
+	if ( iconRotate ) {
+		rules.push(
+			`transform: rotate( ${ parseInt( iconRotate, 10 ) }deg );`
+		);
 	}
 
 	if ( rules.length ) {
