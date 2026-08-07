@@ -12,9 +12,12 @@ export { displayMessages } from './display-messages';
 export { getIconStyle } from './icon-style';
 export {
 	CORE_ICON_TYPE_PREFIX,
+	OWN_COLLECTION,
 	getCoreIconContent,
-	getCoreIconRegistryLabel,
 	getIconClassSuffix,
+	getOwnRegistryName,
 	isCoreIconName,
+	isOwnCollectionName,
 	useCoreIcons,
 } from './use-core-icons';
+export { default as normalizeIconName } from './normalize-icon-name';

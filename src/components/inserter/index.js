@@ -6,7 +6,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { Modal } from '@wordpress/components';
 import { useState, useEffect, useMemo, useCallback } from '@wordpress/element';
 
@@ -14,7 +14,13 @@ import { useState, useEffect, useMemo, useCallback } from '@wordpress/element';
  * Internal dependencies
  */
 import getIcons from './../../icons';
-import { flattenIconsArray, getIconTypes, useCoreIcons } from './../../utils';
+import {
+	flattenIconsArray,
+	getIconTypes,
+	getOwnRegistryName,
+	OWN_COLLECTION,
+	useCoreIcons,
+} from './../../utils';
 import ContentHeader from './content-header';
 import IconGrid from './icon-grid';
 import Sidebar from './sidebar';
@@ -26,13 +32,39 @@ export default function InserterModal( props ) {
 
 	// Icons registered with the WordPress Icon API (WP 7.1+), exposed as
 	// additional types alongside the plugin's bundled icons. Resolves to an
-	// empty array on older versions, leaving the inserter unchanged.
-	const { coreIconTypes } = useCoreIcons();
+	// empty array on older versions, leaving the inserter unchanged. The
+	// registry is only fetched once the modal is actually opened.
+	const { coreIconTypes } = useCoreIcons( { enabled: isInserterOpen } );
 
-	const iconsByType = useMemo(
-		() => [ ...bundledIconsByType, ...coreIconTypes ],
-		[ bundledIconsByType, coreIconTypes ]
-	);
+	const iconsByType = useMemo( () => {
+		const bundledTitles = new Set(
+			bundledIconsByType.map( ( type ) => type?.title ?? type?.type )
+		);
+
+		const shownCoreTypes = coreIconTypes
+			// The plugin's own published collection duplicates the bundled
+			// set, so it is hidden here (but kept in the data for previews).
+			.filter( ( type ) => type.collection !== OWN_COLLECTION )
+			// Core's own collection is labeled "WordPress", which collides
+			// with the bundled set's sidebar group. Disambiguate collisions.
+			.map( ( type ) =>
+				bundledTitles.has( type.title )
+					? {
+							...type,
+							title: sprintf(
+								/* translators: %s: icon collection name. */
+								__(
+									'%s (Icon API)',
+									'enable-navigation-icons'
+								),
+								type.title
+							),
+					  }
+					: type
+			);
+
+		return [ ...bundledIconsByType, ...shownCoreTypes ];
+	}, [ bundledIconsByType, coreIconTypes ] );
 	const iconTypes = getIconTypes( iconsByType );
 
 	// Get the default type, and if there is none, get the first type.
@@ -110,6 +142,21 @@ export default function InserterModal( props ) {
 			setAttributes( {
 				icon: undefined,
 				iconName: iconObject.coreName,
+				hasNoIconFill,
+			} );
+			setInserterOpen( false );
+			return;
+		}
+
+		// The plugin's own bundled icons are also stored by name — resolved
+		// from the shipped manifest on the server and the JS registry in the
+		// editor, so this works on every supported WordPress version. Sets
+		// registered by other plugins via the `iconBlock.icons` filter are
+		// not in the manifest and keep embedding their SVG.
+		if ( iconObject?.type === 'wordpress' ) {
+			setAttributes( {
+				icon: undefined,
+				iconName: getOwnRegistryName( name ),
 				hasNoIconFill,
 			} );
 			setInserterOpen( false );

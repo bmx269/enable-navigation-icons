@@ -2,9 +2,13 @@
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies
+ */
+import normalizeIconName from './normalize-icon-name';
 
 /**
  * Prefix used for the inserter "type" of every core Icon API collection.
@@ -16,6 +20,18 @@ import { addQueryArgs } from '@wordpress/url';
  * @since 0.3.0
  */
 export const CORE_ICON_TYPE_PREFIX = 'wp-icons--';
+
+/**
+ * The collection slug this plugin itself publishes to the registry.
+ *
+ * Must stay in sync with the `ENABLE_NAVIGATION_ICONS_COLLECTION` PHP
+ * constant. The inserter hides this collection because those icons are
+ * already shown as the bundled set — but it stays in the fetched data so
+ * `getCoreIconContent()` can still resolve icons stored under its names.
+ *
+ * @since 0.3.0
+ */
+export const OWN_COLLECTION = 'enable-navigation-icons';
 
 /**
  * Module-level cache so the (potentially large) icon registry is only fetched
@@ -43,12 +59,44 @@ export function isCoreIconName( iconName ) {
 }
 
 /**
+ * Determine whether an icon name belongs to the plugin's own collection.
+ *
+ * Own-collection names resolve from the plugin's bundled data (the PHP
+ * manifest on the frontend, the JS registry in the editor), so they work on
+ * every supported WordPress version — no Icon API required.
+ *
+ * @since 0.3.0
+ * @param {string} iconName The stored iconName attribute.
+ * @return {boolean} True if the name is in the plugin's own collection.
+ */
+export function isOwnCollectionName( iconName ) {
+	return (
+		typeof iconName === 'string' &&
+		iconName.startsWith( `${ OWN_COLLECTION }/` )
+	);
+}
+
+/**
+ * Build the registry name a bundled icon is published under.
+ *
+ * @since 0.3.0
+ * @param {string} bundledJsName The icon's JS registry name (e.g.
+ *                               `wordpress-starFilled`).
+ * @return {string} The namespaced registry name.
+ */
+export function getOwnRegistryName( bundledJsName ) {
+	return `${ OWN_COLLECTION }/${ normalizeIconName( bundledJsName ) }`;
+}
+
+/**
  * Build the `has-icon__*` class suffix for an icon name.
  *
  * Namespaced registry names contain a slash, which is not valid in a CSS class,
- * so it is converted to a hyphen (`core/plus` becomes `core-plus`). Bare legacy
- * names pass through untouched, so existing theme CSS targeting classes such as
- * `has-icon__wordpress-github` keeps working.
+ * so it is converted to a hyphen (`core/plus` becomes `core-plus`). The
+ * plugin's own collection prefix is dropped entirely, so a bundled icon picked
+ * on 0.3.0 (`enable-navigation-icons/wordpress-github`) produces the same
+ * `has-icon__wordpress-github` class that earlier versions did — existing
+ * theme CSS keeps matching. Bare legacy names pass through untouched.
  *
  * Must stay in sync with `enable_navigation_icons_icon_class_suffix()` in PHP.
  *
@@ -59,6 +107,10 @@ export function isCoreIconName( iconName ) {
 export function getIconClassSuffix( iconName ) {
 	if ( typeof iconName !== 'string' ) {
 		return '';
+	}
+
+	if ( isOwnCollectionName( iconName ) ) {
+		iconName = iconName.slice( OWN_COLLECTION.length + 1 );
 	}
 
 	return iconName.replace( /\//g, '-' );
@@ -148,10 +200,16 @@ async function loadCoreIconTypes() {
  * Resolves to an empty list on WordPress versions without the Icon API REST
  * routes, so the inserter simply shows the plugin's bundled icons as before.
  *
+ * The registry (every icon's full SVG) is only downloaded once `enabled` is
+ * true, so editors that never open the icon library and contain no
+ * registry-named icons never pay for the request.
+ *
  * @since 0.3.0
+ * @param {Object}  options         Hook options.
+ * @param {boolean} options.enabled Whether the registry is actually needed.
  * @return {Object} `{ coreIconTypes, isResolving, isSupported }`.
  */
-export function useCoreIcons() {
+export function useCoreIcons( { enabled = true } = {} ) {
 	const [ state, setState ] = useState(
 		() =>
 			cache ?? {
@@ -162,7 +220,14 @@ export function useCoreIcons() {
 	);
 
 	useEffect( () => {
+		if ( ! enabled ) {
+			return;
+		}
+
+		// Another consumer may have populated the cache while this one was
+		// disabled; sync up. React bails out when the reference is unchanged.
 		if ( cache ) {
+			setState( cache );
 			return;
 		}
 
@@ -199,7 +264,7 @@ export function useCoreIcons() {
 		return () => {
 			isStale = true;
 		};
-	}, [] );
+	}, [ enabled ] );
 
 	return state;
 }
@@ -231,14 +296,4 @@ export function getCoreIconContent( coreIconTypes, iconName ) {
 	}
 
 	return '';
-}
-
-/**
- * Human readable label for the core icon registry, used in notices.
- *
- * @since 0.3.0
- * @return {string} The label.
- */
-export function getCoreIconRegistryLabel() {
-	return __( 'WordPress icon registry', 'enable-navigation-icons' );
 }

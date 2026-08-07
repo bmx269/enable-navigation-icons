@@ -58,12 +58,29 @@ function enable_navigation_icons_is_registry_icon( $icon_name ) {
 }
 
 /**
+ * Determine whether an icon name belongs to this plugin's own collection.
+ *
+ * Own-collection names resolve from the shipped manifest rather than the
+ * Icon API, so they work on every supported WordPress version.
+ *
+ * @since 0.3.0
+ * @param string $icon_name The stored iconName attribute.
+ * @return bool True when the name is in the plugin's own collection.
+ */
+function enable_navigation_icons_is_own_collection_name( $icon_name ) {
+	return is_string( $icon_name )
+		&& 0 === strpos( $icon_name, ENABLE_NAVIGATION_ICONS_COLLECTION . '/' );
+}
+
+/**
  * Build the `has-icon__*` class suffix for an icon name.
  *
  * Slashes in namespaced registry names are converted to hyphens so the result
- * is a valid CSS class (`core/plus` becomes `core-plus`). Bare legacy names are
- * unaffected, so theme CSS targeting classes such as
- * `has-icon__wordpress-github` continues to match.
+ * is a valid CSS class (`core/plus` becomes `core-plus`). The plugin's own
+ * collection prefix is dropped entirely, so a bundled icon picked on 0.3.0
+ * (`enable-navigation-icons/wordpress-github`) produces the same
+ * `has-icon__wordpress-github` class as earlier versions — existing theme CSS
+ * keeps matching. Bare legacy names are unaffected.
  *
  * Must stay in sync with `getIconClassSuffix()` in src/utils/use-core-icons.js.
  *
@@ -76,11 +93,62 @@ function enable_navigation_icons_icon_class_suffix( $icon_name ) {
 		return '';
 	}
 
+	if ( enable_navigation_icons_is_own_collection_name( $icon_name ) ) {
+		$icon_name = substr( $icon_name, strlen( ENABLE_NAVIGATION_ICONS_COLLECTION ) + 1 );
+	}
+
 	return sanitize_html_class( str_replace( '/', '-', $icon_name ) );
 }
 
 /**
+ * Load the generated icon manifest, once per request.
+ *
+ * @since 0.3.0
+ * @return array The manifest, keyed by unqualified icon name.
+ */
+function enable_navigation_icons_get_manifest() {
+	static $manifest = null;
+
+	if ( null === $manifest ) {
+		$manifest_path = plugin_dir_path( __FILE__ ) . 'build/icon-manifest.php';
+		$manifest      = file_exists( $manifest_path ) ? include $manifest_path : array();
+
+		if ( ! is_array( $manifest ) ) {
+			$manifest = array();
+		}
+	}
+
+	return $manifest;
+}
+
+/**
+ * Resolve an own-collection icon name from the shipped manifest.
+ *
+ * This is the version-independent path: bundled icons stored by name render
+ * from the plugin's own data on WordPress 6.3 just as on 7.1 — the Icon API
+ * is never required for them.
+ *
+ * @since 0.3.0
+ * @param string $icon_name The namespaced icon name.
+ * @return string The SVG markup, or an empty string when unknown.
+ */
+function enable_navigation_icons_get_manifest_icon( $icon_name ) {
+	if ( ! enable_navigation_icons_is_own_collection_name( $icon_name ) ) {
+		return '';
+	}
+
+	$manifest = enable_navigation_icons_get_manifest();
+	$bare     = substr( $icon_name, strlen( ENABLE_NAVIGATION_ICONS_COLLECTION ) + 1 );
+
+	return isset( $manifest[ $bare ]['content'] ) ? $manifest[ $bare ]['content'] : '';
+}
+
+/**
  * Resolve the SVG markup for an icon stored by registry name.
+ *
+ * The plugin's own collection is resolved from the shipped manifest first —
+ * no Icon API needed, so those names work on WordPress 6.3+. Anything else
+ * (core and third-party collections) requires wp_get_icon() from 7.1.
  *
  * @since 0.3.0
  * @param string $icon_name The namespaced icon name.
@@ -89,6 +157,11 @@ function enable_navigation_icons_icon_class_suffix( $icon_name ) {
 function enable_navigation_icons_get_registry_icon( $icon_name ) {
 	if ( ! enable_navigation_icons_is_registry_icon( $icon_name ) ) {
 		return '';
+	}
+
+	$manifest_icon = enable_navigation_icons_get_manifest_icon( $icon_name );
+	if ( '' !== $manifest_icon ) {
+		return $manifest_icon;
 	}
 
 	if ( ! enable_navigation_icons_has_icon_api() ) {
@@ -113,15 +186,9 @@ function enable_navigation_icons_register_icons() {
 		return;
 	}
 
-	$manifest_path = plugin_dir_path( __FILE__ ) . 'build/icon-manifest.php';
+	$manifest = enable_navigation_icons_get_manifest();
 
-	if ( ! file_exists( $manifest_path ) ) {
-		return;
-	}
-
-	$manifest = include $manifest_path;
-
-	if ( ! is_array( $manifest ) || empty( $manifest ) ) {
+	if ( empty( $manifest ) ) {
 		return;
 	}
 

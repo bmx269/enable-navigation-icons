@@ -2,6 +2,7 @@ import { isValidElement } from '@wordpress/element';
 import ReactDOMServer from 'react-dom/server';
 
 import { flattenIconsArray } from './icon-functions';
+import { getOwnRegistryName, isOwnCollectionName } from './use-core-icons';
 import getIcons from '../icons';
 
 /**
@@ -23,7 +24,14 @@ export function appendSelectors( selectors, append = '' ) {
 }
 
 function svgToDataUri( svg ) {
-	const encodedSvg = encodeURIComponent( svg )
+	// A data URI is parsed as XML, where attribute names are case-sensitive.
+	// SVG that went through wp_kses (e.g. WordPress Icon API content) has a
+	// lowercased `viewbox`, which XML ignores — the mask then defaults to a
+	// 300x150 canvas and the icon glyph stays tiny at every size. The HTML
+	// parser fixes the casing on the frontend, so this only bites here.
+	const xmlSvg = svg.replace( /\bviewbox=/g, 'viewBox=' );
+
+	const encodedSvg = encodeURIComponent( xmlSvg )
 		.replace( /'/g, '%27' )
 		.replace( /"/g, '%22' )
 		.replace( /</g, '%3C' )
@@ -67,10 +75,18 @@ export function getIconStyle( {
 	const rules = [];
 	let svg = icon || coreIconContent;
 
-	// If we don't have the icon SVG string but we have an iconName, look it up.
+	// If we don't have the icon SVG string but we have an iconName, look it
+	// up in the bundled JS registry. Matches both legacy bare names and the
+	// plugin's own namespaced registry names, so own-collection icons resolve
+	// without the Icon API — on WordPress 6.3 just like 7.1.
 	if ( ! svg && iconName ) {
 		const iconsAll = flattenIconsArray( getIcons() );
-		const namedIcon = iconsAll.filter( ( i ) => i.name === iconName );
+		const namedIcon = iconsAll.filter(
+			( i ) =>
+				i.name === iconName ||
+				( isOwnCollectionName( iconName ) &&
+					getOwnRegistryName( i.name ) === iconName )
+		);
 		if ( namedIcon.length > 0 ) {
 			if ( isValidElement( namedIcon[ 0 ].icon ) ) {
 				svg = ReactDOMServer.renderToString( namedIcon[ 0 ].icon );

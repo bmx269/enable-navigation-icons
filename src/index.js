@@ -54,6 +54,8 @@ import {
 	getCoreIconContent,
 	getIconClassSuffix,
 	getIconStyle,
+	isCoreIconName,
+	isOwnCollectionName,
 	parseUploadedMediaAndSetIcon,
 	useCoreIcons,
 } from './utils';
@@ -889,9 +891,15 @@ function addClasses( BlockListBlock ) {
 				? parentNavigationDefaults.defaultIconRotate
 				: attributes?.iconRotate;
 
-		// Icons stored by registry name have no SVG in the block attributes, so
-		// the preview resolves their markup from the Icon API instead.
-		const { coreIconTypes } = useCoreIcons();
+		// Icons stored by registry name have no SVG in the block attributes,
+		// so the preview resolves their markup from the Icon API instead.
+		// Legacy icons carry their own SVG, and the plugin's own collection
+		// resolves from the bundled JS registry — neither needs the fetch.
+		const { coreIconTypes } = useCoreIcons( {
+			enabled:
+				isCoreIconName( attributes?.iconName ) &&
+				! isOwnCollectionName( attributes?.iconName ),
+		} );
 		const coreIconContent = getCoreIconContent(
 			coreIconTypes,
 			attributes?.iconName

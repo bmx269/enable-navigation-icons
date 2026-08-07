@@ -34,6 +34,7 @@ The plugin integrates with core's SVG Icon API in both directions:
 - Icons registered with the Icon API appear in the icon library alongside the plugin's bundled icons
 - Icons chosen from the registry are stored by name and rendered server-side, so no SVG markup is written into your post content
 - The plugin's own icon set is published as an `enable-navigation-icons` collection, making it available to the core Icon block, to other plugins, and over the REST API
+- Built-in library picks are stored by name and resolved from data the plugin ships with — post content stays free of SVG markup on every supported WordPress version, not just 7.1
 
 This is entirely additive. Existing navigation icons keep working with no migration, and the plugin still runs normally on WordPress 6.3 through 7.0.
 

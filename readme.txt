@@ -60,6 +60,8 @@ On WordPress 7.1 and later the plugin integrates with the new SVG Icon API in bo
 * Icons chosen from the registry are stored by name and rendered server-side, so no SVG markup is written into your post content
 * The plugin's own icon set is published as an `enable-navigation-icons` collection, making it available to the core Icon block, to other plugins, and over the REST API
 
+Icons picked from the plugin's built-in library are also stored by name — resolved from data the plugin ships with, so this works on every supported WordPress version, not just 7.1. Your post content stays clean everywhere.
+
 All of this is additive. Existing navigation icons keep working exactly as before, with no migration required, and the plugin continues to run normally on WordPress 6.3 through 7.0.
 
 = Supported Blocks =
@@ -116,6 +118,7 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 * Add support for the WordPress Icon API introduced in WordPress 7.1
 * Browse icons from core and from any registered icon collection directly in the icon library
 * Icons chosen from the registry are stored by name and rendered server-side, keeping SVG markup out of post content
+* Built-in library picks are now also stored by name (resolved from bundled plugin data), keeping SVG out of post content on all supported WordPress versions
 * Publish the plugin's bundled icon set as an `enable-navigation-icons` icon collection for use elsewhere in WordPress
 * Add icon rotation control, available per item and as a Navigation block default
 * Confirm compatibility with WordPress 7.1

@@ -14,7 +14,7 @@ import { Button } from '@wordpress/components';
 /**
  * Internal dependencies
  */
-import { parseIcon } from './../../utils';
+import { getOwnRegistryName, parseIcon } from './../../utils';
 
 export default function IconGrid( props ) {
 	const { shownIcons, iconSize, updateIconAtts, attributes } = props;
@@ -39,6 +39,14 @@ export default function IconGrid( props ) {
 					renderedIcon = parseIcon( renderedIcon );
 				}
 
+				// An icon can be stored under its Icon API name, its own-
+				// collection registry name (bundled picks), or its bare JS
+				// name (legacy content) — highlight it for any of the three.
+				const storedNames = [ icon?.coreName ?? icon.name, icon.name ];
+				if ( icon?.type === 'wordpress' ) {
+					storedNames.push( getOwnRegistryName( icon.name ) );
+				}
+
 				return (
 					<Button
 						key={ `icon-${ icon.name }` }
@@ -46,9 +54,9 @@ export default function IconGrid( props ) {
 							'icons-list__item',
 							'block-editor-block-types-list__item',
 							{
-								'is-active':
-									( icon?.coreName ?? icon.name ) ===
-									attributes?.iconName,
+								'is-active': storedNames.includes(
+									attributes?.iconName
+								),
 								'has-no-icon-fill': icon?.hasNoIconFill,
 							}
 						) }
