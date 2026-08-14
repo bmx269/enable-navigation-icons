@@ -121,10 +121,10 @@ export function getIconStyle( {
 
 	// Rotation is applied to the icon itself, so it is independent of the
 	// icon's source and works for bundled, custom and registry icons alike.
+	// Matches core's Icon block, which uses the standalone `rotate` property
+	// rather than `transform` so it composes with existing transforms.
 	if ( iconRotate ) {
-		rules.push(
-			`transform: rotate( ${ parseInt( iconRotate, 10 ) }deg );`
-		);
+		rules.push( `rotate: ${ parseInt( iconRotate, 10 ) }deg;` );
 	}
 
 	if ( rules.length ) {

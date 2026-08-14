@@ -16,6 +16,10 @@
 			height: var(--icon-size, 1em);
 
 			svg {
+				// `box-sizing` and `fill: currentcolor` mirror core's Icon
+				// block stylesheet, so icons from the shared registry render
+				// consistently whether they appear here or in core/icon.
+				box-sizing: border-box;
 				color: currentcolor;
 				fill: currentcolor;
 				display: block;

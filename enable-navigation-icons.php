@@ -438,8 +438,11 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	}
 	// Rotation is applied to the icon wrapper, so it is independent of where
 	// the icon came from and works for bundled, custom and registry icons.
+	// Uses the standalone `rotate` property rather than `transform`, matching
+	// how core's Icon block renders rotation — it composes with any transform
+	// a theme may already apply instead of overwriting it.
 	if ( ! empty( $icon_rotate ) && is_numeric( $icon_rotate ) ) {
-		$icon_styles[] = 'transform:rotate(' . (int) $icon_rotate . 'deg)';
+		$icon_styles[] = 'rotate:' . (int) $icon_rotate . 'deg';
 	}
 
 	$icon_style_attr = ! empty( $icon_styles ) ? ' style="' . esc_attr( implode( ';', $icon_styles ) ) . '"' : '';
