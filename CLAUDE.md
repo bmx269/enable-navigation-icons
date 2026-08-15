@@ -83,6 +83,8 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 | `defaultIconVerticalAlign` | string | `"top"`, `"center"` (default), or `"bottom"` |
 | `defaultIconOffset` | string | CSS value for `top` offset (e.g. `"2px"`, `"-0.1em"`) |
 | `defaultIconRotate` | number | Rotation in degrees applied to all child icons (default: 0) |
+| `defaultFlipHorizontal` | boolean | Mirror all child icons on the X axis (default: false) |
+| `defaultFlipVertical` | boolean | Mirror all child icons on the Y axis (default: false) |
 
 ### core/navigation-link, core/navigation-submenu, ollie/mega-menu (per-item settings)
 | Attribute | Type | Purpose |
@@ -99,6 +101,8 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 | `iconVerticalAlign` | string | Override default: `"top"`, `"center"`, `"bottom"` |
 | `iconOffset` | string | Override default: CSS `top` offset |
 | `iconRotate` | number | Override default: rotation in degrees |
+| `flipHorizontal` | boolean | Override default: mirror the icon on the X axis |
+| `flipVertical` | boolean | Override default: mirror the icon on the Y axis |
 | `useDefaultIconSettings` | boolean | When true (default), inherits parent Navigation block settings |
 
 ## PHP Hooks & Filters (enable-navigation-icons.php)
@@ -136,6 +140,13 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 | `has-no-icon-fill` | Stroke-only rendering |
 | `has-icon-align__top` | Vertical align top |
 | `has-icon-align__bottom` | Vertical align bottom |
+
+Flip classes go on the icon `<span>`, not the `<li>`, and use core's names:
+
+| Class | Condition |
+|---|---|
+| `is-flip-horizontal` | Icon mirrored on the X axis |
+| `is-flip-vertical` | Icon mirrored on the Y axis |
 
 The icon `<span>` uses class `wp-block-navigation-item__icon` and is injected inside the first element with class `wp-block-navigation-item__content` (either `<a>` or `<button>`).
 
@@ -188,5 +199,5 @@ The plugin both **consumes** and **publishes** to core's SVG Icon API, guarded t
 - **REST fetch gating**: `useCoreIcons( { enabled } )` only downloads the registry when the inserter modal is open or a block's `iconName` is registry-namespaced. The plugin's own collection is hidden from the inserter (duplicates the bundled set) but kept in the fetched data so previews can resolve `enable-navigation-icons/*` names.
 - **Publishing**: `build/icon-manifest.php` is generated at build time and registered as the `enable-navigation-icons` collection. Registry names are normalized from camelCase to kebab-case (`starFilled` → `wordpress-star-filled`) and are **public API once released** — renaming them breaks stored content.
 - **Presentation is source-agnostic**: size, spacing, color, position, alignment, offset and rotation are applied to the wrapper `<span>` and `<li>` classes, never to the SVG, so every control works identically for bundled, custom and registry icons.
-- **Core parity**: rotation uses the standalone CSS `rotate` property (not `transform`), matching `render_block_core_icon()`; icon SVGs get `box-sizing: border-box` and `fill: currentcolor` like core's Icon block stylesheet. Core's `core/icon` block also supports `flipHorizontal`/`flipVertical` via `is-flip-horizontal`/`is-flip-vertical` classes — not implemented here yet.
+- **Core parity**: rotation uses the standalone CSS `rotate` property (not `transform`), matching `render_block_core_icon()`; icon SVGs get `box-sizing: border-box` and `fill: currentcolor` like core's Icon block stylesheet. Flipping matches core's `flipHorizontal`/`flipVertical` attributes and `is-flip-horizontal`/`is-flip-vertical` class names. Flip uses `transform: scale*(-1)` while rotation uses `rotate`, so the two compose rather than overwrite — this is why rotation must stay on `rotate`.
 - **Core's sanitizer drops `clip-rule` and `version`** from published icons (37 and 3 icons respectively). Both are inert without `clipPath` elements, which the allowlist excludes anyway, so rendering is unaffected. `fill-rule` **is** allowed, so evenodd holes survive.

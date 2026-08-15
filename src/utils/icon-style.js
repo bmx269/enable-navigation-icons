@@ -46,17 +46,19 @@ function svgToDataUri( svg ) {
  * Generate icon styles for the block editor.
  *
  * @since 0.1.0
- * @param {Object} params                 Function parameters.
- * @param {string} params.selector        CSS selector for the icon.
- * @param {string} params.icon            Icon SVG string.
- * @param {string} params.iconName        Icon name from library.
- * @param {string} params.customIconColor Custom icon color.
- * @param {string} params.iconSize        Icon size value.
- * @param {string} params.iconSpacing     Icon spacing value.
- * @param {string} params.coreIconContent SVG markup resolved from the WordPress
- *                                        Icon API registry, when the icon comes
- *                                        from there rather than being bundled.
- * @param {number} params.iconRotate      Icon rotation in degrees.
+ * @param {Object}  params                 Function parameters.
+ * @param {string}  params.selector        CSS selector for the icon.
+ * @param {string}  params.icon            Icon SVG string.
+ * @param {string}  params.iconName        Icon name from library.
+ * @param {string}  params.customIconColor Custom icon color.
+ * @param {string}  params.iconSize        Icon size value.
+ * @param {string}  params.iconSpacing     Icon spacing value.
+ * @param {string}  params.coreIconContent SVG markup resolved from the WordPress
+ *                                         Icon API registry, when the icon comes
+ *                                         from there rather than being bundled.
+ * @param {number}  params.iconRotate      Icon rotation in degrees.
+ * @param {boolean} params.flipHorizontal  Whether to mirror the icon on the X axis.
+ * @param {boolean} params.flipVertical    Whether to mirror the icon on the Y axis.
  * @return {string} CSS string for the icon.
  */
 export function getIconStyle( {
@@ -70,6 +72,8 @@ export function getIconStyle( {
 	iconOffset,
 	coreIconContent,
 	iconRotate,
+	flipHorizontal,
+	flipVertical,
 } ) {
 	let output = '';
 	const rules = [];
@@ -125,6 +129,20 @@ export function getIconStyle( {
 	// rather than `transform` so it composes with existing transforms.
 	if ( iconRotate ) {
 		rules.push( `rotate: ${ parseInt( iconRotate, 10 ) }deg;` );
+	}
+
+	// Flipping uses `transform` while rotation uses `rotate`, so the two
+	// compose instead of overwriting each other — the same split core's Icon
+	// block relies on.
+	if ( flipHorizontal || flipVertical ) {
+		const scale = [
+			flipHorizontal ? 'scaleX(-1)' : '',
+			flipVertical ? 'scaleY(-1)' : '',
+		]
+			.filter( Boolean )
+			.join( ' ' );
+
+		rules.push( `transform: ${ scale } !important;` );
 	}
 
 	if ( rules.length ) {

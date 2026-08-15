@@ -112,6 +112,14 @@ function addAttributes( settings ) {
 				type: 'number',
 				default: 0,
 			},
+			defaultFlipHorizontal: {
+				type: 'boolean',
+				default: false,
+			},
+			defaultFlipVertical: {
+				type: 'boolean',
+				default: false,
+			},
 		};
 
 		return {
@@ -180,6 +188,14 @@ function addAttributes( settings ) {
 			type: 'number',
 			default: 0,
 		},
+		flipHorizontal: {
+			type: 'boolean',
+			default: false,
+		},
+		flipVertical: {
+			type: 'boolean',
+			default: false,
+		},
 	};
 
 	const newSettings = {
@@ -232,6 +248,8 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 				defaultIconVerticalAlign,
 				defaultIconOffset,
 				defaultIconRotate,
+				defaultFlipHorizontal,
+				defaultFlipVertical,
 			} = attributes;
 
 			const colorGradientSettings = useMultipleOriginColorsAndGradients();
@@ -395,6 +413,36 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 								resetFallbackValue={ 0 }
 								__nextHasNoMarginBottom
 							/>
+							<PanelRow>
+								<ToggleControl
+									label={ __(
+										'Flip icons horizontally',
+										'enable-navigation-icons'
+									) }
+									checked={ defaultFlipHorizontal }
+									onChange={ () => {
+										setAttributes( {
+											defaultFlipHorizontal:
+												! defaultFlipHorizontal,
+										} );
+									} }
+								/>
+							</PanelRow>
+							<PanelRow>
+								<ToggleControl
+									label={ __(
+										'Flip icons vertically',
+										'enable-navigation-icons'
+									) }
+									checked={ defaultFlipVertical }
+									onChange={ () => {
+										setAttributes( {
+											defaultFlipVertical:
+												! defaultFlipVertical,
+										} );
+									} }
+								/>
+							</PanelRow>
 						</PanelBody>
 					</InspectorControls>
 					<InspectorControls group="color">
@@ -445,6 +493,8 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 			iconVerticalAlign,
 			iconOffset,
 			iconRotate,
+			flipHorizontal,
+			flipVertical,
 		} = attributes;
 		const { allowedMimeTypes } = GetAllowedMimeTypes();
 		const isSVGUploadAllowed = allowedMimeTypes
@@ -758,6 +808,36 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 											resetFallbackValue={ 0 }
 											__nextHasNoMarginBottom
 										/>
+										<PanelRow>
+											<ToggleControl
+												label={ __(
+													'Flip horizontally',
+													'enable-navigation-icons'
+												) }
+												checked={ flipHorizontal }
+												onChange={ () => {
+													setAttributes( {
+														flipHorizontal:
+															! flipHorizontal,
+													} );
+												} }
+											/>
+										</PanelRow>
+										<PanelRow>
+											<ToggleControl
+												label={ __(
+													'Flip vertically',
+													'enable-navigation-icons'
+												) }
+												checked={ flipVertical }
+												onChange={ () => {
+													setAttributes( {
+														flipVertical:
+															! flipVertical,
+													} );
+												} }
+											/>
+										</PanelRow>
 									</>
 								) }
 							</PanelBody>
@@ -890,6 +970,16 @@ function addClasses( BlockListBlock ) {
 			useDefaults && parentNavigationDefaults?.defaultIconRotate
 				? parentNavigationDefaults.defaultIconRotate
 				: attributes?.iconRotate;
+		const effectiveFlipHorizontal =
+			useDefaults &&
+			parentNavigationDefaults?.defaultFlipHorizontal !== undefined
+				? parentNavigationDefaults.defaultFlipHorizontal
+				: attributes?.flipHorizontal;
+		const effectiveFlipVertical =
+			useDefaults &&
+			parentNavigationDefaults?.defaultFlipVertical !== undefined
+				? parentNavigationDefaults.defaultFlipVertical
+				: attributes?.flipVertical;
 
 		// Icons stored by registry name have no SVG in the block attributes,
 		// so the preview resolves their markup from the Icon API instead.
@@ -923,6 +1013,8 @@ function addClasses( BlockListBlock ) {
 			iconOffset: effectiveIconOffset,
 			coreIconContent,
 			iconRotate: effectiveIconRotate,
+			flipHorizontal: effectiveFlipHorizontal,
+			flipVertical: effectiveFlipVertical,
 		} );
 
 		const classes = classnames( props?.className, {

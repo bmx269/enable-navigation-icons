@@ -37,11 +37,12 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 * Control the gap between icon and text (supports px, em, rem units)
 * Choose from theme colors or set a custom color
 * Rotate icons in 15 degree steps
+* Flip icons horizontally or vertically
 * Support for stroke-based icons with "No Fill" option (e.g., Lucide icons)
 
 **Navigation Block Default Settings**
 Set default icon settings at the Navigation block level that apply to all child navigation items:
-* Configure size, spacing, color, position, vertical alignment, offset, rotation, and styling once for the entire navigation
+* Configure size, spacing, color, position, vertical alignment, offset, rotation, flipping, and styling once for the entire navigation
 * Individual navigation items can inherit defaults or use custom settings
 * Works seamlessly with multiple and nested Navigation blocks
 * Applies to both inline navigation items and dynamically loaded WordPress menus
@@ -121,6 +122,7 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 * Built-in library picks are now also stored by name (resolved from bundled plugin data), keeping SVG out of post content on all supported WordPress versions
 * Publish the plugin's bundled icon set as an `enable-navigation-icons` icon collection for use elsewhere in WordPress
 * Add icon rotation control, available per item and as a Navigation block default
+* Add horizontal and vertical icon flipping, matching the core Icon block's controls and class names
 * Confirm compatibility with WordPress 7.1
 * Existing icons are unaffected and require no migration
 

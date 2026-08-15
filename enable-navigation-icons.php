@@ -401,6 +401,14 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		? $parent_defaults['defaultIconRotate']
 		: ( isset( $block['attrs']['iconRotate'] ) ? $block['attrs']['iconRotate'] : 0 );
 
+	$flip_horizontal = $use_default_settings && isset( $parent_defaults['defaultFlipHorizontal'] )
+		? $parent_defaults['defaultFlipHorizontal']
+		: ( isset( $block['attrs']['flipHorizontal'] ) ? $block['attrs']['flipHorizontal'] : false );
+
+	$flip_vertical = $use_default_settings && isset( $parent_defaults['defaultFlipVertical'] )
+		? $parent_defaults['defaultFlipVertical']
+		: ( isset( $block['attrs']['flipVertical'] ) ? $block['attrs']['flipVertical'] : false );
+
 	$icon_offset = $use_default_settings && ! empty( $parent_defaults['defaultIconOffset'] )
 		? $parent_defaults['defaultIconOffset']
 		: ( isset( $block['attrs']['iconOffset'] ) ? $block['attrs']['iconOffset'] : '' );
@@ -561,8 +569,18 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	// stripping attributes core deliberately adds.
 	$sanitized_icon = $is_registry_icon ? $icon : wp_kses( $icon, $allowed_svg_tags );
 
+	// Flip classes mirror core's Icon block, so the same class names mean the
+	// same thing whether an icon renders here or in core/icon.
+	$icon_flip_class = '';
+	if ( $flip_horizontal ) {
+		$icon_flip_class .= ' is-flip-horizontal';
+	}
+	if ( $flip_vertical ) {
+		$icon_flip_class .= ' is-flip-vertical';
+	}
+
 	// Add the SVG icon either to the left or right of the navigation item text.
-	$icon_markup = '<span class="wp-block-navigation-item__icon' . $icon_color_class . '" aria-hidden="true"' . $icon_style_attr . '>' . $sanitized_icon . '</span>';
+	$icon_markup = '<span class="wp-block-navigation-item__icon' . $icon_color_class . $icon_flip_class . '" aria-hidden="true"' . $icon_style_attr . '>' . $sanitized_icon . '</span>';
 
 	// Inject icon inside the first element with wp-block-navigation-item__content class.
 	// Handles both <a> (hover mode) and <button> (click mode) tags.

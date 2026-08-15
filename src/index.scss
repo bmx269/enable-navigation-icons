@@ -15,6 +15,21 @@
 			width: var(--icon-size, 1em);
 			height: var(--icon-size, 1em);
 
+			// Flip classes and their transforms match core's Icon block. Using
+			// `transform` here while rotation uses the `rotate` property lets
+			// the two combine rather than overwrite one another.
+			&.is-flip-horizontal {
+				transform: scaleX(-1);
+			}
+
+			&.is-flip-vertical {
+				transform: scaleY(-1);
+			}
+
+			&.is-flip-horizontal.is-flip-vertical {
+				transform: scaleX(-1) scaleY(-1);
+			}
+
 			svg {
 				// `box-sizing` and `fill: currentcolor` mirror core's Icon
 				// block stylesheet, so icons from the shared registry render

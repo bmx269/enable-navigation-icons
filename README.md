@@ -25,6 +25,7 @@ Easily add icons to Navigation Block items in WordPress.
 - **Icon Spacing** - Control the gap between icon and text (supports px, em, rem units)
 - **Icon Color** - Choose from theme colors or set a custom color
 - **Icon Rotation** - Rotate icons in 15 degree steps
+- **Icon Flipping** - Mirror icons horizontally or vertically, matching the core Icon block
 - **No Fill Option** - Support for stroke-based icons (e.g., Lucide icons)
 
 ### WordPress Icon API (WordPress 7.1+)
@@ -40,7 +41,7 @@ This is entirely additive. Existing navigation icons keep working with no migrat
 
 ### Navigation Block Default Settings
 Set default icon settings at the Navigation block level that apply to all child navigation items:
-- **Global Defaults** - Configure size, spacing, color, position, vertical alignment, offset, rotation, and styling once for the entire navigation
+- **Global Defaults** - Configure size, spacing, color, position, vertical alignment, offset, rotation, flipping, and styling once for the entire navigation
 - **Item-Level Overrides** - Individual navigation items can inherit defaults or use custom settings
 - **Nested Support** - Works seamlessly with multiple and nested Navigation blocks
 - **Menu Support** - Applies to both inline navigation items and dynamically loaded WordPress menus
