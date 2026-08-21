@@ -1,4 +1,8 @@
-# Development files
+# Version control and development files
+# .git MUST be listed: the WordPress.org deploy action rsyncs with
+# --exclude-from=.distignore, and its own default excludes are skipped
+# entirely when this file exists.
+/.git
 /.claude
 /.github
 /.wordpress-org
@@ -22,7 +26,9 @@ webpack.config.js
 blueprint.json
 .nvmrc
 
-# OS files
+# Build artifacts and OS files
+*.zip
+.gitkeep
 .DS_Store
 
 # Misc
