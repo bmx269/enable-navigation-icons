@@ -35,7 +35,6 @@ function toPhpString( value ) {
 	return String( value ).replace( /\\/g, '\\\\' ).replace( /'/g, "\\'" );
 }
 
-// eslint-disable-next-line import/no-dynamic-require
 const bundle = require( bundlePath );
 const build = bundle.default ?? bundle;
 const { icons, skipped } = build();
@@ -54,7 +53,7 @@ const lines = [
 	' * @package enable-navigation-icons',
 	' */',
 	'',
-	'defined( \'ABSPATH\' ) || exit;',
+	"defined( 'ABSPATH' ) || exit;",
 	'',
 	'return array(',
 ];

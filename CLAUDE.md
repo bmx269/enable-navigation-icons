@@ -19,8 +19,6 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 │                                      #   for publication to the WordPress Icon API
 │   ├── index.scss                     # Frontend + editor styles (icon positioning, sizing, flex layout)
 │   ├── editor.scss                    # Editor-only styles (inserter modal, controls)
-│   ├── icons.css                      # Auto-generated CSS for icon previews in the inserter
-│   ├── generate-icons-css.mjs         # Script that generates icons.css from the icon registry
 │   ├── icons/
 │   │   ├── index.js                   # Full icon registry: WordPress icons + social icons, exported via getIcons()
 │   │   ├── bolt.js                    # Default bolt icon used in the toolbar "Add icon" button
