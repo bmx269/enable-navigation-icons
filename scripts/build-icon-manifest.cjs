@@ -6,7 +6,7 @@
  * writes build/icon-manifest.php, which enable-navigation-icons.php includes to
  * publish the bundled icons to the WordPress Icon API on WordPress 7.1+.
  *
- * @since 0.3.0
+ * @since 1.0.0
  */
 
 const fs = require( 'fs' );

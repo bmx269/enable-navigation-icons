@@ -1,0 +1,1283 @@
+# Copyright (C) 2026 Trent Stromkins
+# This file is distributed under the GPLv2.
+msgid ""
+msgstr ""
+"Project-Id-Version: Enable Navigation Icons 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/enable-navigation-icons\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-20T16:58:14-07:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: enable-navigation-icons\n"
+
+#. Plugin Name of the plugin
+#: enable-navigation-icons.php
+msgid "Enable Navigation Icons"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: enable-navigation-icons.php
+msgid "https://github.com/bmx269/enable-navigation-icons"
+msgstr ""
+
+#. Description of the plugin
+#: enable-navigation-icons.php
+msgid "Easily add icons to Navigation Block items."
+msgstr ""
+
+#. Author of the plugin
+#: enable-navigation-icons.php
+msgid "Trent Stromkins"
+msgstr ""
+
+#. Author URI of the plugin
+#: enable-navigation-icons.php
+msgid "https://smallrobot.co"
+msgstr ""
+
+#: enable-navigation-icons.php:198
+msgid "Navigation Icons"
+msgstr ""
+
+#: enable-navigation-icons.php:199
+msgid "Icons bundled with the Enable Navigation Icons plugin."
+msgstr ""
+
+#: src/components/custom-inserter/index.js:65
+msgid "Custom Icon"
+msgstr ""
+
+#: src/components/custom-inserter/index.js:72
+msgid "Custom icon"
+msgstr ""
+
+#: src/components/custom-inserter/index.js:76
+msgid "Paste the SVG code for your custom icon."
+msgstr ""
+
+#: src/components/custom-inserter/index.js:94
+#: src/components/inserter/content-header.js:29
+msgid "Preview size"
+msgstr ""
+
+#: src/components/custom-inserter/index.js:112
+msgid "The custom icon does not appear to be in a valid SVG format or contains non-SVG elements."
+msgstr ""
+
+#: src/components/custom-inserter/index.js:121
+msgid "Clear custom icon"
+msgstr ""
+
+#: src/components/custom-inserter/index.js:129
+msgid "Clear"
+msgstr ""
+
+#: src/components/custom-inserter/index.js:132
+#: src/components/custom-inserter/index.js:140
+msgid "Insert custom icon"
+msgstr ""
+
+#: src/components/dimension-control/index.js:107
+msgid "Dimension"
+msgstr ""
+
+#. translators: %1$s: Number of icons returned from search, %2$s: the search input
+#: src/components/inserter/content-header.js:16
+#, js-format
+msgid "%1$s search result for \"%2$s\""
+msgid_plural "%1$s search results for \"%2$s\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/components/inserter/icon-grid.js:28
+msgid "No results found."
+msgstr ""
+
+#. translators: %s: icon collection name.
+#: src/components/inserter/index.js:56
+#, js-format
+msgid "%s (Icon API)"
+msgstr ""
+
+#: src/components/inserter/index.js:184
+msgid "Icon Library"
+msgstr ""
+
+#: src/components/inserter/sidebar.js:41
+msgid "All"
+msgstr ""
+
+#: src/icons/index.js:598
+msgid "Add Card"
+msgstr ""
+
+#: src/icons/index.js:603
+msgid "Add Submenu"
+msgstr ""
+
+#: src/icons/index.js:609
+msgid "Align Center"
+msgstr ""
+
+#: src/icons/index.js:615
+msgid "Align Justify"
+msgstr ""
+
+#: src/icons/index.js:621
+msgid "Align Left"
+msgstr ""
+
+#: src/icons/index.js:627
+msgid "Align None"
+msgstr ""
+
+#: src/icons/index.js:633
+msgid "Align Right"
+msgstr ""
+
+#: src/icons/index.js:639
+msgid "Archive"
+msgstr ""
+
+#: src/icons/index.js:645
+msgid "Arrow Down"
+msgstr ""
+
+#: src/icons/index.js:651
+msgid "Arrow Left"
+msgstr ""
+
+#: src/icons/index.js:657
+msgid "Arrow Right"
+msgstr ""
+
+#: src/icons/index.js:663
+msgid "Arrow Up"
+msgstr ""
+
+#: src/icons/index.js:669
+msgid "At Symbol"
+msgstr ""
+
+#: src/icons/index.js:674
+msgid "Aspect Ratio"
+msgstr ""
+
+#: src/icons/index.js:680
+msgid "Audio"
+msgstr ""
+
+#: src/icons/index.js:686
+msgid "Backup"
+msgstr ""
+
+#: src/icons/index.js:691
+msgid "Block Default"
+msgstr ""
+
+#: src/icons/index.js:697
+msgid "Block Table"
+msgstr ""
+
+#: src/icons/index.js:702
+msgid "Border"
+msgstr ""
+
+#: src/icons/index.js:707
+msgid "Box"
+msgstr ""
+
+#: src/icons/index.js:712
+msgid "Brush"
+msgstr ""
+
+#: src/icons/index.js:717
+msgid "Bug"
+msgstr ""
+
+#: src/icons/index.js:722
+msgid "Button"
+msgstr ""
+
+#: src/icons/index.js:728
+msgid "Buttons"
+msgstr ""
+
+#: src/icons/index.js:734
+msgid "Calendar"
+msgstr ""
+
+#: src/icons/index.js:740
+msgid "Cancel - Circle Filled"
+msgstr ""
+
+#: src/icons/index.js:745
+msgid "Caption"
+msgstr ""
+
+#: src/icons/index.js:750
+msgid "Capture Photo"
+msgstr ""
+
+#: src/icons/index.js:756
+msgid "Capture Video"
+msgstr ""
+
+#: src/icons/index.js:762
+msgid "Category"
+msgstr ""
+
+#: src/icons/index.js:768
+msgid "Chart Bar"
+msgstr ""
+
+#: src/icons/index.js:773
+msgid "Check"
+msgstr ""
+
+#: src/icons/index.js:778
+msgid "Chevron Down"
+msgstr ""
+
+#: src/icons/index.js:784
+msgid "Chevron Left"
+msgstr ""
+
+#: src/icons/index.js:790
+msgid "Chevron Right"
+msgstr ""
+
+#: src/icons/index.js:796
+msgid "Chevron Right - Small"
+msgstr ""
+
+#: src/icons/index.js:802
+msgid "Chevron Up"
+msgstr ""
+
+#: src/icons/index.js:808
+msgid "Chevron Up/Down"
+msgstr ""
+
+#: src/icons/index.js:814
+msgid "Classic"
+msgstr ""
+
+#: src/icons/index.js:820
+msgid "Close"
+msgstr ""
+
+#: src/icons/index.js:825
+msgid "Close - Small"
+msgstr ""
+
+#: src/icons/index.js:830
+msgid "Cloud Upload"
+msgstr ""
+
+#: src/icons/index.js:836
+msgid "Cloud"
+msgstr ""
+
+#: src/icons/index.js:841
+msgid "Code"
+msgstr ""
+
+#: src/icons/index.js:847
+msgid "Cog"
+msgstr ""
+
+#: src/icons/index.js:852
+msgid "Color"
+msgstr ""
+
+#: src/icons/index.js:857
+msgid "Column"
+msgstr ""
+
+#: src/icons/index.js:863
+msgid "Columns"
+msgstr ""
+
+#: src/icons/index.js:869
+msgid "Comment"
+msgstr ""
+
+#: src/icons/index.js:875
+msgid "Comment Author Avatar"
+msgstr ""
+
+#: src/icons/index.js:881
+msgid "Comment Author Name"
+msgstr ""
+
+#: src/icons/index.js:887
+msgid "Comment Content"
+msgstr ""
+
+#: src/icons/index.js:893
+msgid "Comment Edit Link"
+msgstr ""
+
+#: src/icons/index.js:899
+msgid "Comment Reply Link"
+msgstr ""
+
+#: src/icons/index.js:905
+msgid "Copy"
+msgstr ""
+
+#: src/icons/index.js:910
+msgid "Cover"
+msgstr ""
+
+#: src/icons/index.js:916
+msgid "Create"
+msgstr ""
+
+#: src/icons/index.js:921
+msgid "Crop"
+msgstr ""
+
+#: src/icons/index.js:926
+msgid "Currency Dollar"
+msgstr ""
+
+#: src/icons/index.js:931
+msgid "Currency Euro"
+msgstr ""
+
+#: src/icons/index.js:936
+msgid "Currency Pound"
+msgstr ""
+
+#: src/icons/index.js:941
+msgid "Custom Post Type"
+msgstr ""
+
+#: src/icons/index.js:946
+msgid "Desktop"
+msgstr ""
+
+#: src/icons/index.js:952
+msgid "Drag Handle"
+msgstr ""
+
+#: src/icons/index.js:957
+msgid "Drawer Left"
+msgstr ""
+
+#: src/icons/index.js:963
+msgid "Drawer Right"
+msgstr ""
+
+#: src/icons/index.js:969
+msgid "Download"
+msgstr ""
+
+#: src/icons/index.js:975
+msgid "Edit"
+msgstr ""
+
+#: src/icons/index.js:980
+msgid "External"
+msgstr ""
+
+#: src/icons/index.js:985
+msgid "File"
+msgstr ""
+
+#: src/icons/index.js:990
+msgid "Filter"
+msgstr ""
+
+#: src/icons/index.js:996
+msgid "Flip Horizontal"
+msgstr ""
+
+#: src/icons/index.js:1001
+msgid "Flip Vertical"
+msgstr ""
+
+#: src/icons/index.js:1006
+msgid "Format Bold"
+msgstr ""
+
+#: src/icons/index.js:1012
+msgid "Format Capitalize"
+msgstr ""
+
+#: src/icons/index.js:1018
+msgid "Format Indent"
+msgstr ""
+
+#: src/icons/index.js:1024
+msgid "Format Indent RTL"
+msgstr ""
+
+#: src/icons/index.js:1029
+msgid "Format Italic"
+msgstr ""
+
+#: src/icons/index.js:1035
+msgid "Format List Bullets"
+msgstr ""
+
+#: src/icons/index.js:1041
+msgid "Format List Bullets RTL"
+msgstr ""
+
+#: src/icons/index.js:1047
+msgid "Format List Numbered"
+msgstr ""
+
+#: src/icons/index.js:1053
+msgid "Format List Numbered RTL"
+msgstr ""
+
+#: src/icons/index.js:1059
+msgid "Format LTR"
+msgstr ""
+
+#: src/icons/index.js:1065
+msgid "Format Lowercase"
+msgstr ""
+
+#: src/icons/index.js:1071
+msgid "Format Outdent"
+msgstr ""
+
+#: src/icons/index.js:1077
+msgid "Format Outdent RTL"
+msgstr ""
+
+#: src/icons/index.js:1083
+msgid "Format RTL"
+msgstr ""
+
+#: src/icons/index.js:1089
+msgid "Format Strikethrough"
+msgstr ""
+
+#: src/icons/index.js:1095
+msgid "Format Underline"
+msgstr ""
+
+#: src/icons/index.js:1101
+msgid "Format Uppercase"
+msgstr ""
+
+#: src/icons/index.js:1107
+msgid "Fullscreen"
+msgstr ""
+
+#: src/icons/index.js:1113
+msgid "Gallery"
+msgstr ""
+
+#: src/icons/index.js:1119
+msgid "Globe"
+msgstr ""
+
+#: src/icons/index.js:1124
+msgid "Grid"
+msgstr ""
+
+#: src/icons/index.js:1129
+msgid "Group"
+msgstr ""
+
+#: src/icons/index.js:1135
+msgid "Handle"
+msgstr ""
+
+#: src/icons/index.js:1140
+msgid "Heading"
+msgstr ""
+
+#: src/icons/index.js:1146
+msgid "Help"
+msgstr ""
+
+#: src/icons/index.js:1151
+msgid "Help - Filled"
+msgstr ""
+
+#: src/icons/index.js:1156
+msgid "Inbox"
+msgstr ""
+
+#: src/icons/index.js:1161
+msgid "Institution"
+msgstr ""
+
+#: src/icons/index.js:1166
+msgid "Home"
+msgstr ""
+
+#: src/icons/index.js:1172
+msgid "HTML"
+msgstr ""
+
+#: src/icons/index.js:1179
+msgid "Image"
+msgstr ""
+
+#: src/icons/index.js:1185
+msgid "Info"
+msgstr ""
+
+#: src/icons/index.js:1190
+msgid "Insert After"
+msgstr ""
+
+#: src/icons/index.js:1196
+msgid "Insert Before"
+msgstr ""
+
+#: src/icons/index.js:1202
+msgid "Justify Left"
+msgstr ""
+
+#: src/icons/index.js:1208
+msgid "Justify Center"
+msgstr ""
+
+#: src/icons/index.js:1214
+msgid "Justify Right"
+msgstr ""
+
+#: src/icons/index.js:1220
+msgid "Justify Space Between"
+msgstr ""
+
+#: src/icons/index.js:1226
+msgid "Justify Stretch"
+msgstr ""
+
+#: src/icons/index.js:1232
+msgid "Key"
+msgstr ""
+
+#: src/icons/index.js:1237
+msgid "Keyboard Close"
+msgstr ""
+
+#: src/icons/index.js:1243
+msgid "Keyboard Return"
+msgstr ""
+
+#: src/icons/index.js:1249
+msgid "Layout"
+msgstr ""
+
+#: src/icons/index.js:1254
+msgid "Lifesaver"
+msgstr ""
+
+#: src/icons/index.js:1259
+msgid "Line Dashed"
+msgstr ""
+
+#: src/icons/index.js:1264
+msgid "Line Dotted"
+msgstr ""
+
+#: src/icons/index.js:1269
+msgid "Line Solid"
+msgstr ""
+
+#: src/icons/index.js:1274
+msgid "Link"
+msgstr ""
+
+#: src/icons/index.js:1280
+msgid "Link Off"
+msgstr ""
+
+#: src/icons/index.js:1286
+msgid "List"
+msgstr ""
+
+#: src/icons/index.js:1292
+msgid "List Item"
+msgstr ""
+
+#: src/icons/index.js:1298
+msgid "List View"
+msgstr ""
+
+#: src/icons/index.js:1304
+msgid "Lock"
+msgstr ""
+
+#: src/icons/index.js:1310
+msgid "Lock Outline"
+msgstr ""
+
+#: src/icons/index.js:1316
+msgid "Lock Small"
+msgstr ""
+
+#: src/icons/index.js:1322
+msgid "Login"
+msgstr ""
+
+#: src/icons/index.js:1327
+msgid "Loop"
+msgstr ""
+
+#: src/icons/index.js:1333
+msgid "Map Marker"
+msgstr ""
+
+#: src/icons/index.js:1338
+#: src/icons/index.js:2024
+msgid "Media"
+msgstr ""
+
+#: src/icons/index.js:1344
+msgid "Media & Text"
+msgstr ""
+
+#: src/icons/index.js:1350
+msgid "Megaphone"
+msgstr ""
+
+#: src/icons/index.js:1355
+msgid "Menu"
+msgstr ""
+
+#: src/icons/index.js:1360
+msgid "Mobile"
+msgstr ""
+
+#: src/icons/index.js:1366
+msgid "More"
+msgstr ""
+
+#: src/icons/index.js:1371
+msgid "More Horizontal"
+msgstr ""
+
+#: src/icons/index.js:1376
+msgid "More Horizontal - Mobile"
+msgstr ""
+
+#: src/icons/index.js:1381
+msgid "More Vertical"
+msgstr ""
+
+#: src/icons/index.js:1386
+msgid "Move To"
+msgstr ""
+
+#: src/icons/index.js:1392
+msgid "Navigation"
+msgstr ""
+
+#: src/icons/index.js:1397
+msgid "Overlay Text"
+msgstr ""
+
+#: src/icons/index.js:1402
+msgid "Page Break"
+msgstr ""
+
+#: src/icons/index.js:1407
+msgid "Custom Link"
+msgstr ""
+
+#: src/icons/index.js:1412
+msgid "Page"
+msgstr ""
+
+#: src/icons/index.js:1417
+msgid "Pages"
+msgstr ""
+
+#: src/icons/index.js:1422
+msgid "Paragraph"
+msgstr ""
+
+#: src/icons/index.js:1427
+msgid "Payment"
+msgstr ""
+
+#: src/icons/index.js:1432
+msgid "Percent"
+msgstr ""
+
+#: src/icons/index.js:1437
+msgid "Position Center"
+msgstr ""
+
+#: src/icons/index.js:1442
+msgid "Position Left"
+msgstr ""
+
+#: src/icons/index.js:1447
+msgid "Position Right"
+msgstr ""
+
+#: src/icons/index.js:1452
+msgid "Post"
+msgstr ""
+
+#: src/icons/index.js:1457
+msgid "Pencil"
+msgstr ""
+
+#: src/icons/index.js:1462
+msgid "People"
+msgstr ""
+
+#: src/icons/index.js:1467
+msgid "Pin"
+msgstr ""
+
+#: src/icons/index.js:1472
+msgid "Plugins"
+msgstr ""
+
+#: src/icons/index.js:1477
+msgid "Plus Circle - Filled"
+msgstr ""
+
+#: src/icons/index.js:1482
+msgid "Plus Circle"
+msgstr ""
+
+#: src/icons/index.js:1487
+msgid "Plus"
+msgstr ""
+
+#: src/icons/index.js:1492
+msgid "Post Author"
+msgstr ""
+
+#: src/icons/index.js:1498
+msgid "Post Categories"
+msgstr ""
+
+#: src/icons/index.js:1504
+msgid "Post Content"
+msgstr ""
+
+#: src/icons/index.js:1510
+msgid "Post Comments"
+msgstr ""
+
+#: src/icons/index.js:1516
+msgid "Post Comment Count"
+msgstr ""
+
+#: src/icons/index.js:1521
+msgid "Post Comments Form"
+msgstr ""
+
+#: src/icons/index.js:1527
+msgid "Post Date"
+msgstr ""
+
+#: src/icons/index.js:1533
+msgid "Post Excerpt"
+msgstr ""
+
+#: src/icons/index.js:1539
+msgid "Post Featured Image"
+msgstr ""
+
+#: src/icons/index.js:1545
+msgid "Post List"
+msgstr ""
+
+#: src/icons/index.js:1551
+msgid "Post Terms"
+msgstr ""
+
+#: src/icons/index.js:1557
+msgid "Previous"
+msgstr ""
+
+#: src/icons/index.js:1563
+msgid "Next"
+msgstr ""
+
+#: src/icons/index.js:1569
+msgid "Preformatted"
+msgstr ""
+
+#: src/icons/index.js:1574
+msgid "Pull Left"
+msgstr ""
+
+#: src/icons/index.js:1579
+msgid "Pull Right"
+msgstr ""
+
+#: src/icons/index.js:1584
+msgid "Pull Quote"
+msgstr ""
+
+#: src/icons/index.js:1589
+msgid "Query Pagination"
+msgstr ""
+
+#: src/icons/index.js:1594
+msgid "Query Pagination Next"
+msgstr ""
+
+#: src/icons/index.js:1600
+msgid "Query Pagination Numbers"
+msgstr ""
+
+#: src/icons/index.js:1605
+msgid "Query Pagination Previous"
+msgstr ""
+
+#: src/icons/index.js:1611
+msgid "Quote"
+msgstr ""
+
+#: src/icons/index.js:1617
+msgid "Receipt"
+msgstr ""
+
+#: src/icons/index.js:1622
+msgid "Redo"
+msgstr ""
+
+#: src/icons/index.js:1628
+msgid "Remove Bug"
+msgstr ""
+
+#: src/icons/index.js:1633
+msgid "Remove Submenu"
+msgstr ""
+
+#: src/icons/index.js:1638
+msgid "Replace"
+msgstr ""
+
+#: src/icons/index.js:1644
+#: src/index.js:626
+msgid "Reset"
+msgstr ""
+
+#: src/icons/index.js:1650
+msgid "Resize Corner"
+msgstr ""
+
+#: src/icons/index.js:1656
+msgid "Reusable Block"
+msgstr ""
+
+#: src/icons/index.js:1662
+msgid "Rotate Left"
+msgstr ""
+
+#: src/icons/index.js:1668
+msgid "Rotate Right"
+msgstr ""
+
+#: src/icons/index.js:1674
+msgid "Row"
+msgstr ""
+
+#: src/icons/index.js:1679
+msgid "RSS"
+msgstr ""
+
+#: src/icons/index.js:1684
+msgid "Search"
+msgstr ""
+
+#: src/icons/index.js:1690
+msgid "Seen"
+msgstr ""
+
+#: src/icons/index.js:1696
+msgid "Separator"
+msgstr ""
+
+#: src/icons/index.js:1702
+msgid "Settings"
+msgstr ""
+
+#: src/icons/index.js:1707
+msgid "Shadow"
+msgstr ""
+
+#: src/icons/index.js:1713
+msgid "Share"
+msgstr ""
+
+#: src/icons/index.js:1718
+msgid "Shield"
+msgstr ""
+
+#: src/icons/index.js:1723
+msgid "Shortcode"
+msgstr ""
+
+#: src/icons/index.js:1729
+msgid "Shuffle"
+msgstr ""
+
+#: src/icons/index.js:1734
+msgid "Site Logo"
+msgstr ""
+
+#: src/icons/index.js:1741
+msgid "Sparkles"
+msgstr ""
+
+#: src/icons/index.js:1746
+msgid "Stack"
+msgstr ""
+
+#: src/icons/index.js:1751
+msgid "Star Empty"
+msgstr ""
+
+#: src/icons/index.js:1756
+msgid "Star Filled"
+msgstr ""
+
+#: src/icons/index.js:1761
+msgid "Star Half"
+msgstr ""
+
+#: src/icons/index.js:1766
+msgid "Store"
+msgstr ""
+
+#: src/icons/index.js:1771
+msgid "Stretch Full Width"
+msgstr ""
+
+#: src/icons/index.js:1777
+msgid "Styles"
+msgstr ""
+
+#: src/icons/index.js:1783
+msgid "Shipping"
+msgstr ""
+
+#: src/icons/index.js:1789
+msgid "Stretch Wide"
+msgstr ""
+
+#: src/icons/index.js:1795
+msgid "Subscript"
+msgstr ""
+
+#: src/icons/index.js:1801
+msgid "Superscript"
+msgstr ""
+
+#: src/icons/index.js:1807
+msgid "Swatch"
+msgstr ""
+
+#: src/icons/index.js:1812
+msgid "Symbol"
+msgstr ""
+
+#: src/icons/index.js:1817
+msgid "Symbol - Filled"
+msgstr ""
+
+#: src/icons/index.js:1822
+msgid "Table Column After"
+msgstr ""
+
+#: src/icons/index.js:1828
+msgid "Table Column Before"
+msgstr ""
+
+#: src/icons/index.js:1834
+msgid "Table Column Delete"
+msgstr ""
+
+#: src/icons/index.js:1840
+msgid "Table Row After"
+msgstr ""
+
+#: src/icons/index.js:1846
+msgid "Table Row Before"
+msgstr ""
+
+#: src/icons/index.js:1852
+msgid "Table Row Delete"
+msgstr ""
+
+#: src/icons/index.js:1858
+msgid "Table"
+msgstr ""
+
+#: src/icons/index.js:1863
+msgid "Tag"
+msgstr ""
+
+#: src/icons/index.js:1868
+msgid "Term Description"
+msgstr ""
+
+#: src/icons/index.js:1874
+msgid "Footer"
+msgstr ""
+
+#: src/icons/index.js:1879
+msgid "Header"
+msgstr ""
+
+#: src/icons/index.js:1884
+msgid "Sidebar"
+msgstr ""
+
+#: src/icons/index.js:1889
+msgid "Text Color"
+msgstr ""
+
+#: src/icons/index.js:1894
+msgid "Tablet"
+msgstr ""
+
+#: src/icons/index.js:1900
+msgid "Title"
+msgstr ""
+
+#: src/icons/index.js:1905
+msgid "Tip"
+msgstr ""
+
+#: src/icons/index.js:1910
+msgid "Tool"
+msgstr ""
+
+#: src/icons/index.js:1915
+msgid "Trash"
+msgstr ""
+
+#: src/icons/index.js:1920
+msgid "Trending Down"
+msgstr ""
+
+#: src/icons/index.js:1926
+msgid "Trending Up"
+msgstr ""
+
+#: src/icons/index.js:1932
+msgid "Typography"
+msgstr ""
+
+#: src/icons/index.js:1937
+msgid "Undo"
+msgstr ""
+
+#: src/icons/index.js:1943
+msgid "Ungroup"
+msgstr ""
+
+#: src/icons/index.js:1949
+msgid "Unlock"
+msgstr ""
+
+#: src/icons/index.js:1955
+msgid "Unseen"
+msgstr ""
+
+#: src/icons/index.js:1961
+msgid "Update"
+msgstr ""
+
+#: src/icons/index.js:1966
+msgid "Upload"
+msgstr ""
+
+#: src/icons/index.js:1973
+msgid "Verse"
+msgstr ""
+
+#: src/icons/index.js:1979
+msgid "Video"
+msgstr ""
+
+#: src/icons/index.js:1985
+msgid "Warning"
+msgstr ""
+
+#: src/icons/index.js:1990
+msgid "Widget"
+msgstr ""
+
+#: src/icons/index.js:1999
+msgid "WordPress"
+msgstr ""
+
+#: src/icons/index.js:2004
+msgid "Arrows"
+msgstr ""
+
+#: src/icons/index.js:2008
+msgid "Blocks"
+msgstr ""
+
+#: src/icons/index.js:2012
+msgid "Devices"
+msgstr ""
+
+#: src/icons/index.js:2016
+msgid "Editor"
+msgstr ""
+
+#: src/icons/index.js:2020
+msgid "Logos"
+msgstr ""
+
+#: src/index.js:262
+msgid "Default Icon Settings"
+msgstr ""
+
+#: src/index.js:270
+msgid "Set default icon settings for all navigation items. Individual items can override these settings."
+msgstr ""
+
+#: src/index.js:277
+#: src/index.js:716
+msgid "Icon size"
+msgstr ""
+
+#: src/index.js:288
+#: src/index.js:729
+msgid "Icon spacing"
+msgstr ""
+
+#: src/index.js:302
+msgid "Show icons on left"
+msgstr ""
+
+#: src/index.js:317
+#: src/index.js:702
+msgid "Justify space between"
+msgstr ""
+
+#: src/index.js:332
+msgid "No icon fill (stroke only)"
+msgstr ""
+
+#: src/index.js:346
+#: src/index.js:742
+msgid "Icon vertical alignment"
+msgstr ""
+
+#: src/index.js:353
+#: src/index.js:751
+msgid "Top"
+msgstr ""
+
+#: src/index.js:360
+#: src/index.js:758
+msgid "Center"
+msgstr ""
+
+#: src/index.js:367
+#: src/index.js:765
+msgid "Bottom"
+msgstr ""
+
+#: src/index.js:381
+#: src/index.js:779
+msgid "Icon offset"
+msgstr ""
+
+#: src/index.js:395
+#: src/index.js:793
+msgid "Icon rotation"
+msgstr ""
+
+#: src/index.js:399
+msgid "Rotate icons clockwise, in degrees."
+msgstr ""
+
+#: src/index.js:418
+msgid "Flip icons horizontally"
+msgstr ""
+
+#: src/index.js:433
+msgid "Flip icons vertically"
+msgstr ""
+
+#: src/index.js:453
+msgid "Default Icon Color"
+msgstr ""
+
+#: src/index.js:539
+msgid "Replace icon"
+msgstr ""
+
+#: src/index.js:540
+msgid "Add icon"
+msgstr ""
+
+#: src/index.js:543
+msgid "Add/edit custom icon"
+msgstr ""
+
+#: src/index.js:544
+msgid "Add custom icon"
+msgstr ""
+
+#: src/index.js:571
+msgid "Browse Icon Library"
+msgstr ""
+
+#: src/index.js:592
+msgid "Open Media Library"
+msgstr ""
+
+#: src/index.js:657
+msgid "Icon settings"
+msgstr ""
+
+#: src/index.js:666
+msgid "Use default icon settings"
+msgstr ""
+
+#: src/index.js:670
+msgid "When enabled, this item will use the default settings from the Navigation block."
+msgstr ""
+
+#: src/index.js:687
+msgid "Show icon on left"
+msgstr ""
+
+#: src/index.js:797
+msgid "Rotate the icon clockwise, in degrees."
+msgstr ""
+
+#: src/index.js:816
+msgid "Flip horizontally"
+msgstr ""
+
+#: src/index.js:831
+msgid "Flip vertically"
+msgstr ""
+
+#: src/utils/display-messages.js:15
+msgid "An error occured while uploading. The file does not appear to be an SVG."
+msgstr ""
+
+#: src/utils/display-messages.js:19
+msgid "An error occured while inserting the icon. The media selected is not an SVG."
+msgstr ""
+
+#: src/utils/display-messages.js:23
+msgid "An error occured while inserting the icon. Check that the file is valid SVG."
+msgstr ""

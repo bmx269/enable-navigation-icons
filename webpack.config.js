@@ -28,7 +28,7 @@ const pluginConfig = {
  * reused here because it externalizes every `@wordpress/*` import to a browser
  * global, which is meaningless in Node.
  *
- * @since 0.3.0
+ * @since 1.0.0
  */
 const iconManifestConfig = {
 	mode: 'production',

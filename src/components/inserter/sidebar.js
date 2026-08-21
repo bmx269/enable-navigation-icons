@@ -38,7 +38,7 @@ export default function Sidebar( props ) {
 				categories.sort().unshift( allCategory );
 				categoriesFull.unshift( {
 					name: allCategory,
-					title: __( 'All', 'icon-block' ),
+					title: __( 'All', 'enable-navigation-icons' ),
 				} );
 			}
 

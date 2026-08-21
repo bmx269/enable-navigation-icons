@@ -5,7 +5,7 @@
  * This module is never shipped to the browser. It is bundled for Node by the
  * second webpack config and consumed by scripts/build-icon-manifest.cjs.
  *
- * @since 0.3.0
+ * @since 1.0.0
  */
 
 /**

@@ -17,7 +17,7 @@ export default function ContentHeader( props ) {
 							'%1$s search result for "%2$s"',
 							'%1$s search results for "%2$s"',
 							shownIconsCount,
-							'icon-block'
+							'enable-navigation-icons'
 						),
 						shownIconsCount,
 						searchInput
@@ -25,7 +25,9 @@ export default function ContentHeader( props ) {
 			</div>
 			<div className="icon-controls">
 				<div className="icon-controls__size">
-					<span>{ __( 'Preview size', 'icon-block' ) }</span>
+					<span>
+						{ __( 'Preview size', 'enable-navigation-icons' ) }
+					</span>
 					<RangeControl
 						min={ 24 }
 						max={ 72 }

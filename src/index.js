@@ -536,12 +536,12 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 
 		const replaceText =
 			icon || iconName
-				? __( 'Replace icon', 'icon-block' )
-				: __( 'Add icon', 'icon-block' );
+				? __( 'Replace icon', 'enable-navigation-icons' )
+				: __( 'Add icon', 'enable-navigation-icons' );
 		const customIconText =
 			icon || iconName
-				? __( 'Add/edit custom icon', 'icon-block' )
-				: __( 'Add custom icon', 'icon-block' );
+				? __( 'Add/edit custom icon', 'enable-navigation-icons' )
+				: __( 'Add custom icon', 'enable-navigation-icons' );
 
 		const replaceDropdown = (
 			<Dropdown
@@ -568,7 +568,10 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 								} }
 								icon={ defaultIcon }
 							>
-								{ __( 'Browse Icon Library', 'icon-block' ) }
+								{ __(
+									'Browse Icon Library',
+									'enable-navigation-icons'
+								) }
 							</MenuItem>
 							{ isSVGUploadAllowed && (
 								<MediaUpload
@@ -588,7 +591,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 										>
 											{ __(
 												'Open Media Library',
-												'icon-block'
+												'enable-navigation-icons'
 											) }
 										</MenuItem>
 									) }
@@ -620,7 +623,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 										onClose( true );
 									} }
 								>
-									{ __( 'Reset', 'icon-block' ) }
+									{ __( 'Reset', 'enable-navigation-icons' ) }
 								</MenuItem>
 							</MenuGroup>
 						) }
@@ -653,7 +656,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 							<PanelBody
 								title={ __(
 									'Icon settings',
-									'enable-button-icons'
+									'enable-navigation-icons'
 								) }
 								className="button-icon-picker"
 								initialOpen={ true }
@@ -683,7 +686,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 											<ToggleControl
 												label={ __(
 													'Show icon on left',
-													'enable-button-icons'
+													'enable-navigation-icons'
 												) }
 												checked={ iconPositionLeft }
 												onChange={ () => {
@@ -698,7 +701,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 											<ToggleControl
 												label={ __(
 													'Justify space between',
-													'enable-button-icons'
+													'enable-navigation-icons'
 												) }
 												checked={ justifySpaceBetween }
 												onChange={ () => {

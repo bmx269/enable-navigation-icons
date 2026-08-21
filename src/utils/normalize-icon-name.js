@@ -12,7 +12,7 @@
  * resolve. These names are public API once released; do not change the
  * normalization for icons that have already shipped.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param {string} name The icon's JS registry name.
  * @return {string} The normalized registry name.
  */

@@ -62,20 +62,20 @@ export default function CustomInserterModal( props ) {
 	return (
 		<Modal
 			className="wp-block-outermost-icon-custom-inserter__modal"
-			title={ __( 'Custom Icon', 'icon-block' ) }
+			title={ __( 'Custom Icon', 'enable-navigation-icons' ) }
 			onRequestClose={ () => setCustomInserterOpen( false ) }
 			isFullScreen
 		>
 			<div className="icon-custom-inserter">
 				<div className="icon-custom-inserter__content">
 					<TextareaControl
-						label={ __( 'Custom icon', 'icon-block' ) }
+						label={ __( 'Custom icon', 'enable-navigation-icons' ) }
 						hideLabelFromVision={ true }
 						value={ customIcon }
 						onChange={ setCustomIcon }
 						placeholder={ __(
 							'Paste the SVG code for your custom icon.',
-							'icon-block'
+							'enable-navigation-icons'
 						) }
 					/>
 				</div>
@@ -91,7 +91,10 @@ export default function CustomInserterModal( props ) {
 						<div className="icon-controls">
 							<div className="icon-controls__size">
 								<span>
-									{ __( 'Preview size', 'icon-block' ) }
+									{ __(
+										'Preview size',
+										'enable-navigation-icons'
+									) }
 								</span>
 								<RangeControl
 									min={ 24 }
@@ -108,27 +111,36 @@ export default function CustomInserterModal( props ) {
 							<Notice status="error" isDismissible={ false }>
 								{ __(
 									'The custom icon does not appear to be in a valid SVG format or contains non-SVG elements.',
-									'icon-block'
+									'enable-navigation-icons'
 								) }
 							</Notice>
 						) }
 					</div>
 					<div className="icon-insert-buttons">
 						<Button
-							label={ __( 'Clear custom icon', 'icon-block' ) }
+							label={ __(
+								'Clear custom icon',
+								'enable-navigation-icons'
+							) }
 							isSecondary
 							disabled={ ! customIcon }
 							onClick={ () => setCustomIcon( '' ) }
 						>
-							{ __( 'Clear', 'icon-block' ) }
+							{ __( 'Clear', 'enable-navigation-icons' ) }
 						</Button>
 						<Button
-							label={ __( 'Insert custom icon', 'icon-block' ) }
+							label={ __(
+								'Insert custom icon',
+								'enable-navigation-icons'
+							) }
 							isPrimary
 							disabled={ ! isSVG || ! customIcon }
 							onClick={ insertCustomIcon }
 						>
-							{ __( 'Insert custom icon', 'icon-block' ) }
+							{ __(
+								'Insert custom icon',
+								'enable-navigation-icons'
+							) }
 						</Button>
 					</div>
 				</div>

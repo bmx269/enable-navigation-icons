@@ -14,15 +14,15 @@ export function displayMessages( messageType ) {
 	const messages = {
 		fileTypeUploadError: __(
 			'An error occured while uploading. The file does not appear to be an SVG.',
-			'icon-block'
+			'enable-navigation-icons'
 		),
 		fileTypeSelectError: __(
 			'An error occured while inserting the icon. The media selected is not an SVG.',
-			'icon-block'
+			'enable-navigation-icons'
 		),
 		fileTypeError: __(
 			'An error occured while inserting the icon. Check that the file is valid SVG.',
-			'icon-block'
+			'enable-navigation-icons'
 		),
 	};
 

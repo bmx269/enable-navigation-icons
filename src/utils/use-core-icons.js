@@ -17,7 +17,7 @@ import normalizeIconName from './normalize-icon-name';
  * with the plugin's own bundled `wordpress` type, and it lets the rest of the
  * codebase recognise a core-sourced icon from its type alone.
  *
- * @since 0.3.0
+ * @since 1.0.0
  */
 export const CORE_ICON_TYPE_PREFIX = 'wp-icons--';
 
@@ -29,7 +29,7 @@ export const CORE_ICON_TYPE_PREFIX = 'wp-icons--';
  * already shown as the bundled set — but it stays in the fetched data so
  * `getCoreIconContent()` can still resolve icons stored under its names.
  *
- * @since 0.3.0
+ * @since 1.0.0
  */
 export const OWN_COLLECTION = 'enable-navigation-icons';
 
@@ -37,7 +37,7 @@ export const OWN_COLLECTION = 'enable-navigation-icons';
  * Module-level cache so the (potentially large) icon registry is only fetched
  * once per editor session, no matter how many navigation items are edited.
  *
- * @since 0.3.0
+ * @since 1.0.0
  */
 let cache = null;
 let pending = null;
@@ -50,7 +50,7 @@ let pending = null;
  * the presence of a slash is an unambiguous discriminator and no data
  * migration is required for existing content.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param {string} iconName The stored iconName attribute.
  * @return {boolean} True if the name refers to the core icon registry.
  */
@@ -65,7 +65,7 @@ export function isCoreIconName( iconName ) {
  * manifest on the frontend, the JS registry in the editor), so they work on
  * every supported WordPress version — no Icon API required.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param {string} iconName The stored iconName attribute.
  * @return {boolean} True if the name is in the plugin's own collection.
  */
@@ -79,7 +79,7 @@ export function isOwnCollectionName( iconName ) {
 /**
  * Build the registry name a bundled icon is published under.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param {string} bundledJsName The icon's JS registry name (e.g.
  *                               `wordpress-starFilled`).
  * @return {string} The namespaced registry name.
@@ -94,13 +94,13 @@ export function getOwnRegistryName( bundledJsName ) {
  * Namespaced registry names contain a slash, which is not valid in a CSS class,
  * so it is converted to a hyphen (`core/plus` becomes `core-plus`). The
  * plugin's own collection prefix is dropped entirely, so a bundled icon picked
- * on 0.3.0 (`enable-navigation-icons/wordpress-github`) produces the same
+ * on 1.0.0 (`enable-navigation-icons/wordpress-github`) produces the same
  * `has-icon__wordpress-github` class that earlier versions did — existing
  * theme CSS keeps matching. Bare legacy names pass through untouched.
  *
  * Must stay in sync with `enable_navigation_icons_icon_class_suffix()` in PHP.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param {string} iconName The stored iconName attribute.
  * @return {string} The class suffix.
  */
@@ -122,7 +122,7 @@ export function getIconClassSuffix( iconName ) {
  * `coreName` preserves the namespaced registry name, because
  * `flattenIconsArray()` rewrites `name` by prefixing it with the type.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param {Object} record The REST icon record.
  * @return {Object} An inserter icon.
  */
@@ -140,7 +140,7 @@ function toInserterIcon( record ) {
 /**
  * Load all core icon collections and their icons from the REST API.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @return {Promise<Array>} Inserter icon types, one per collection.
  */
 async function loadCoreIconTypes() {
@@ -204,7 +204,7 @@ async function loadCoreIconTypes() {
  * true, so editors that never open the icon library and contain no
  * registry-named icons never pay for the request.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param {Object}  options         Hook options.
  * @param {boolean} options.enabled Whether the registry is actually needed.
  * @return {Object} `{ coreIconTypes, isResolving, isSupported }`.
@@ -275,7 +275,7 @@ export function useCoreIcons( { enabled = true } = {} ) {
  * Used by the editor preview, which needs the markup to build a mask image.
  * Returns an empty string until the registry has loaded.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param {Array}  coreIconTypes Types returned by `useCoreIcons()`.
  * @param {string} iconName      Namespaced icon name, e.g. `core/plus`.
  * @return {string} The SVG markup, or an empty string.

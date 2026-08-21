@@ -3,7 +3,7 @@
  * Plugin Name:         Enable Navigation Icons
  * Plugin URI:          https://github.com/bmx269/enable-navigation-icons
  * Description:         Easily add icons to Navigation Block items.
- * Version:             0.3.0
+ * Version:             1.0.0
  * Requires at least:   6.3
  * Requires PHP:        7.4
  * Author:              Trent Stromkins
@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
  * Collection slug used when publishing this plugin's icons to the WordPress
  * Icon API registry (WordPress 7.1+).
  *
- * @since 0.3.0
+ * @since 1.0.0
  */
 const ENABLE_NAVIGATION_ICONS_COLLECTION = 'enable-navigation-icons';
 
@@ -32,7 +32,7 @@ const ENABLE_NAVIGATION_ICONS_COLLECTION = 'enable-navigation-icons';
  * The registration and rendering helpers landed in WordPress 7.1. Every call
  * site guards on this so the plugin keeps working unchanged on 6.3 - 7.0.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @return bool True when the Icon API can be used.
  */
 function enable_navigation_icons_has_icon_api() {
@@ -49,7 +49,7 @@ function enable_navigation_icons_has_icon_api() {
  * slash is therefore an unambiguous discriminator, which is what allows content
  * created by earlier versions to keep rendering with no migration at all.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param string $icon_name The stored iconName attribute.
  * @return bool True when the name refers to the icon registry.
  */
@@ -63,7 +63,7 @@ function enable_navigation_icons_is_registry_icon( $icon_name ) {
  * Own-collection names resolve from the shipped manifest rather than the
  * Icon API, so they work on every supported WordPress version.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param string $icon_name The stored iconName attribute.
  * @return bool True when the name is in the plugin's own collection.
  */
@@ -77,14 +77,14 @@ function enable_navigation_icons_is_own_collection_name( $icon_name ) {
  *
  * Slashes in namespaced registry names are converted to hyphens so the result
  * is a valid CSS class (`core/plus` becomes `core-plus`). The plugin's own
- * collection prefix is dropped entirely, so a bundled icon picked on 0.3.0
+ * collection prefix is dropped entirely, so a bundled icon picked on 1.0.0
  * (`enable-navigation-icons/wordpress-github`) produces the same
  * `has-icon__wordpress-github` class as earlier versions — existing theme CSS
  * keeps matching. Bare legacy names are unaffected.
  *
  * Must stay in sync with `getIconClassSuffix()` in src/utils/use-core-icons.js.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param string $icon_name The stored iconName attribute.
  * @return string The sanitized class suffix.
  */
@@ -103,7 +103,7 @@ function enable_navigation_icons_icon_class_suffix( $icon_name ) {
 /**
  * Load the generated icon manifest, once per request.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @return array The manifest, keyed by unqualified icon name.
  */
 function enable_navigation_icons_get_manifest() {
@@ -128,7 +128,7 @@ function enable_navigation_icons_get_manifest() {
  * from the plugin's own data on WordPress 6.3 just as on 7.1 — the Icon API
  * is never required for them.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param string $icon_name The namespaced icon name.
  * @return string The SVG markup, or an empty string when unknown.
  */
@@ -150,7 +150,7 @@ function enable_navigation_icons_get_manifest_icon( $icon_name ) {
  * no Icon API needed, so those names work on WordPress 6.3+. Anything else
  * (core and third-party collections) requires wp_get_icon() from 7.1.
  *
- * @since 0.3.0
+ * @since 1.0.0
  * @param string $icon_name The namespaced icon name.
  * @return string The SVG markup, or an empty string when unavailable.
  */
@@ -179,7 +179,7 @@ function enable_navigation_icons_get_registry_icon( $icon_name ) {
  * This makes the icon set available to the core Icon block, to other plugins,
  * and over the REST API - not just inside navigation items.
  *
- * @since 0.3.0
+ * @since 1.0.0
  */
 function enable_navigation_icons_register_icons() {
 	if ( ! enable_navigation_icons_has_icon_api() ) {

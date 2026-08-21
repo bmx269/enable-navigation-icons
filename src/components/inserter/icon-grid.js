@@ -25,7 +25,7 @@ export default function IconGrid( props ) {
 				icon={ blockDefault }
 				className="block-editor-inserter__no-results-icon"
 			/>
-			<p>{ __( 'No results found.', 'block-icon' ) }</p>
+			<p>{ __( 'No results found.', 'enable-navigation-icons' ) }</p>
 		</div>
 	);
 

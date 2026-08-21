@@ -4,7 +4,7 @@ Tags: navigation, icons, menu, block editor, gutenberg
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.0
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -115,16 +115,40 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 == Changelog ==
 
-= 0.3.0 =
-* Add support for the WordPress Icon API introduced in WordPress 7.1
-* Browse icons from core and from any registered icon collection directly in the icon library
-* Icons chosen from the registry are stored by name and rendered server-side, keeping SVG markup out of post content
-* Built-in library picks are now also stored by name (resolved from bundled plugin data), keeping SVG out of post content on all supported WordPress versions
-* Publish the plugin's bundled icon set as an `enable-navigation-icons` icon collection for use elsewhere in WordPress
-* Add icon rotation control, available per item and as a Navigation block default
-* Add horizontal and vertical icon flipping, matching the core Icon block's controls and class names
-* Confirm compatibility with WordPress 7.1
-* Existing icons are unaffected and require no migration
+= 1.0.0 =
+
+First stable release. Adds support for the WordPress Icon API introduced in WordPress 7.1, alongside new rotation and flip controls. Existing icons are unaffected and no migration is required.
+
+**WordPress Icon API support (WordPress 7.1+)**
+
+* Browse icons registered with core's SVG Icon API directly in the icon library, including WordPress core's own icon set and any collection registered by your theme or another plugin
+* Icons chosen from a collection are stored by name and rendered on the server, so no SVG markup is written into your post content
+* The plugin's bundled icon set is published as an `enable-navigation-icons` icon collection, making all 297 icons available to the core Icon block, to other plugins, and over the REST API
+
+**Cleaner post content on every supported version**
+
+* Icons picked from the built-in library are now stored by name and resolved from data the plugin ships with, so post content stays free of SVG markup on WordPress 6.3 and later, not only on 7.1
+* Content remains portable between sites running any supported WordPress version
+
+**New icon controls**
+
+* Rotate icons, in 15 degree steps, per navigation item or as a Navigation block default
+* Flip icons horizontally and vertically, matching the core Icon block's controls and CSS class names
+* Rotation and flipping combine correctly, and both work for built-in, custom, and collection icons
+
+**Fixes and improvements**
+
+* Fix editor interface strings not being translatable: text domains are now correct throughout and JavaScript strings are included in the translation template
+* Fix icon size and rotation not applying to the editor preview for icons rendered from a collection
+* Only download the icon registry when it is actually needed, rather than on every editor load
+* Match the core Icon block's render model, using the CSS `rotate` property and `box-sizing` on icon SVGs so shared icons render consistently wherever they appear
+* Two bundled icons that core's SVG sanitizer could not represent are now published correctly
+
+**Compatibility**
+
+* Tested with WordPress 7.1
+* Requires WordPress 6.3 or later, and continues to run unchanged on 6.3 through 7.0
+* Existing navigation icons keep working exactly as before, with no migration and no changes to the CSS classes themes target
 
 = 0.2.1 =
 * Confirm compatibility with WordPress 7.0
@@ -155,8 +179,8 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 == Upgrade Notice ==
 
-= 0.3.0 =
-Adds WordPress 7.1 Icon API support and a new icon rotation control. Existing icons are unaffected and no migration is needed.
+= 1.0.0 =
+First stable release. Adds WordPress 7.1 Icon API support, icon rotation and flipping, and fixes editor translations. Existing icons are unaffected and no migration is needed.
 
 = 0.2.1 =
 Confirmed compatibility with WordPress 7.0.
