@@ -117,6 +117,7 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 = 1.1.0 =
 
+* Add 57 new icons, bringing the built-in library to 354. Highlights include bell, cart, envelope, gift, dashboard, send, play, pause, thumbs up and thumbs down, four diagonal arrows, and a set of accordion and tab icons
 * Update the bundled WordPress icon set to @wordpress/icons 15.4, bringing icon artwork in line with current WordPress designs
 * 31 icons have been refreshed upstream and now look slightly different; the "Drafts" and "Unseen" icons changed the most
 * Five icons removed from the upstream package are now bundled with the plugin instead, so any navigation item already using them keeps working unchanged
@@ -133,7 +134,7 @@ First stable release. Adds support for the WordPress Icon API introduced in Word
 
 * Browse icons registered with core's SVG Icon API directly in the icon library, including WordPress core's own icon set and any collection registered by your theme or another plugin
 * Icons chosen from a collection are stored by name and rendered on the server, so no SVG markup is written into your post content
-* The plugin's bundled icon set is published as an `enable-navigation-icons` icon collection, making all 297 icons available to the core Icon block, to other plugins, and over the REST API
+* The plugin's bundled icon set is published as an `enable-navigation-icons` icon collection, making every bundled icon available to the core Icon block, to other plugins, and over the REST API
 
 **Cleaner post content on every supported version**
 
@@ -190,7 +191,7 @@ First stable release. Adds support for the WordPress Icon API introduced in Word
 == Upgrade Notice ==
 
 = 1.1.0 =
-Refreshes the bundled icon artwork to match current WordPress designs. 31 icons look slightly different. No icons were lost and no settings change.
+Adds 57 new icons and refreshes the bundled artwork to match current WordPress designs. 31 icons look slightly different. No icons were lost and no settings change.
 
 = 1.0.1 =
 Packaging fix only, reducing the download size. No functional changes from 1.0.0.

@@ -9,7 +9,7 @@ Easily add icons to Navigation Block items in WordPress.
 ## Features
 
 ### Icon Selection
-- **Icon Library** - Browse and select from a curated collection of WordPress icons
+- **Icon Library** - Browse and select from 354 bundled WordPress and social icons
 - **WordPress Icon API** - On WordPress 7.1+, browse icons registered with core's SVG Icon API, including core's own set and any collection added by your theme or other plugins
 - **Media Library** - Upload and use custom SVG icons from your media library
 - **Custom SVG** - Paste custom SVG code directly for complete flexibility
