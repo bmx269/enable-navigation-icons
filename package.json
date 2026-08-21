@@ -1,6 +1,6 @@
 {
   "name": "enable-navigation-icons",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Easily add icons to Navigation Block items.",
   "author": "Trent Stromkins",
   "license": "GPL-2.0-or-later",
@@ -38,7 +38,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@wordpress/icons": "^9.35.0",
+    "@wordpress/icons": "^15.4.0",
     "@wordpress/scripts": "^32.2.0",
     "webpack-remove-empty-scripts": "^0.8.4"
   },

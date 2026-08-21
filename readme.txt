@@ -4,7 +4,7 @@ Tags: navigation, icons, menu, block editor, gutenberg
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -115,6 +115,12 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 == Changelog ==
 
+= 1.1.0 =
+
+* Update the bundled WordPress icon set to @wordpress/icons 15.4, bringing icon artwork in line with current WordPress designs
+* 31 icons have been refreshed upstream and now look slightly different; the "Drafts" and "Unseen" icons changed the most
+* Five icons removed from the upstream package are now bundled with the plugin instead, so any navigation item already using them keeps working unchanged
+
 = 1.0.1 =
 
 * Fix the distributed plugin package including the repository's version control directory, which inflated the download from roughly 170 KB to 916 KB. No functional changes.
@@ -182,6 +188,9 @@ First stable release. Adds support for the WordPress Icon API introduced in Word
 * Support for Ollie Menu Designer mega menu blocks
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Refreshes the bundled icon artwork to match current WordPress designs. 31 icons look slightly different. No icons were lost and no settings change.
 
 = 1.0.1 =
 Packaging fix only, reducing the download size. No functional changes from 1.0.0.
