@@ -23,6 +23,7 @@ deploy.sh
 package.json
 package-lock.json
 webpack.config.js
+blueprint.json
 .nvmrc
 
 # Build artifacts and OS files

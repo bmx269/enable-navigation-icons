@@ -182,6 +182,7 @@ Icons not yet in the `@wordpress/icons` npm package go in `src/icons/wordpress/t
 - Icon vertical alignment (`top`/`center`/`bottom`) is applied via `align-items` CSS classes on the `<li>` flex container
 - Icon vertical offset uses `position: relative; top:` on the icon `<span>` — independent of alignment
 - `.wordpress-org/blueprints/blueprint.json` is the single Playground blueprint. It must live there: the deploy action syncs `.wordpress-org/` to SVN `assets/`, and WordPress.org's Live Preview button only reads `assets/blueprints/blueprint.json`. It also serves the README Playground link and local dev (`--auto-mount`). Pinned to `wp: latest`
+- The root `blueprint.json` is a **temporary duplicate** kept only so the Playground link in the 1.0.1 readme on WordPress.org (which points at `main/blueprint.json`) keeps working. Keep it identical to `.wordpress-org/blueprints/blueprint.json`; delete it once 1.1.0 is the stable release
 
 ## WordPress Icon API Integration (WordPress 7.1+)
 
