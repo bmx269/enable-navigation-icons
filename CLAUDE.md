@@ -12,7 +12,6 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 │                                      #   Node-targeted bundle that renders icons for the manifest
 ├── scripts/
 │   └── build-icon-manifest.cjs        # Turns the Node bundle into build/icon-manifest.php
-├── blueprint.json                     # WordPress Playground blueprint (hosted + local --auto-mount)
 ├── src/
 │   ├── index.js                       # Editor entry point — registers all block filters
 │   ├── icon-manifest-entry.js         # Build-time only — renders bundled icons to SVG strings
@@ -50,6 +49,7 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 │   └── icon-manifest.php              # Generated icon manifest — ships in the zip, not in git
 ├── languages/                         # POT + PO/MO translation files
 ├── .wordpress-org/                    # WP.org assets (banner-772x250.png, icon-256x256.png, screenshots)
+│   └── blueprints/blueprint.json      # Playground blueprint — WP.org Live Preview, README link, and npm run playground
 ├── .github/workflows/
 │   ├── build.yml                      # CI: runs npm install + lint + build on push/PR to main
 │   └── deploy.yml                     # CD: deploys to WordPress.org SVN on GitHub release published
@@ -152,7 +152,7 @@ The icon `<span>` uses class `wp-block-navigation-item__icon` and is injected in
 
 Icons are organized into two groups in `src/icons/index.js`:
 - **Social icons** (`wordpressSocialIcons`): ~45 brand/social SVGs (custom SVGs in `src/icons/wordpress/social/`)
-- **WordPress icons** (`wordpressIcons`): ~200 icons sourced from `@wordpress/icons` package
+- **WordPress icons** (`wordpressIcons`): ~250 icons sourced from `@wordpress/icons` (pinned to 15.x), plus a handful vendored in `wordpress/retired.js` and `wordpress/temp.js`
 
 Both groups are combined into a single `icons` array with type `"wordpress"` and exported via `getIcons()`, which applies the `iconBlock.icons` filter to allow third-party additions.
 
@@ -181,7 +181,8 @@ Icons not yet in the `@wordpress/icons` npm package go in `src/icons/wordpress/t
 - Editor-side icon preview uses `useStyleOverride()` to inject CSS into the iframed editor — no direct `document` access
 - Icon vertical alignment (`top`/`center`/`bottom`) is applied via `align-items` CSS classes on the `<li>` flex container
 - Icon vertical offset uses `position: relative; top:` on the icon `<span>` — independent of alignment
-- `blueprint.json` supports both hosted Playground (installs from WordPress.org) and local dev (`--auto-mount`). Pinned to `wp: nightly` so the 7.1 Icon API is available
+- `.wordpress-org/blueprints/blueprint.json` is the single Playground blueprint. It must live there: the deploy action syncs `.wordpress-org/` to SVN `assets/`, and WordPress.org's Live Preview button only reads `assets/blueprints/blueprint.json`. It also serves the README Playground link and local dev (`--auto-mount`). Pinned to `wp: latest`
+- The root `blueprint.json` is a **temporary duplicate** kept only so the Playground link in the 1.0.1 readme on WordPress.org (which points at `main/blueprint.json`) keeps working. Keep it identical to `.wordpress-org/blueprints/blueprint.json`; delete it once 1.1.0 is the stable release
 
 ## WordPress Icon API Integration (WordPress 7.1+)
 
@@ -189,6 +190,8 @@ The plugin both **consumes** and **publishes** to core's SVG Icon API, guarded t
 
 - **Consuming**: `useCoreIcons()` fetches `/wp/v2/icon-collections` and `/wp/v2/icons` once per editor session and exposes each collection as an extra inserter type. Note that `WP_REST_Icons_Controller::get_items()` **ignores `page`/`per_page`** and returns the full set in one response — do not paginate it, or every icon will be duplicated.
 - **Storage**: all library picks store only `iconName` with an empty `icon` attribute. Bundled icons store `enable-navigation-icons/<name>` — resolved from the shipped `build/icon-manifest.php` on the server and the bundled JS registry in the editor, so they render on WordPress 6.3+ with **no Icon API needed**. Core/third-party collection picks store their registry name, resolved by `wp_get_icon( $name, [ 'size' => null ] )` (7.1+). Third-party JS icon sets (`iconBlock.icons` filter) are not in the manifest and still embed raw SVG. Legacy content keeps its raw SVG in the `icon` attribute, which takes precedence.
+- **The build rejects unpublishable icons**: `scripts/build-icon-manifest.cjs` exits non-zero, without writing a manifest, if any registry icon cannot be represented in core's allowlist. This is deliberate — such an icon still appears in the editor's library (which reads the JS registry) but resolves to nothing on the frontend, so it fails loudly at build time instead. `<circle>`/`<rect>` are auto-converted; `<g>` is not, and icons relying on group-level attributes such as `opacity` cannot be published at all.
+- **Never lose an icon name**: manifest names are public API, so an icon dropped from `@wordpress/icons` must be vendored into `src/icons/wordpress/retired.js` (verbatim, original geometry) rather than deleted — otherwise stored content silently blanks out. `@wordpress/icons` is bundled, not externalized, so a missing export does **not** fail the build: webpack warns, the value becomes `undefined`, and the manifest generator skips it. Watch the build's `Skipped N icon(s)` line. Beware case-only upstream renames: `formatLTR` and the retired `formatLtr` both normalize to `format-ltr`, so adding the new spelling would collide.
 - **Name normalization**: `src/utils/normalize-icon-name.js` maps JS registry names to manifest names (`wordpress-starFilled` → `wordpress-star-filled`). It is shared by the manifest build and the editor pick flow and MUST stay identical between them; shipped names are public API — never change normalization retroactively.
 - **CSS class continuity**: the own-collection prefix is stripped from `has-icon__*` classes, so a 1.0.0 bundled pick produces the same `has-icon__wordpress-github` class as 0.2.x. Only foreign collections get namespaced classes (`has-icon__core-plus`).
 - **No migration**: a slash in `iconName` is the discriminator between the two paths (`enable_navigation_icons_is_registry_icon()` / `isCoreIconName()`). Bundled names are always bare slugs, so old and new content can never be confused.

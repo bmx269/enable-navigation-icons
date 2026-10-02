@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Enable Navigation Icons 1.0.0\n"
+"Project-Id-Version: Enable Navigation Icons 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/enable-navigation-icons\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-20T16:58:14-07:00\n"
+"POT-Creation-Date: 2026-08-21T12:59:31-07:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: enable-navigation-icons\n"
@@ -111,1033 +111,1261 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: src/icons/index.js:598
+#: src/icons/index.js:657
 msgid "Add Card"
 msgstr ""
 
-#: src/icons/index.js:603
+#: src/icons/index.js:662
 msgid "Add Submenu"
 msgstr ""
 
-#: src/icons/index.js:609
+#: src/icons/index.js:668
 msgid "Align Center"
 msgstr ""
 
-#: src/icons/index.js:615
+#: src/icons/index.js:674
 msgid "Align Justify"
 msgstr ""
 
-#: src/icons/index.js:621
+#: src/icons/index.js:680
 msgid "Align Left"
 msgstr ""
 
-#: src/icons/index.js:627
+#: src/icons/index.js:686
 msgid "Align None"
 msgstr ""
 
-#: src/icons/index.js:633
+#: src/icons/index.js:692
 msgid "Align Right"
 msgstr ""
 
-#: src/icons/index.js:639
+#: src/icons/index.js:698
 msgid "Archive"
 msgstr ""
 
-#: src/icons/index.js:645
+#: src/icons/index.js:704
 msgid "Arrow Down"
 msgstr ""
 
-#: src/icons/index.js:651
+#: src/icons/index.js:710
 msgid "Arrow Left"
 msgstr ""
 
-#: src/icons/index.js:657
+#: src/icons/index.js:716
 msgid "Arrow Right"
 msgstr ""
 
-#: src/icons/index.js:663
+#: src/icons/index.js:722
 msgid "Arrow Up"
 msgstr ""
 
-#: src/icons/index.js:669
+#: src/icons/index.js:728
 msgid "At Symbol"
 msgstr ""
 
-#: src/icons/index.js:674
+#: src/icons/index.js:733
 msgid "Aspect Ratio"
 msgstr ""
 
-#: src/icons/index.js:680
+#: src/icons/index.js:739
 msgid "Audio"
 msgstr ""
 
-#: src/icons/index.js:686
+#: src/icons/index.js:745
 msgid "Backup"
 msgstr ""
 
-#: src/icons/index.js:691
+#: src/icons/index.js:750
 msgid "Block Default"
 msgstr ""
 
-#: src/icons/index.js:697
+#: src/icons/index.js:756
 msgid "Block Table"
 msgstr ""
 
-#: src/icons/index.js:702
+#: src/icons/index.js:761
 msgid "Border"
 msgstr ""
 
-#: src/icons/index.js:707
+#: src/icons/index.js:766
 msgid "Box"
 msgstr ""
 
-#: src/icons/index.js:712
+#: src/icons/index.js:771
 msgid "Brush"
 msgstr ""
 
-#: src/icons/index.js:717
+#: src/icons/index.js:776
 msgid "Bug"
 msgstr ""
 
-#: src/icons/index.js:722
+#: src/icons/index.js:781
 msgid "Button"
 msgstr ""
 
-#: src/icons/index.js:728
+#: src/icons/index.js:787
 msgid "Buttons"
 msgstr ""
 
-#: src/icons/index.js:734
+#: src/icons/index.js:793
 msgid "Calendar"
 msgstr ""
 
-#: src/icons/index.js:740
+#: src/icons/index.js:799
 msgid "Cancel - Circle Filled"
 msgstr ""
 
-#: src/icons/index.js:745
+#: src/icons/index.js:804
 msgid "Caption"
 msgstr ""
 
-#: src/icons/index.js:750
+#: src/icons/index.js:809
 msgid "Capture Photo"
 msgstr ""
 
-#: src/icons/index.js:756
+#: src/icons/index.js:815
 msgid "Capture Video"
 msgstr ""
 
-#: src/icons/index.js:762
+#: src/icons/index.js:821
 msgid "Category"
 msgstr ""
 
-#: src/icons/index.js:768
+#: src/icons/index.js:827
 msgid "Chart Bar"
 msgstr ""
 
-#: src/icons/index.js:773
+#: src/icons/index.js:832
 msgid "Check"
 msgstr ""
 
-#: src/icons/index.js:778
+#: src/icons/index.js:837
 msgid "Chevron Down"
 msgstr ""
 
-#: src/icons/index.js:784
+#: src/icons/index.js:843
 msgid "Chevron Left"
 msgstr ""
 
-#: src/icons/index.js:790
+#: src/icons/index.js:849
 msgid "Chevron Right"
 msgstr ""
 
-#: src/icons/index.js:796
+#: src/icons/index.js:855
 msgid "Chevron Right - Small"
 msgstr ""
 
-#: src/icons/index.js:802
+#: src/icons/index.js:861
 msgid "Chevron Up"
 msgstr ""
 
-#: src/icons/index.js:808
+#: src/icons/index.js:867
 msgid "Chevron Up/Down"
 msgstr ""
 
-#: src/icons/index.js:814
+#: src/icons/index.js:873
 msgid "Classic"
 msgstr ""
 
-#: src/icons/index.js:820
+#: src/icons/index.js:879
 msgid "Close"
 msgstr ""
 
-#: src/icons/index.js:825
+#: src/icons/index.js:884
 msgid "Close - Small"
 msgstr ""
 
-#: src/icons/index.js:830
+#: src/icons/index.js:889
 msgid "Cloud Upload"
 msgstr ""
 
-#: src/icons/index.js:836
+#: src/icons/index.js:895
 msgid "Cloud"
 msgstr ""
 
-#: src/icons/index.js:841
+#: src/icons/index.js:900
 msgid "Code"
 msgstr ""
 
-#: src/icons/index.js:847
+#: src/icons/index.js:906
 msgid "Cog"
 msgstr ""
 
-#: src/icons/index.js:852
+#: src/icons/index.js:911
 msgid "Color"
 msgstr ""
 
-#: src/icons/index.js:857
+#: src/icons/index.js:916
 msgid "Column"
 msgstr ""
 
-#: src/icons/index.js:863
+#: src/icons/index.js:922
 msgid "Columns"
 msgstr ""
 
-#: src/icons/index.js:869
+#: src/icons/index.js:928
 msgid "Comment"
 msgstr ""
 
-#: src/icons/index.js:875
+#: src/icons/index.js:934
 msgid "Comment Author Avatar"
 msgstr ""
 
-#: src/icons/index.js:881
+#: src/icons/index.js:940
 msgid "Comment Author Name"
 msgstr ""
 
-#: src/icons/index.js:887
+#: src/icons/index.js:946
 msgid "Comment Content"
 msgstr ""
 
-#: src/icons/index.js:893
+#: src/icons/index.js:952
 msgid "Comment Edit Link"
 msgstr ""
 
-#: src/icons/index.js:899
+#: src/icons/index.js:958
 msgid "Comment Reply Link"
 msgstr ""
 
-#: src/icons/index.js:905
+#: src/icons/index.js:964
 msgid "Copy"
 msgstr ""
 
-#: src/icons/index.js:910
+#: src/icons/index.js:969
 msgid "Cover"
 msgstr ""
 
-#: src/icons/index.js:916
+#: src/icons/index.js:975
 msgid "Create"
 msgstr ""
 
-#: src/icons/index.js:921
+#: src/icons/index.js:980
 msgid "Crop"
 msgstr ""
 
-#: src/icons/index.js:926
+#: src/icons/index.js:985
 msgid "Currency Dollar"
 msgstr ""
 
-#: src/icons/index.js:931
+#: src/icons/index.js:990
 msgid "Currency Euro"
 msgstr ""
 
-#: src/icons/index.js:936
+#: src/icons/index.js:995
 msgid "Currency Pound"
 msgstr ""
 
-#: src/icons/index.js:941
+#: src/icons/index.js:1000
 msgid "Custom Post Type"
 msgstr ""
 
-#: src/icons/index.js:946
+#: src/icons/index.js:1005
 msgid "Desktop"
 msgstr ""
 
-#: src/icons/index.js:952
+#: src/icons/index.js:1011
 msgid "Drag Handle"
 msgstr ""
 
-#: src/icons/index.js:957
+#: src/icons/index.js:1016
 msgid "Drawer Left"
 msgstr ""
 
-#: src/icons/index.js:963
+#: src/icons/index.js:1022
 msgid "Drawer Right"
 msgstr ""
 
-#: src/icons/index.js:969
+#: src/icons/index.js:1028
 msgid "Download"
 msgstr ""
 
-#: src/icons/index.js:975
+#: src/icons/index.js:1034
 msgid "Edit"
 msgstr ""
 
-#: src/icons/index.js:980
+#: src/icons/index.js:1039
 msgid "External"
 msgstr ""
 
-#: src/icons/index.js:985
+#: src/icons/index.js:1044
 msgid "File"
 msgstr ""
 
-#: src/icons/index.js:990
+#: src/icons/index.js:1049
 msgid "Filter"
 msgstr ""
 
-#: src/icons/index.js:996
+#: src/icons/index.js:1055
 msgid "Flip Horizontal"
 msgstr ""
 
-#: src/icons/index.js:1001
+#: src/icons/index.js:1060
 msgid "Flip Vertical"
 msgstr ""
 
-#: src/icons/index.js:1006
+#: src/icons/index.js:1065
 msgid "Format Bold"
 msgstr ""
 
-#: src/icons/index.js:1012
+#: src/icons/index.js:1071
 msgid "Format Capitalize"
 msgstr ""
 
-#: src/icons/index.js:1018
+#: src/icons/index.js:1077
 msgid "Format Indent"
 msgstr ""
 
-#: src/icons/index.js:1024
+#: src/icons/index.js:1083
 msgid "Format Indent RTL"
 msgstr ""
 
-#: src/icons/index.js:1029
+#: src/icons/index.js:1088
 msgid "Format Italic"
 msgstr ""
 
-#: src/icons/index.js:1035
+#: src/icons/index.js:1094
 msgid "Format List Bullets"
 msgstr ""
 
-#: src/icons/index.js:1041
+#: src/icons/index.js:1100
 msgid "Format List Bullets RTL"
 msgstr ""
 
-#: src/icons/index.js:1047
+#: src/icons/index.js:1106
 msgid "Format List Numbered"
 msgstr ""
 
-#: src/icons/index.js:1053
+#: src/icons/index.js:1112
 msgid "Format List Numbered RTL"
 msgstr ""
 
-#: src/icons/index.js:1059
+#: src/icons/index.js:1118
 msgid "Format LTR"
 msgstr ""
 
-#: src/icons/index.js:1065
+#: src/icons/index.js:1124
 msgid "Format Lowercase"
 msgstr ""
 
-#: src/icons/index.js:1071
+#: src/icons/index.js:1130
 msgid "Format Outdent"
 msgstr ""
 
-#: src/icons/index.js:1077
+#: src/icons/index.js:1136
 msgid "Format Outdent RTL"
 msgstr ""
 
-#: src/icons/index.js:1083
+#: src/icons/index.js:1142
 msgid "Format RTL"
 msgstr ""
 
-#: src/icons/index.js:1089
+#: src/icons/index.js:1148
 msgid "Format Strikethrough"
 msgstr ""
 
-#: src/icons/index.js:1095
+#: src/icons/index.js:1154
 msgid "Format Underline"
 msgstr ""
 
-#: src/icons/index.js:1101
+#: src/icons/index.js:1160
 msgid "Format Uppercase"
 msgstr ""
 
-#: src/icons/index.js:1107
+#: src/icons/index.js:1166
 msgid "Fullscreen"
 msgstr ""
 
-#: src/icons/index.js:1113
+#: src/icons/index.js:1172
 msgid "Gallery"
 msgstr ""
 
-#: src/icons/index.js:1119
+#: src/icons/index.js:1178
 msgid "Globe"
 msgstr ""
 
-#: src/icons/index.js:1124
+#: src/icons/index.js:1183
 msgid "Grid"
 msgstr ""
 
-#: src/icons/index.js:1129
+#: src/icons/index.js:1188
 msgid "Group"
 msgstr ""
 
-#: src/icons/index.js:1135
+#: src/icons/index.js:1194
 msgid "Handle"
 msgstr ""
 
-#: src/icons/index.js:1140
+#: src/icons/index.js:1199
 msgid "Heading"
 msgstr ""
 
-#: src/icons/index.js:1146
+#: src/icons/index.js:1205
 msgid "Help"
 msgstr ""
 
-#: src/icons/index.js:1151
+#: src/icons/index.js:1210
 msgid "Help - Filled"
 msgstr ""
 
-#: src/icons/index.js:1156
+#: src/icons/index.js:1215
 msgid "Inbox"
 msgstr ""
 
-#: src/icons/index.js:1161
+#: src/icons/index.js:1220
 msgid "Institution"
 msgstr ""
 
-#: src/icons/index.js:1166
+#: src/icons/index.js:1225
 msgid "Home"
 msgstr ""
 
-#: src/icons/index.js:1172
+#: src/icons/index.js:1231
 msgid "HTML"
 msgstr ""
 
-#: src/icons/index.js:1179
+#: src/icons/index.js:1238
 msgid "Image"
 msgstr ""
 
-#: src/icons/index.js:1185
+#: src/icons/index.js:1244
 msgid "Info"
 msgstr ""
 
-#: src/icons/index.js:1190
+#: src/icons/index.js:1249
 msgid "Insert After"
 msgstr ""
 
-#: src/icons/index.js:1196
+#: src/icons/index.js:1255
 msgid "Insert Before"
 msgstr ""
 
-#: src/icons/index.js:1202
+#: src/icons/index.js:1261
 msgid "Justify Left"
 msgstr ""
 
-#: src/icons/index.js:1208
+#: src/icons/index.js:1267
 msgid "Justify Center"
 msgstr ""
 
-#: src/icons/index.js:1214
+#: src/icons/index.js:1273
 msgid "Justify Right"
 msgstr ""
 
-#: src/icons/index.js:1220
+#: src/icons/index.js:1279
 msgid "Justify Space Between"
 msgstr ""
 
-#: src/icons/index.js:1226
+#: src/icons/index.js:1285
 msgid "Justify Stretch"
 msgstr ""
 
-#: src/icons/index.js:1232
+#: src/icons/index.js:1291
 msgid "Key"
 msgstr ""
 
-#: src/icons/index.js:1237
+#: src/icons/index.js:1296
 msgid "Keyboard Close"
 msgstr ""
 
-#: src/icons/index.js:1243
+#: src/icons/index.js:1302
 msgid "Keyboard Return"
 msgstr ""
 
-#: src/icons/index.js:1249
+#: src/icons/index.js:1308
 msgid "Layout"
 msgstr ""
 
-#: src/icons/index.js:1254
+#: src/icons/index.js:1313
 msgid "Lifesaver"
 msgstr ""
 
-#: src/icons/index.js:1259
+#: src/icons/index.js:1318
 msgid "Line Dashed"
 msgstr ""
 
-#: src/icons/index.js:1264
+#: src/icons/index.js:1323
 msgid "Line Dotted"
 msgstr ""
 
-#: src/icons/index.js:1269
+#: src/icons/index.js:1328
 msgid "Line Solid"
 msgstr ""
 
-#: src/icons/index.js:1274
+#: src/icons/index.js:1333
 msgid "Link"
 msgstr ""
 
-#: src/icons/index.js:1280
+#: src/icons/index.js:1339
 msgid "Link Off"
 msgstr ""
 
-#: src/icons/index.js:1286
+#: src/icons/index.js:1345
 msgid "List"
 msgstr ""
 
-#: src/icons/index.js:1292
+#: src/icons/index.js:1351
 msgid "List Item"
 msgstr ""
 
-#: src/icons/index.js:1298
+#: src/icons/index.js:1357
 msgid "List View"
 msgstr ""
 
-#: src/icons/index.js:1304
+#: src/icons/index.js:1363
 msgid "Lock"
 msgstr ""
 
-#: src/icons/index.js:1310
+#: src/icons/index.js:1369
 msgid "Lock Outline"
 msgstr ""
 
-#: src/icons/index.js:1316
+#: src/icons/index.js:1375
 msgid "Lock Small"
 msgstr ""
 
-#: src/icons/index.js:1322
+#: src/icons/index.js:1381
 msgid "Login"
 msgstr ""
 
-#: src/icons/index.js:1327
+#: src/icons/index.js:1386
 msgid "Loop"
 msgstr ""
 
-#: src/icons/index.js:1333
+#: src/icons/index.js:1392
 msgid "Map Marker"
 msgstr ""
 
-#: src/icons/index.js:1338
-#: src/icons/index.js:2024
+#: src/icons/index.js:1397
+#: src/icons/index.js:2419
 msgid "Media"
 msgstr ""
 
-#: src/icons/index.js:1344
+#: src/icons/index.js:1403
 msgid "Media & Text"
 msgstr ""
 
-#: src/icons/index.js:1350
+#: src/icons/index.js:1409
 msgid "Megaphone"
 msgstr ""
 
-#: src/icons/index.js:1355
+#: src/icons/index.js:1414
 msgid "Menu"
 msgstr ""
 
-#: src/icons/index.js:1360
+#: src/icons/index.js:1419
 msgid "Mobile"
 msgstr ""
 
-#: src/icons/index.js:1366
+#: src/icons/index.js:1425
 msgid "More"
 msgstr ""
 
-#: src/icons/index.js:1371
+#: src/icons/index.js:1430
 msgid "More Horizontal"
 msgstr ""
 
-#: src/icons/index.js:1376
+#: src/icons/index.js:1435
 msgid "More Horizontal - Mobile"
 msgstr ""
 
-#: src/icons/index.js:1381
+#: src/icons/index.js:1440
 msgid "More Vertical"
 msgstr ""
 
-#: src/icons/index.js:1386
+#: src/icons/index.js:1445
 msgid "Move To"
 msgstr ""
 
-#: src/icons/index.js:1392
+#: src/icons/index.js:1451
 msgid "Navigation"
 msgstr ""
 
-#: src/icons/index.js:1397
+#: src/icons/index.js:1456
 msgid "Overlay Text"
 msgstr ""
 
-#: src/icons/index.js:1402
+#: src/icons/index.js:1461
 msgid "Page Break"
 msgstr ""
 
-#: src/icons/index.js:1407
+#: src/icons/index.js:1466
 msgid "Custom Link"
 msgstr ""
 
-#: src/icons/index.js:1412
+#: src/icons/index.js:1471
 msgid "Page"
 msgstr ""
 
-#: src/icons/index.js:1417
+#: src/icons/index.js:1476
 msgid "Pages"
 msgstr ""
 
-#: src/icons/index.js:1422
+#: src/icons/index.js:1481
 msgid "Paragraph"
 msgstr ""
 
-#: src/icons/index.js:1427
+#: src/icons/index.js:1486
 msgid "Payment"
 msgstr ""
 
-#: src/icons/index.js:1432
+#: src/icons/index.js:1491
 msgid "Percent"
 msgstr ""
 
-#: src/icons/index.js:1437
+#: src/icons/index.js:1496
 msgid "Position Center"
 msgstr ""
 
-#: src/icons/index.js:1442
+#: src/icons/index.js:1501
 msgid "Position Left"
 msgstr ""
 
-#: src/icons/index.js:1447
+#: src/icons/index.js:1506
 msgid "Position Right"
 msgstr ""
 
-#: src/icons/index.js:1452
+#: src/icons/index.js:1511
 msgid "Post"
 msgstr ""
 
-#: src/icons/index.js:1457
+#: src/icons/index.js:1516
 msgid "Pencil"
 msgstr ""
 
-#: src/icons/index.js:1462
+#: src/icons/index.js:1521
 msgid "People"
 msgstr ""
 
-#: src/icons/index.js:1467
+#: src/icons/index.js:1526
 msgid "Pin"
 msgstr ""
 
-#: src/icons/index.js:1472
+#: src/icons/index.js:1531
 msgid "Plugins"
 msgstr ""
 
-#: src/icons/index.js:1477
+#: src/icons/index.js:1536
 msgid "Plus Circle - Filled"
 msgstr ""
 
-#: src/icons/index.js:1482
+#: src/icons/index.js:1541
 msgid "Plus Circle"
 msgstr ""
 
-#: src/icons/index.js:1487
+#: src/icons/index.js:1546
 msgid "Plus"
 msgstr ""
 
-#: src/icons/index.js:1492
+#: src/icons/index.js:1551
 msgid "Post Author"
 msgstr ""
 
-#: src/icons/index.js:1498
+#: src/icons/index.js:1557
 msgid "Post Categories"
 msgstr ""
 
-#: src/icons/index.js:1504
+#: src/icons/index.js:1563
 msgid "Post Content"
 msgstr ""
 
-#: src/icons/index.js:1510
+#: src/icons/index.js:1569
 msgid "Post Comments"
 msgstr ""
 
-#: src/icons/index.js:1516
+#: src/icons/index.js:1575
 msgid "Post Comment Count"
 msgstr ""
 
-#: src/icons/index.js:1521
+#: src/icons/index.js:1580
 msgid "Post Comments Form"
 msgstr ""
 
-#: src/icons/index.js:1527
+#: src/icons/index.js:1586
 msgid "Post Date"
 msgstr ""
 
-#: src/icons/index.js:1533
+#: src/icons/index.js:1592
 msgid "Post Excerpt"
 msgstr ""
 
-#: src/icons/index.js:1539
+#: src/icons/index.js:1598
 msgid "Post Featured Image"
 msgstr ""
 
-#: src/icons/index.js:1545
+#: src/icons/index.js:1604
 msgid "Post List"
 msgstr ""
 
-#: src/icons/index.js:1551
+#: src/icons/index.js:1610
 msgid "Post Terms"
 msgstr ""
 
-#: src/icons/index.js:1557
+#: src/icons/index.js:1616
 msgid "Previous"
 msgstr ""
 
-#: src/icons/index.js:1563
+#: src/icons/index.js:1622
 msgid "Next"
 msgstr ""
 
-#: src/icons/index.js:1569
+#: src/icons/index.js:1628
 msgid "Preformatted"
 msgstr ""
 
-#: src/icons/index.js:1574
+#: src/icons/index.js:1633
 msgid "Pull Left"
 msgstr ""
 
-#: src/icons/index.js:1579
+#: src/icons/index.js:1638
 msgid "Pull Right"
 msgstr ""
 
-#: src/icons/index.js:1584
+#: src/icons/index.js:1643
 msgid "Pull Quote"
 msgstr ""
 
-#: src/icons/index.js:1589
+#: src/icons/index.js:1648
 msgid "Query Pagination"
 msgstr ""
 
-#: src/icons/index.js:1594
+#: src/icons/index.js:1653
 msgid "Query Pagination Next"
 msgstr ""
 
-#: src/icons/index.js:1600
+#: src/icons/index.js:1659
 msgid "Query Pagination Numbers"
 msgstr ""
 
-#: src/icons/index.js:1605
+#: src/icons/index.js:1664
 msgid "Query Pagination Previous"
 msgstr ""
 
-#: src/icons/index.js:1611
+#: src/icons/index.js:1670
 msgid "Quote"
 msgstr ""
 
-#: src/icons/index.js:1617
+#: src/icons/index.js:1676
 msgid "Receipt"
 msgstr ""
 
-#: src/icons/index.js:1622
+#: src/icons/index.js:1681
 msgid "Redo"
 msgstr ""
 
-#: src/icons/index.js:1628
+#: src/icons/index.js:1687
 msgid "Remove Bug"
 msgstr ""
 
-#: src/icons/index.js:1633
+#: src/icons/index.js:1692
 msgid "Remove Submenu"
 msgstr ""
 
-#: src/icons/index.js:1638
+#: src/icons/index.js:1697
 msgid "Replace"
 msgstr ""
 
-#: src/icons/index.js:1644
+#: src/icons/index.js:1703
 #: src/index.js:626
 msgid "Reset"
 msgstr ""
 
-#: src/icons/index.js:1650
+#: src/icons/index.js:1709
 msgid "Resize Corner"
 msgstr ""
 
-#: src/icons/index.js:1656
+#: src/icons/index.js:1715
 msgid "Reusable Block"
 msgstr ""
 
-#: src/icons/index.js:1662
+#: src/icons/index.js:1721
 msgid "Rotate Left"
 msgstr ""
 
-#: src/icons/index.js:1668
+#: src/icons/index.js:1727
 msgid "Rotate Right"
 msgstr ""
 
-#: src/icons/index.js:1674
+#: src/icons/index.js:1733
 msgid "Row"
 msgstr ""
 
-#: src/icons/index.js:1679
+#: src/icons/index.js:1738
 msgid "RSS"
 msgstr ""
 
-#: src/icons/index.js:1684
+#: src/icons/index.js:1743
 msgid "Search"
 msgstr ""
 
-#: src/icons/index.js:1690
+#: src/icons/index.js:1749
 msgid "Seen"
 msgstr ""
 
-#: src/icons/index.js:1696
+#: src/icons/index.js:1755
 msgid "Separator"
 msgstr ""
 
-#: src/icons/index.js:1702
+#: src/icons/index.js:1761
 msgid "Settings"
 msgstr ""
 
-#: src/icons/index.js:1707
+#: src/icons/index.js:1766
 msgid "Shadow"
 msgstr ""
 
-#: src/icons/index.js:1713
+#: src/icons/index.js:1772
 msgid "Share"
 msgstr ""
 
-#: src/icons/index.js:1718
+#: src/icons/index.js:1777
 msgid "Shield"
 msgstr ""
 
-#: src/icons/index.js:1723
+#: src/icons/index.js:1782
 msgid "Shortcode"
 msgstr ""
 
-#: src/icons/index.js:1729
+#: src/icons/index.js:1788
 msgid "Shuffle"
 msgstr ""
 
-#: src/icons/index.js:1734
+#: src/icons/index.js:1793
 msgid "Site Logo"
 msgstr ""
 
-#: src/icons/index.js:1741
+#: src/icons/index.js:1800
 msgid "Sparkles"
 msgstr ""
 
-#: src/icons/index.js:1746
+#: src/icons/index.js:1805
 msgid "Stack"
 msgstr ""
 
-#: src/icons/index.js:1751
+#: src/icons/index.js:1810
 msgid "Star Empty"
 msgstr ""
 
-#: src/icons/index.js:1756
+#: src/icons/index.js:1815
 msgid "Star Filled"
 msgstr ""
 
-#: src/icons/index.js:1761
+#: src/icons/index.js:1820
 msgid "Star Half"
 msgstr ""
 
-#: src/icons/index.js:1766
+#: src/icons/index.js:1825
 msgid "Store"
 msgstr ""
 
-#: src/icons/index.js:1771
+#: src/icons/index.js:1830
 msgid "Stretch Full Width"
 msgstr ""
 
-#: src/icons/index.js:1777
+#: src/icons/index.js:1836
 msgid "Styles"
 msgstr ""
 
-#: src/icons/index.js:1783
+#: src/icons/index.js:1842
 msgid "Shipping"
 msgstr ""
 
-#: src/icons/index.js:1789
+#: src/icons/index.js:1848
 msgid "Stretch Wide"
 msgstr ""
 
-#: src/icons/index.js:1795
+#: src/icons/index.js:1854
 msgid "Subscript"
 msgstr ""
 
-#: src/icons/index.js:1801
+#: src/icons/index.js:1860
 msgid "Superscript"
 msgstr ""
 
-#: src/icons/index.js:1807
+#: src/icons/index.js:1866
 msgid "Swatch"
 msgstr ""
 
-#: src/icons/index.js:1812
+#: src/icons/index.js:1871
 msgid "Symbol"
 msgstr ""
 
-#: src/icons/index.js:1817
+#: src/icons/index.js:1876
 msgid "Symbol - Filled"
 msgstr ""
 
-#: src/icons/index.js:1822
+#: src/icons/index.js:1881
 msgid "Table Column After"
 msgstr ""
 
-#: src/icons/index.js:1828
+#: src/icons/index.js:1887
 msgid "Table Column Before"
 msgstr ""
 
-#: src/icons/index.js:1834
+#: src/icons/index.js:1893
 msgid "Table Column Delete"
 msgstr ""
 
-#: src/icons/index.js:1840
+#: src/icons/index.js:1899
 msgid "Table Row After"
 msgstr ""
 
-#: src/icons/index.js:1846
+#: src/icons/index.js:1905
 msgid "Table Row Before"
 msgstr ""
 
-#: src/icons/index.js:1852
+#: src/icons/index.js:1911
 msgid "Table Row Delete"
 msgstr ""
 
-#: src/icons/index.js:1858
+#: src/icons/index.js:1917
 msgid "Table"
 msgstr ""
 
-#: src/icons/index.js:1863
+#: src/icons/index.js:1922
 msgid "Tag"
 msgstr ""
 
-#: src/icons/index.js:1868
+#: src/icons/index.js:1927
 msgid "Term Description"
 msgstr ""
 
-#: src/icons/index.js:1874
+#: src/icons/index.js:1933
 msgid "Footer"
 msgstr ""
 
-#: src/icons/index.js:1879
+#: src/icons/index.js:1938
 msgid "Header"
 msgstr ""
 
-#: src/icons/index.js:1884
+#: src/icons/index.js:1943
 msgid "Sidebar"
 msgstr ""
 
-#: src/icons/index.js:1889
+#: src/icons/index.js:1948
 msgid "Text Color"
 msgstr ""
 
-#: src/icons/index.js:1894
+#: src/icons/index.js:1953
 msgid "Tablet"
 msgstr ""
 
-#: src/icons/index.js:1900
+#: src/icons/index.js:1959
 msgid "Title"
 msgstr ""
 
-#: src/icons/index.js:1905
+#: src/icons/index.js:1964
 msgid "Tip"
 msgstr ""
 
-#: src/icons/index.js:1910
+#: src/icons/index.js:1969
 msgid "Tool"
 msgstr ""
 
-#: src/icons/index.js:1915
+#: src/icons/index.js:1974
 msgid "Trash"
 msgstr ""
 
-#: src/icons/index.js:1920
+#: src/icons/index.js:1979
 msgid "Trending Down"
 msgstr ""
 
-#: src/icons/index.js:1926
+#: src/icons/index.js:1985
 msgid "Trending Up"
 msgstr ""
 
-#: src/icons/index.js:1932
+#: src/icons/index.js:1991
 msgid "Typography"
 msgstr ""
 
-#: src/icons/index.js:1937
+#: src/icons/index.js:1996
 msgid "Undo"
 msgstr ""
 
-#: src/icons/index.js:1943
+#: src/icons/index.js:2002
 msgid "Ungroup"
 msgstr ""
 
-#: src/icons/index.js:1949
+#: src/icons/index.js:2008
 msgid "Unlock"
 msgstr ""
 
-#: src/icons/index.js:1955
+#: src/icons/index.js:2014
 msgid "Unseen"
 msgstr ""
 
-#: src/icons/index.js:1961
+#: src/icons/index.js:2020
 msgid "Update"
 msgstr ""
 
-#: src/icons/index.js:1966
+#: src/icons/index.js:2025
 msgid "Upload"
 msgstr ""
 
-#: src/icons/index.js:1973
+#: src/icons/index.js:2032
 msgid "Verse"
 msgstr ""
 
-#: src/icons/index.js:1979
+#: src/icons/index.js:2038
 msgid "Video"
 msgstr ""
 
-#: src/icons/index.js:1985
+#: src/icons/index.js:2044
 msgid "Warning"
 msgstr ""
 
-#: src/icons/index.js:1990
+#: src/icons/index.js:2049
 msgid "Widget"
 msgstr ""
 
-#: src/icons/index.js:1999
+#: src/icons/index.js:2056
+msgid "Accordion"
+msgstr ""
+
+#: src/icons/index.js:2062
+msgid "Accordion Heading"
+msgstr ""
+
+#: src/icons/index.js:2068
+msgid "Accordion Item"
+msgstr ""
+
+#: src/icons/index.js:2074
+msgid "Arrow Down Left"
+msgstr ""
+
+#: src/icons/index.js:2080
+msgid "Arrow Down Right"
+msgstr ""
+
+#: src/icons/index.js:2086
+msgid "Arrow Up Left"
+msgstr ""
+
+#: src/icons/index.js:2092
+msgid "Arrow Up Right"
+msgstr ""
+
+#: src/icons/index.js:2098
+msgid "Background"
+msgstr ""
+
+#: src/icons/index.js:2104
+msgid "Bell"
+msgstr ""
+
+#: src/icons/index.js:2109
+msgid "Bell Unread"
+msgstr ""
+
+#: src/icons/index.js:2114
+msgid "Breadcrumbs"
+msgstr ""
+
+#: src/icons/index.js:2120
+msgid "Cart"
+msgstr ""
+
+#: src/icons/index.js:2125
+msgid "Caution"
+msgstr ""
+
+#: src/icons/index.js:2131
+msgid "Caution Filled"
+msgstr ""
+
+#: src/icons/index.js:2137
+msgid "Chevron Up Small"
+msgstr ""
+
+#: src/icons/index.js:2143
+msgid "Cloud Download"
+msgstr ""
+
+#: src/icons/index.js:2149
+msgid "Contents"
+msgstr ""
+
+#: src/icons/index.js:2155
+msgid "Corner All"
+msgstr ""
+
+#: src/icons/index.js:2161
+msgid "Dashboard"
+msgstr ""
+
+#: src/icons/index.js:2166
+msgid "Envelope"
+msgstr ""
+
+#: src/icons/index.js:2171
+msgid "Error"
+msgstr ""
+
+#: src/icons/index.js:2177
+msgid "Full Height"
+msgstr ""
+
+#: src/icons/index.js:2183
+msgid "Gift"
+msgstr ""
+
+#: src/icons/index.js:2188
+msgid "Home Button"
+msgstr ""
+
+#: src/icons/index.js:2194
+msgid "Inline Image"
+msgstr ""
+
+#: src/icons/index.js:2200
+msgid "Justify Bottom"
+msgstr ""
+
+#: src/icons/index.js:2206
+msgid "Justify Center Vertical"
+msgstr ""
+
+#: src/icons/index.js:2212
+msgid "Justify Space Between Vertical"
+msgstr ""
+
+#: src/icons/index.js:2221
+msgid "Justify Stretch Vertical"
+msgstr ""
+
+#: src/icons/index.js:2227
+msgid "Justify Top"
+msgstr ""
+
+#: src/icons/index.js:2233
+msgid "Math"
+msgstr ""
+
+#: src/icons/index.js:2239
+msgid "Navigation Overlay"
+msgstr ""
+
+#: src/icons/index.js:2245
+msgid "Not Allowed"
+msgstr ""
+
+#: src/icons/index.js:2251
+msgid "Pause"
+msgstr ""
+
+#: src/icons/index.js:2257
+msgid "Pending"
+msgstr ""
+
+#: src/icons/index.js:2263
+msgid "Play"
+msgstr ""
+
+#: src/icons/index.js:2269
+msgid "Playlist"
+msgstr ""
+
+#: src/icons/index.js:2275
+msgid "Playlist Track"
+msgstr ""
+
+#: src/icons/index.js:2281
+msgid "Published"
+msgstr ""
+
+#: src/icons/index.js:2287
+msgid "Repeat"
+msgstr ""
+
+#: src/icons/index.js:2293
+msgid "Repeat All"
+msgstr ""
+
+#: src/icons/index.js:2299
+msgid "Replay"
+msgstr ""
+
+#: src/icons/index.js:2305
+msgid "Scheduled"
+msgstr ""
+
+#: src/icons/index.js:2311
+msgid "Send"
+msgstr ""
+
+#: src/icons/index.js:2316
+msgid "Sites"
+msgstr ""
+
+#: src/icons/index.js:2321
+msgid "Skip Back"
+msgstr ""
+
+#: src/icons/index.js:2327
+msgid "Skip Forward"
+msgstr ""
+
+#: src/icons/index.js:2333
+msgid "Square"
+msgstr ""
+
+#: src/icons/index.js:2339
+msgid "Tab List"
+msgstr ""
+
+#: src/icons/index.js:2345
+msgid "Tab Panel"
+msgstr ""
+
+#: src/icons/index.js:2351
+msgid "Tabs"
+msgstr ""
+
+#: src/icons/index.js:2357
+msgid "Term Count"
+msgstr ""
+
+#: src/icons/index.js:2363
+msgid "Term Name"
+msgstr ""
+
+#: src/icons/index.js:2369
+msgid "Thumbs Down"
+msgstr ""
+
+#: src/icons/index.js:2374
+msgid "Thumbs Up"
+msgstr ""
+
+#: src/icons/index.js:2379
+msgid "Time"
+msgstr ""
+
+#: src/icons/index.js:2384
+msgid "Word Count"
+msgstr ""
+
+#: src/icons/index.js:2394
 msgid "WordPress"
 msgstr ""
 
-#: src/icons/index.js:2004
+#: src/icons/index.js:2399
 msgid "Arrows"
 msgstr ""
 
-#: src/icons/index.js:2008
+#: src/icons/index.js:2403
 msgid "Blocks"
 msgstr ""
 
-#: src/icons/index.js:2012
+#: src/icons/index.js:2407
 msgid "Devices"
 msgstr ""
 
-#: src/icons/index.js:2016
+#: src/icons/index.js:2411
 msgid "Editor"
 msgstr ""
 
-#: src/icons/index.js:2020
+#: src/icons/index.js:2415
 msgid "Logos"
 msgstr ""
 
