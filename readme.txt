@@ -21,18 +21,21 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 = Key Features =
 
 **Icon Selection**
+
 * Browse and select from a curated collection of WordPress icons
 * Browse icons registered with the WordPress Icon API on WordPress 7.1+, including core's icon set and any collection added by your theme or other plugins
 * Upload and use custom SVG icons from your media library
 * Paste custom SVG code directly for complete flexibility
 
 **Icon Positioning**
+
 * Position icons before or after navigation link text (left/right)
 * Space between justification for full-width layouts
 * Vertical alignment options (top, center, bottom) for multi-line menu items
 * Fine-tune icon position with vertical offset (supports px, %, em, rem units)
 
 **Icon Styling**
+
 * Adjust icon dimensions with a slider control (supports px, em, rem units)
 * Control the gap between icon and text (supports px, em, rem units)
 * Choose from theme colors or set a custom color
@@ -41,7 +44,9 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 * Support for stroke-based icons with "No Fill" option (e.g., Lucide icons)
 
 **Navigation Block Default Settings**
+
 Set default icon settings at the Navigation block level that apply to all child navigation items:
+
 * Configure size, spacing, color, position, vertical alignment, offset, rotation, flipping, and styling once for the entire navigation
 * Individual navigation items can inherit defaults or use custom settings
 * Works seamlessly with multiple and nested Navigation blocks
@@ -50,13 +55,17 @@ Set default icon settings at the Navigation block level that apply to all child 
 This feature streamlines icon management for large navigation menus by eliminating repetitive configuration while maintaining flexibility for individual items.
 
 **Ollie Menu Designer Integration**
+
 Full support for the Ollie Menu Designer plugin's mega menu dropdown items:
+
 * Add icons to Ollie mega menu dropdown navigation items
 * Same icon selection and styling options as standard navigation items
 * Works seamlessly with Ollie themes and the Menu Designer plugin
 
 **WordPress Icon API Support (WordPress 7.1+)**
+
 On WordPress 7.1 and later the plugin integrates with the new SVG Icon API in both directions:
+
 * Icons registered with the Icon API appear in the icon library alongside the plugin's bundled icons
 * Icons chosen from the registry are stored by name and rendered server-side, so no SVG markup is written into your post content
 * The plugin's own icon set is published as an `enable-navigation-icons` collection, making it available to the core Icon block, to other plugins, and over the REST API
@@ -155,11 +164,13 @@ First stable release. Adds support for the WordPress Icon API introduced in Word
 * Existing navigation icons keep working exactly as before, with no migration and no changes to the CSS classes themes target
 
 = 0.2.1 =
+
 * Confirm compatibility with WordPress 7.0
 * Update npm dependencies
 * Remove legacy WordPress 6.1 fallback code (minimum version is 6.3)
 
 = 0.2.0 =
+
 * Add icon vertical alignment option (top, center, bottom) for multi-line menu items
 * Add icon vertical offset for fine-tuning icon position (supports px, %, em, rem units)
 * Add WordPress Playground support for local development and testing
@@ -167,12 +178,14 @@ First stable release. Adds support for the WordPress Icon API introduced in Word
 * Update Node.js to 22 LTS and update npm dependencies
 
 = 0.1.1 =
+
 * Fix submenu icon not appearing on parent item when children have their own icons
 * Fix icon injection for submenu items rendered as button elements (click-to-open mode)
 * Fix icon styles leaking from parent submenu into child navigation items in editor and frontend
 * Fix block error when adding custom icon to navigation item with no existing icon
 
 = 0.1.0 =
+
 * Initial release
 * Icon selection (library, media, custom SVG)
 * Icon positioning (left/right, space between)
