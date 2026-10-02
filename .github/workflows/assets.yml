@@ -17,3 +17,6 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: enable-navigation-icons
+          # Commit only assets/ and readme.txt. Without this, the action syncs the
+          # unbuilt repo into trunk, sees build/ as deleted, and aborts.
+          IGNORE_OTHER_FILES: true
