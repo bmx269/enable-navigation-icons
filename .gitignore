@@ -43,3 +43,6 @@ logs
 *.log
 *.sql
 *.sqlite
+
+# Working files (previews, renders, notes) kept out of git
+scratch/

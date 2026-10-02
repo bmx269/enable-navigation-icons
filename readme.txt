@@ -117,10 +117,9 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 
 == Screenshots ==
 
-1. Icon selection interface showing library, media, and custom SVG options
-2. Icon positioning and styling controls in the block sidebar
-3. Navigation block with default icon settings panel
-4. Example navigation with icons in various styles and positions
+1. How it works: add an icon from the block toolbar, pick one from the library, the Media Library or your own SVG, then style it per item or for the whole menu from the Navigation block.
+2. Navigation items with icons in the editor. The block toolbar shows Replace icon once an item has one.
+3. The Add icon menu offers the icon library, the Media Library or custom SVG code. Select the Navigation block to set Default Icon Settings for every item.
 
 == Changelog ==
 
