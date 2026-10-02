@@ -59,7 +59,7 @@ export default function InserterModal( props ) {
 								),
 								type.title
 							),
-					  }
+						}
 					: type
 			);
 
