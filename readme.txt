@@ -14,7 +14,7 @@ Easily add icons to Navigation Block items in WordPress.
 
 Enable Navigation Icons makes it simple to add and customize icons for your WordPress Navigation Block items. Whether you're building a simple menu or complex mega menu navigation, this plugin provides intuitive controls for adding beautiful icons to your navigation links.
 
-**[Try it in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bmx269/enable-navigation-icons/main/blueprint.json)** — test the plugin instantly in your browser, no installation required.
+**[Try it in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bmx269/enable-navigation-icons/main/.wordpress-org/blueprints/blueprint.json)** — test the plugin instantly in your browser, no installation required.
 
 **Recommended Companion Plugin:** Use the [Icon Block](https://wordpress.org/plugins/icon-block/) plugin to add custom icon sets and expand your icon library options. Icon Block is a powerful companion that allows you to register additional icon libraries for use with Enable Navigation Icons.
 
@@ -71,6 +71,11 @@ All of this is additive. Existing navigation icons keep working exactly as befor
 * `core/navigation-link` - Standard navigation links
 * `core/navigation-submenu` - Submenu/dropdown navigation items
 * `ollie/mega-menu` - Ollie Menu Designer dropdown menu items (requires Ollie Menu Designer plugin)
+
+= Support & Contribute =
+
+* **Support:** ask questions and report problems in the [support forum](https://wordpress.org/support/plugin/enable-navigation-icons/).
+* **Contribute:** the code lives on [GitHub](https://github.com/bmx269/enable-navigation-icons). Bug reports and pull requests are welcome in the [issue tracker](https://github.com/bmx269/enable-navigation-icons/issues).
 
 = Credits =
 

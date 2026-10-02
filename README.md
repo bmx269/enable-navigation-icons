@@ -2,7 +2,7 @@
 
 Easily add icons to Navigation Block items in WordPress.
 
-**[Try it in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bmx269/enable-navigation-icons/main/blueprint.json)** — test the plugin instantly in your browser, no installation required.
+**[Try it in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bmx269/enable-navigation-icons/main/.wordpress-org/blueprints/blueprint.json)** — test the plugin instantly in your browser, no installation required.
 
 **Recommended Companion Plugin:** Use the [Icon Block](https://wordpress.org/plugins/icon-block/) plugin to add custom icon sets and expand your icon library options. Icon Block is a powerful companion that allows you to register additional icon libraries for use with Enable Navigation Icons.
 
@@ -142,6 +142,12 @@ npm run build
 # Launch WordPress Playground with plugin
 npm run playground
 ```
+
+## Support & Contribute
+
+- **Support:** [WordPress.org support forum](https://wordpress.org/support/plugin/enable-navigation-icons/)
+- **Bugs and feature requests:** [GitHub issues](https://github.com/bmx269/enable-navigation-icons/issues)
+- **Contribute:** pull requests are welcome against `main`.
 
 ## Acknowledgments
 

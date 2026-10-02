@@ -12,7 +12,6 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 │                                      #   Node-targeted bundle that renders icons for the manifest
 ├── scripts/
 │   └── build-icon-manifest.cjs        # Turns the Node bundle into build/icon-manifest.php
-├── blueprint.json                     # WordPress Playground blueprint (hosted + local --auto-mount)
 ├── src/
 │   ├── index.js                       # Editor entry point — registers all block filters
 │   ├── icon-manifest-entry.js         # Build-time only — renders bundled icons to SVG strings
@@ -50,6 +49,7 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 │   └── icon-manifest.php              # Generated icon manifest — ships in the zip, not in git
 ├── languages/                         # POT + PO/MO translation files
 ├── .wordpress-org/                    # WP.org assets (banner-772x250.png, icon-256x256.png, screenshots)
+│   └── blueprints/blueprint.json      # Playground blueprint — WP.org Live Preview, README link, and npm run playground
 ├── .github/workflows/
 │   ├── build.yml                      # CI: runs npm install + lint + build on push/PR to main
 │   └── deploy.yml                     # CD: deploys to WordPress.org SVN on GitHub release published
@@ -181,7 +181,7 @@ Icons not yet in the `@wordpress/icons` npm package go in `src/icons/wordpress/t
 - Editor-side icon preview uses `useStyleOverride()` to inject CSS into the iframed editor — no direct `document` access
 - Icon vertical alignment (`top`/`center`/`bottom`) is applied via `align-items` CSS classes on the `<li>` flex container
 - Icon vertical offset uses `position: relative; top:` on the icon `<span>` — independent of alignment
-- `blueprint.json` supports both hosted Playground (installs from WordPress.org) and local dev (`--auto-mount`). Pinned to `wp: nightly` so the 7.1 Icon API is available
+- `.wordpress-org/blueprints/blueprint.json` is the single Playground blueprint. It must live there: the deploy action syncs `.wordpress-org/` to SVN `assets/`, and WordPress.org's Live Preview button only reads `assets/blueprints/blueprint.json`. It also serves the README Playground link and local dev (`--auto-mount`). Pinned to `wp: latest`
 
 ## WordPress Icon API Integration (WordPress 7.1+)
 

@@ -19,7 +19,7 @@
     "packages-update": "wp-scripts packages-update",
     "update-pot": "wp i18n make-pot . languages/enable-navigation-icons.pot --exclude=build,scripts",
     "plugin-zip": "wp-scripts plugin-zip",
-    "playground": "npx @wp-playground/cli@latest server --blueprint=blueprint.json --auto-mount"
+    "playground": "npx @wp-playground/cli@latest server --blueprint=.wordpress-org/blueprints/blueprint.json --auto-mount"
   },
   "dependencies": {
     "@wordpress/api-fetch": "^7.41.0",
