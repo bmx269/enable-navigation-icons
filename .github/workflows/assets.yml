@@ -1,6 +1,14 @@
 name: Deploy assets to WordPress.org
 
+# Pushes readme.txt and .wordpress-org/ changes to SVN between releases.
+# Plugin code and version bumps ship through deploy.yml on a GitHub release.
+
 on:
+  push:
+    branches: [main]
+    paths:
+      - readme.txt
+      - .wordpress-org/**
   workflow_dispatch:
 
 jobs:
@@ -10,6 +18,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # A Stable tag that is not yet released would point WordPress.org at a
+      # missing tag. Version bumps ship through the deploy workflow instead.
+      - name: Check Stable tag is already released
+        run: |
+          STABLE=$(grep -m1 "^Stable tag:" readme.txt | sed 's/.*Stable tag:[[:space:]]*//' | tr -d '[:space:]')
+          if ! git tag --list | sed 's/^v//' | grep -qx "$STABLE"; then
+            echo "Stable tag $STABLE has no git tag yet. Publish a release to deploy it."
+            exit 1
+          fi
 
       - name: WordPress.org plugin asset/readme update
         uses: 10up/action-wordpress-plugin-asset-update@stable
