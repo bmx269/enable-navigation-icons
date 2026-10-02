@@ -50,6 +50,8 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 │   └── icon-manifest.php              # Generated icon manifest — ships in the zip, not in git
 ├── languages/                         # POT + PO/MO translation files
 ├── .wordpress-org/                    # WP.org assets (banner-772x250.png, icon-256x256.png, screenshots)
+├── .wordpress-org-src/                # HTML sources + render.mjs for drawn WP.org images (screenshot 1)
+├── scratch/                           # Gitignored working dir: previews, renders, notes. Use instead of /tmp
 ├── .github/workflows/
 │   ├── build.yml                      # CI: runs npm install + lint + build on push/PR to main
 │   └── deploy.yml                     # CD: deploys to WordPress.org SVN on GitHub release published

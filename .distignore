@@ -6,6 +6,8 @@
 /.claude
 /.github
 /.wordpress-org
+/.wordpress-org-src
+/scratch
 /node_modules
 /scripts
 /src
