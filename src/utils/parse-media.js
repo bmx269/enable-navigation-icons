@@ -7,9 +7,9 @@ import { displayMessages } from './display-messages';
  * Parse a saved SVG file in the Media Library as a string and
  * set the icon attribute.
  *
- * @param {Object}   media         The media object for the selected SVG file.
- * @param {Object}   attributes    All set block attributes.
- * @param {Function} setAttributes Sets the block attributes.
+ * @param {Object}                  media         The media object for the selected SVG file.
+ * @param {Object}                  attributes    All set block attributes.
+ * @param {(attrs: Object) => void} setAttributes Sets the block attributes.
  */
 export function parseUploadedMediaAndSetIcon(
 	media,
@@ -46,8 +46,8 @@ export function parseUploadedMediaAndSetIcon(
 /**
  * Parse the SVG file dropped in the DropZone and set the icon if valid.
  *
- * @param {string}   media         The media object for the selected SVG file.
- * @param {Function} setAttributes Sets the block attributes.
+ * @param {string}                  media         The media object for the selected SVG file.
+ * @param {(attrs: Object) => void} setAttributes Sets the block attributes.
  */
 export function parseDroppedMediaAndSetIcon( media, setAttributes ) {
 	const svgString = sanitizeRawSVGString( media );

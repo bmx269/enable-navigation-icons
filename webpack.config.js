@@ -64,9 +64,7 @@ const iconManifestConfig = {
 					loader: require.resolve( 'babel-loader' ),
 					options: {
 						presets: [
-							require.resolve(
-								'@wordpress/babel-preset-default'
-							),
+							require.resolve( '@wordpress/babel-preset-default' ),
 						],
 					},
 				},

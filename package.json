@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@wordpress/icons": "^9.35.0",
-    "@wordpress/scripts": "^32.2.0",
-    "playwright": "1.60.0",
+    "@wordpress/scripts": "^36.0.0",
+    "playwright": "1.63.0",
     "webpack-remove-empty-scripts": "^0.8.4"
   },
   "overrides": {
