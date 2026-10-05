@@ -1,0 +1,142 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>How it works</title>
+<style>
+@font-face { font-family: Raleway; src: url(https://cdn.jsdelivr.net/npm/@fontsource-variable/raleway/files/raleway-latin-wght-normal.woff2) format('woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Open Sans'; src: url(https://cdn.jsdelivr.net/npm/@fontsource-variable/open-sans/files/open-sans-latin-wght-normal.woff2) format('woff2'); font-weight: 300 800; }
+:root { --navy: #071B3A; --blue: #3574AD; --sky: #9CCBF5; --line: #C9D8E8; --ink: #1E1E1E; --muted: #50575e; --bg: #f3f5f8; --chip: #e3edf7; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1280px; height: 800px; overflow: hidden; background: var(--bg); font-family: 'Open Sans', sans-serif; color: var(--ink); }
+svg { display: block; fill: currentColor; }
+i[data-i] { display: block; font-style: normal; flex: none; }
+.wrap { padding: 30px 64px 0; }
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand img { width: 76px; height: 76px; border-radius: 8px; }
+.brand b { font-family: Raleway, sans-serif; color: var(--navy); font-size: 27px; font-weight: 900; letter-spacing: -.3px; line-height: 25px; }
+h1, h2, h3 { font-family: Raleway, sans-serif; color: var(--navy); }
+h1 { margin-top: 18px; font-size: 30px; font-weight: 900; letter-spacing: -.5px; line-height: 1.1; }
+.lede { margin-top: 6px; font-size: 17px; color: var(--muted); }
+.steps { margin-top: 20px; display: grid; grid-template-columns: 341px 366px 341px; justify-content: space-between; align-items: stretch; position: relative; }
+.card { background: #fff; border-radius: 15px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.04); padding: 26px 26px 0; height: 392px; position: relative; }
+.num { width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: #fff; font-weight: 700; font-size: 17px; display: grid; place-items: center; }
+h2 { margin-top: 18px; font-size: 23px; font-weight: 800; letter-spacing: -.3px; }
+.card p { margin-top: 8px; font-size: 15.5px; line-height: 22.5px; color: var(--muted); }
+.card p b { color: #2c3338; font-weight: 700; }
+.arrow { position: absolute; top: 187px; width: 20px; height: 20px; color: var(--blue); }
+.arrow svg { fill: none; }
+.art { position: absolute; left: 0; right: 0; bottom: 22px; display: flex; justify-content: center; }
+.label { position: absolute; top: -13px; left: 14px; background: var(--navy); color: #fff; font-size: 12.5px; font-weight: 700; padding: 4px 10px; border-radius: 12px; white-space: nowrap; z-index: 1; }
+
+/* 1: block toolbar and the Add icon menu */
+.tb { width: 289px; }
+.tb .bar { display: flex; height: 44px; border: 1px solid var(--ink); border-radius: 2px; background: #fff; }
+.tb .bar > span { display: grid; place-items: center; padding: 0 13px; font-size: 14px; border-left: 1px solid var(--ink); }
+.tb .bar > span:first-child { border-left: 0; }
+.tb .bar .bi { font-family: Georgia, serif; font-size: 18px; font-weight: 700; }
+.tb .bar .it { font-style: italic; font-weight: 400; }
+.tb .bar .add { color: var(--blue); font-weight: 600; flex: 1; }
+.tb .bar .dots { font-weight: 700; letter-spacing: 0; }
+.tb .menu { margin: 6px 0 0 22px; width: 246px; border: 1px solid var(--ink); border-radius: 2px; background: #fff; padding: 6px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+.tb .menu div { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; font-size: 13.5px; border-radius: 2px; }
+.tb .menu div.on { outline: 1.5px solid var(--blue); }
+.tb .menu svg { width: 20px; height: 20px; }
+
+/* 2: icon library */
+.lib { width: 318px; border: 1.5px solid #dcdcde; border-radius: 9px; overflow: hidden; background: #fff; }
+.lib .hd { display: flex; align-items: center; justify-content: space-between; background: var(--navy); color: #fff; font-weight: 700; padding: 9px 12px; font-size: 13.5px; }
+.lib .hd span { font-weight: 400; font-size: 12px; opacity: .8; }
+.lib .search { margin: 10px 12px 2px; display: flex; align-items: center; gap: 6px; border: 1px solid #c3c4c7; border-radius: 3px; padding: 5px 8px; font-size: 12.5px; color: #8c8f94; }
+.lib .search svg { width: 16px; height: 16px; color: #50575e; }
+.lib .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; padding: 10px 12px 12px; }
+.lib .grid i { display: grid; place-items: center; height: 36px; border-radius: 4px; background: #f6f7f7; color: var(--ink); }
+.lib .grid i svg { width: 24px; height: 24px; }
+.lib .grid i.on { background: var(--blue); color: #fff; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--blue); }
+
+/* 3: the styled navigation */
+.nav { width: 268px; background: var(--blue); border-radius: 6px; padding: 18px 20px 14px; position: relative; }
+.nav div { display: flex; align-items: center; gap: 12px; color: #fff; font-size: 16.5px; padding: 6px 0; }
+.nav div svg { width: 24px; height: 24px; color: var(--sky); flex: none; }
+.nav div.sp { justify-content: space-between; }
+.nav div.sp svg { order: 2; }
+.knobs { position: absolute; right: 16px; top: 22px; display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+.chip { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 10px; background: var(--chip); color: var(--blue); white-space: nowrap; box-shadow: 0 0 0 2px #fff; }
+
+/* Navigation block defaults */
+.match { margin-top: 22px; background: #fff; border-radius: 15px; box-shadow: 0 1px 3px rgba(0,0,0,.06); padding: 20px 26px; display: flex; align-items: center; gap: 13px; height: 102px; }
+.match .intro { width: 168px; flex: none; }
+.match .intro h3 { font-size: 18px; font-weight: 800; line-height: 21px; }
+.match .intro span { display: block; margin-top: 5px; font-size: 14px; color: var(--muted); }
+.m { flex: 1; display: flex; align-items: center; gap: 10px; background: var(--bg); border-radius: 9px; padding: 12px 14px; height: 60px; }
+.m .num { width: 26px; height: 26px; font-size: 13px; flex: none; }
+.m b { display: block; font-size: 14.5px; font-weight: 700; }
+.m small { font-size: 13px; white-space: nowrap; color: #2c3338; }
+.m small em { font-style: normal; font-weight: 600; color: var(--blue); }
+.chev { color: #8c8f94; font-size: 16px; flex: none; }
+.foot { margin-top: 20px; font-size: 14.5px; color: var(--muted); line-height: 19px; padding-left: 4px; }
+.foot b { color: var(--ink); }
+</style></head>
+<body><div class="wrap">
+	<div class="brand" aria-hidden="true"><img src="../.wordpress-org/icon-256x256.png" alt=""><b>Enable<br>Navigation<br>Icons</b></div>
+	<h1>How it works</h1>
+	<p class="lede">Add an icon to any menu item in three steps. No code, no extra blocks.</p>
+
+	<div class="steps">
+		<div class="card">
+			<div class="num">1</div>
+			<h2>Add an icon</h2>
+			<p>Select a navigation link or submenu item, then click <b>Add icon</b> in the block toolbar.</p>
+			<div class="art"><div class="tb">
+				<div class="bar"><span class="bi">B</span><span class="bi it">I</span><span class="add">Add icon</span><span class="dots">⋮</span></div>
+				<div class="menu">
+					<div class="on">Browse Icon Library <i data-i="bolt"></i></div>
+					<div>Open Media Library <i data-i="image"></i></div>
+					<div>Add custom icon <i data-i="code"></i></div>
+				</div>
+			</div></div>
+		</div>
+		<div class="card">
+			<div class="num">2</div>
+			<h2>Pick one</h2>
+			<p>Search the icon library, pick an SVG from the Media Library, or paste your own.</p>
+			<div class="art"><div class="lib">
+				<div class="hd">Icon Library <span>WordPress · Social</span></div>
+				<div class="search"><i data-i="search"></i>Search</div>
+				<div class="grid">
+					<i data-i="home"></i><i data-i="calendar"></i><i data-i="search"></i><i data-i="people"></i><i data-i="star-empty" class="on"></i><i data-i="map-marker"></i>
+					<i data-i="store"></i><i data-i="globe"></i><i data-i="help"></i><i data-i="tag"></i><i data-i="megaphone"></i><i data-i="github"></i>
+				</div>
+			</div></div>
+		</div>
+		<div class="card">
+			<div class="num">3</div>
+			<h2>Style it</h2>
+			<p>Set size, spacing, color, position, rotation and flip in the sidebar.</p>
+			<div class="art"><div class="nav"><span class="label">Your navigation</span>
+				<div><i data-i="home"></i>Home</div>
+				<div><i data-i="calendar"></i>Events</div>
+				<div><i data-i="star-empty"></i>Staff Picks</div>
+				<div><i data-i="map-marker"></i>Visit Us</div>
+				<div class="knobs"><span class="chip">Size 1.5em</span><span class="chip">Icon on left</span></div>
+			</div></div>
+		</div>
+		<svg class="arrow" style="left:351px" viewBox="0 0 20 20"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+		<svg class="arrow" style="left:769px" viewBox="0 0 20 20"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+	</div>
+
+	<div class="match">
+		<div class="intro"><h3>Style the whole menu</h3><span>Navigation block defaults</span></div>
+		<div class="m"><div class="num">1</div><div><b>Select the Navigation block</b><small>Open <em>Default Icon Settings</em></small></div></div>
+		<span class="chev">›</span>
+		<div class="m"><div class="num">2</div><div><b>Every item follows</b><small>Size, spacing, color, position</small></div></div>
+		<span class="chev">›</span>
+		<div class="m"><div class="num">3</div><div><b>Override any item</b><small>Turn off <em>Use default icon settings</em></small></div></div>
+	</div>
+
+	<p class="foot"><b>Nothing is written into your content.</b> Icons are stored by name and rendered on the server. On WordPress 7.1+, icons registered with the WordPress Icon API appear in the library too.</p>
+</div>
+<script>
+// Icons from the plugin's bundled set (build/icon-manifest.php) and src/icons/bolt.js.
+const ICONS = {"bolt":"<svg viewBox=\"0 0 24 24\"><path d=\"M5.123,13.547 L5.0737,13.634 C4.831,14.132 5.219,14.735 5.791,14.683 L10.2624715,14.270549 L9.82933866,21.7227919 C9.78597021,22.4686759 10.7447862,22.7937669 11.1544448,22.1720753 L18.8767932,10.4527553 L18.9263046,10.3660059 C19.1692295,9.86740676 18.7810449,9.2643915 18.2088152,9.31705918 L13.736563,9.72847448 L14.1706611,2.27720814 C14.2140292,1.5313296 13.2552248,1.20623489 12.8455606,1.82791614 L5.12321216,13.5468785 Z M12.5675925,4.88951961 L12.2425725,10.4921196 L12.2429925,10.5865822 C12.2702521,10.9894968 12.6214196,11.3022396 13.0308862,11.2645525 L16.8312941,10.9140428 L11.431442,19.1095038 L11.7574272,13.5078804 L11.7570075,13.4134218 C11.729751,13.0105235 11.3786124,12.697785 10.9691611,12.7354431 L7.16774032,13.0849806 L12.5675925,4.88951961 Z\"/></svg>","image":"<svg viewBox=\"0 0 24 24\"><path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z\"></path></svg>","code":"<svg viewBox=\"0 0 24 24\"><path d=\"M20.8 10.7l-4.3-4.3-1.1 1.1 4.3 4.3c.1.1.1.3 0 .4l-4.3 4.3 1.1 1.1 4.3-4.3c.7-.8.7-1.9 0-2.6zM4.2 11.8l4.3-4.3-1-1-4.3 4.3c-.7.7-.7 1.8 0 2.5l4.3 4.3 1.1-1.1-4.3-4.3c-.2-.1-.2-.3-.1-.4z\"></path></svg>","search":"<svg viewBox=\"0 0 24 24\"><path d=\"M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z\"></path></svg>","home":"<svg viewBox=\"0 0 24 24\"><path d=\"M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z\"></path></svg>","calendar":"<svg viewBox=\"0 0 24 24\"><path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z\"></path></svg>","people":"<svg viewBox=\"0 0 24 24\"><path fill-rule=\"evenodd\" d=\"M15.5 9.5a1 1 0 100-2 1 1 0 000 2zm0 1.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zm-2.25 6v-2a2.75 2.75 0 00-2.75-2.75h-4A2.75 2.75 0 003.75 15v2h1.5v-2c0-.69.56-1.25 1.25-1.25h4c.69 0 1.25.56 1.25 1.25v2h1.5zm7-2v2h-1.5v-2c0-.69-.56-1.25-1.25-1.25H15v-1.5h2.5A2.75 2.75 0 0120.25 15zM9.5 8.5a1 1 0 11-2 0 1 1 0 012 0zm1.5 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z\"></path></svg>","star-empty":"<svg viewBox=\"0 0 24 24\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M9.706 8.646a.25.25 0 01-.188.137l-4.626.672a.25.25 0 00-.139.427l3.348 3.262a.25.25 0 01.072.222l-.79 4.607a.25.25 0 00.362.264l4.138-2.176a.25.25 0 01.233 0l4.137 2.175a.25.25 0 00.363-.263l-.79-4.607a.25.25 0 01.072-.222l3.347-3.262a.25.25 0 00-.139-.427l-4.626-.672a.25.25 0 01-.188-.137l-2.069-4.192a.25.25 0 00-.448 0L9.706 8.646zM12 7.39l-.948 1.921a1.75 1.75 0 01-1.317.957l-2.12.308 1.534 1.495c.412.402.6.982.503 1.55l-.362 2.11 1.896-.997a1.75 1.75 0 011.629 0l1.895.997-.362-2.11a1.75 1.75 0 01.504-1.55l1.533-1.495-2.12-.308a1.75 1.75 0 01-1.317-.957L12 7.39z\"></path></svg>","map-marker":"<svg viewBox=\"0 0 24 24\"><path d=\"M12 9c-.8 0-1.5.7-1.5 1.5S11.2 12 12 12s1.5-.7 1.5-1.5S12.8 9 12 9zm0-5c-3.6 0-6.5 2.8-6.5 6.2 0 .8.3 1.8.9 3.1.5 1.1 1.2 2.3 2 3.6.7 1 3 3.8 3.2 3.9l.4.5.4-.5c.2-.2 2.6-2.9 3.2-3.9.8-1.2 1.5-2.5 2-3.6.6-1.3.9-2.3.9-3.1C18.5 6.8 15.6 4 12 4zm4.3 8.7c-.5 1-1.1 2.2-1.9 3.4-.5.7-1.7 2.2-2.4 3-.7-.8-1.9-2.3-2.4-3-.8-1.2-1.4-2.3-1.9-3.3-.6-1.4-.7-2.2-.7-2.5 0-2.6 2.2-4.7 5-4.7s5 2.1 5 4.7c0 .2-.1 1-.7 2.4z\"></path></svg>","store":"<svg viewBox=\"0 0 24 24\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M19.75 11H21V8.667L19.875 4H4.125L3 8.667V11h1.25v8.75h15.5V11zm-1.5 0H5.75v7.25H10V13h4v5.25h4.25V11zm-5.5-5.5h2.067l.486 3.24.028.76H12.75v-4zm-3.567 0h2.067v4H8.669l.028-.76.486-3.24zm7.615 3.1l-.464-3.1h2.36l.806 3.345V9.5h-2.668l-.034-.9zM7.666 5.5h-2.36L4.5 8.845V9.5h2.668l.034-.9.464-3.1z\"></path></svg>","globe":"<svg viewBox=\"0 0 24 24\"><path d=\"M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm6.5 8c0 .6 0 1.2-.2 1.8h-2.7c0-.6.2-1.1.2-1.8s0-1.2-.2-1.8h2.7c.2.6.2 1.1.2 1.8Zm-.9-3.2h-2.4c-.3-.9-.7-1.8-1.1-2.4-.1-.2-.2-.4-.3-.5 1.6.5 3 1.6 3.8 3ZM12.8 17c-.3.5-.6 1-.8 1.3-.2-.3-.5-.8-.8-1.3-.3-.5-.6-1.1-.8-1.7h3.3c-.2.6-.5 1.2-.8 1.7Zm-2.9-3.2c-.1-.6-.2-1.1-.2-1.8s0-1.2.2-1.8H14c.1.6.2 1.1.2 1.8s0 1.2-.2 1.8H9.9ZM11.2 7c.3-.5.6-1 .8-1.3.2.3.5.8.8 1.3.3.5.6 1.1.8 1.7h-3.3c.2-.6.5-1.2.8-1.7Zm-1-1.2c-.1.2-.2.3-.3.5-.4.7-.8 1.5-1.1 2.4H6.4c.8-1.4 2.2-2.5 3.8-3Zm-1.8 8H5.7c-.2-.6-.2-1.1-.2-1.8s0-1.2.2-1.8h2.7c0 .6-.2 1.1-.2 1.8s0 1.2.2 1.8Zm-2 1.4h2.4c.3.9.7 1.8 1.1 2.4.1.2.2.4.3.5-1.6-.5-3-1.6-3.8-3Zm7.4 3c.1-.2.2-.3.3-.5.4-.7.8-1.5 1.1-2.4h2.4c-.8 1.4-2.2 2.5-3.8 3Z\"></path></svg>","help":"<svg viewBox=\"0 0 24 24\"><path d=\"M12 4a8 8 0 1 1 .001 16.001A8 8 0 0 1 12 4Zm0 1.5a6.5 6.5 0 1 0-.001 13.001A6.5 6.5 0 0 0 12 5.5Zm.75 11h-1.5V15h1.5v1.5Zm-.445-9.234a3 3 0 0 1 .445 5.89V14h-1.5v-1.25c0-.57.452-.958.917-1.01A1.5 1.5 0 0 0 12 8.75a1.5 1.5 0 0 0-1.5 1.5H9a3 3 0 0 1 3.305-2.984Z\"></path></svg>","tag":"<svg viewBox=\"0 0 24 24\"><path d=\"M4.75 4a.75.75 0 0 0-.75.75v7.826c0 .2.08.39.22.53l6.72 6.716a2.313 2.313 0 0 0 3.276-.001l5.61-5.611-.531-.53.532.528a2.315 2.315 0 0 0 0-3.264L13.104 4.22a.75.75 0 0 0-.53-.22H4.75ZM19 12.576a.815.815 0 0 1-.236.574l-5.61 5.611a.814.814 0 0 1-1.153 0L5.5 12.264V5.5h6.763l6.5 6.502a.816.816 0 0 1 .237.574ZM8.75 9.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z\"></path></svg>","megaphone":"<svg viewBox=\"0 0 24 24\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M6.863 13.644L5 13.25h-.5a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5H5L18 6.5h2V16h-2l-3.854-.815.026.008a3.75 3.75 0 01-7.31-1.549zm1.477.313a2.251 2.251 0 004.356.921l-4.356-.921zm-2.84-3.28L18.157 8h.343v6.5h-.343L5.5 11.823v-1.146z\"></path></svg>","github":"<svg viewBox=\"0 0 24 24\"><path d=\"M12,2C6.477,2,2,6.477,2,12c0,4.419,2.865,8.166,6.839,9.489c0.5,0.09,0.682-0.218,0.682-0.484 c0-0.236-0.009-0.866-0.014-1.699c-2.782,0.602-3.369-1.34-3.369-1.34c-0.455-1.157-1.11-1.465-1.11-1.465 c-0.909-0.62,0.069-0.608,0.069-0.608c1.004,0.071,1.532,1.03,1.532,1.03c0.891,1.529,2.341,1.089,2.91,0.833 c0.091-0.647,0.349-1.086,0.635-1.337c-2.22-0.251-4.555-1.111-4.555-4.943c0-1.091,0.39-1.984,1.03-2.682 C6.546,8.54,6.202,7.524,6.746,6.148c0,0,0.84-0.269,2.75,1.025C10.295,6.95,11.15,6.84,12,6.836 c0.85,0.004,1.705,0.114,2.504,0.336c1.909-1.294,2.748-1.025,2.748-1.025c0.546,1.376,0.202,2.394,0.1,2.646 c0.64,0.699,1.026,1.591,1.026,2.682c0,3.841-2.337,4.687-4.565,4.935c0.359,0.307,0.679,0.917,0.679,1.852 c0,1.335-0.012,2.415-0.012,2.741c0,0.269,0.18,0.579,0.688,0.481C19.138,20.161,22,16.416,22,12C22,6.477,17.523,2,12,2z\"></path></svg>"};
+document.querySelectorAll('[data-i]').forEach((el) => { el.innerHTML = ICONS[el.dataset.i]; });
+document.fonts.ready.then(() => { document.body.dataset.ready = '1'; });
+</script>
+</body></html>
