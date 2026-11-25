@@ -124,6 +124,7 @@ export default function DimensionControl( {
 				<FlexItem isBlock>
 					<Spacer marginX={ 2 } marginBottom={ 0 }>
 						<RangeControl
+							__next40pxDefaultSize
 							value={ customRangeValue }
 							min={ min }
 							max={

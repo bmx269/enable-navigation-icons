@@ -69,6 +69,7 @@ export default function CustomInserterModal( props ) {
 			<div className="icon-custom-inserter">
 				<div className="icon-custom-inserter__content">
 					<TextareaControl
+						__nextHasNoMarginBottom
 						label={ __( 'Custom icon', 'enable-navigation-icons' ) }
 						hideLabelFromVision={ true }
 						value={ customIcon }
@@ -97,6 +98,8 @@ export default function CustomInserterModal( props ) {
 									) }
 								</span>
 								<RangeControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
 									min={ 24 }
 									max={ 400 }
 									initialPosition={ 100 }

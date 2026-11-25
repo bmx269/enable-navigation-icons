@@ -299,6 +299,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 							/>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={ __(
 										'Show icons on left',
 										'enable-navigation-icons'
@@ -314,6 +315,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={ __(
 										'Justify space between',
 										'enable-navigation-icons'
@@ -329,6 +331,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={ __(
 										'No icon fill (stroke only)',
 										'enable-navigation-icons'
@@ -343,6 +346,8 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 								/>
 							</PanelRow>
 							<SelectControl
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
 								label={ __(
 									'Icon vertical alignment',
 									'enable-navigation-icons'
@@ -392,6 +397,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 								min={ -100 }
 							/>
 							<RangeControl
+								__next40pxDefaultSize
 								label={ __(
 									'Icon rotation',
 									'enable-navigation-icons'
@@ -415,6 +421,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 							/>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={ __(
 										'Flip icons horizontally',
 										'enable-navigation-icons'
@@ -430,6 +437,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={ __(
 										'Flip icons vertically',
 										'enable-navigation-icons'
@@ -663,6 +671,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 							>
 								<PanelRow>
 									<ToggleControl
+										__nextHasNoMarginBottom
 										label={ __(
 											'Use default icon settings',
 											'enable-navigation-icons'
@@ -684,6 +693,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 									<>
 										<PanelRow>
 											<ToggleControl
+												__nextHasNoMarginBottom
 												label={ __(
 													'Show icon on left',
 													'enable-navigation-icons'
@@ -699,6 +709,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 										</PanelRow>
 										<PanelRow>
 											<ToggleControl
+												__nextHasNoMarginBottom
 												label={ __(
 													'Justify space between',
 													'enable-navigation-icons'
@@ -739,6 +750,8 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 											units={ [ 'px', 'em', 'rem' ] }
 										/>
 										<SelectControl
+											__next40pxDefaultSize
+											__nextHasNoMarginBottom
 											label={ __(
 												'Icon vertical alignment',
 												'enable-navigation-icons'
@@ -790,6 +803,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 											min={ -100 }
 										/>
 										<RangeControl
+											__next40pxDefaultSize
 											label={ __(
 												'Icon rotation',
 												'enable-navigation-icons'
@@ -813,6 +827,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 										/>
 										<PanelRow>
 											<ToggleControl
+												__nextHasNoMarginBottom
 												label={ __(
 													'Flip horizontally',
 													'enable-navigation-icons'
@@ -828,6 +843,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 										</PanelRow>
 										<PanelRow>
 											<ToggleControl
+												__nextHasNoMarginBottom
 												label={ __(
 													'Flip vertically',
 													'enable-navigation-icons'
