@@ -324,6 +324,79 @@ function enable_navigation_icons_block_styles_ollie_mega_menu() {
 add_action( 'init', 'enable_navigation_icons_block_styles_ollie_mega_menu' );
 
 /**
+ * The wp_kses() allowlist for custom and legacy SVG icons.
+ *
+ * Presentation attributes are allowed on every element, including the root
+ * <svg> and <g>, because SVG inherits them: stroke-based sets such as Lucide
+ * declare `stroke`, `stroke-width` and friends once on the root, and icons
+ * with cut-outs depend on `fill-rule`. Dropping either makes the icon render
+ * invisible or solid on the front end while the editor preview looks fine.
+ *
+ * @since 1.0.2
+ * @return array The allowed tags and attributes.
+ */
+function enable_navigation_icons_allowed_svg_tags() {
+	$presentation = array(
+		'fill'              => true,
+		'fill-rule'         => true,
+		'fill-opacity'      => true,
+		'clip-rule'         => true,
+		'stroke'            => true,
+		'stroke-width'      => true,
+		'stroke-linecap'    => true,
+		'stroke-linejoin'   => true,
+		'stroke-miterlimit' => true,
+		'stroke-dasharray'  => true,
+		'stroke-dashoffset' => true,
+		'stroke-opacity'    => true,
+		'opacity'           => true,
+		'transform'         => true,
+	);
+
+	return array(
+		'svg'      => $presentation + array(
+			'xmlns'       => true,
+			'viewbox'     => true,
+			'role'        => true,
+			'aria-hidden' => true,
+			'focusable'   => true,
+			'width'       => true,
+			'height'      => true,
+			'class'       => true,
+		),
+		'g'        => $presentation,
+		'path'     => $presentation + array( 'd' => true ),
+		'circle'   => $presentation + array(
+			'cx' => true,
+			'cy' => true,
+			'r'  => true,
+		),
+		'ellipse'  => $presentation + array(
+			'cx' => true,
+			'cy' => true,
+			'rx' => true,
+			'ry' => true,
+		),
+		'rect'     => $presentation + array(
+			'x'      => true,
+			'y'      => true,
+			'width'  => true,
+			'height' => true,
+			'rx'     => true,
+			'ry'     => true,
+		),
+		'polygon'  => $presentation + array( 'points' => true ),
+		'polyline' => $presentation + array( 'points' => true ),
+		'line'     => $presentation + array(
+			'x1' => true,
+			'y1' => true,
+			'x2' => true,
+			'y2' => true,
+		),
+	);
+}
+
+/**
  * Render icons on the frontend for navigation items.
  *
  * @since 0.1.0
@@ -495,65 +568,6 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		$block_content = $p->get_updated_html();
 	}
 
-	// Sanitize SVG content to prevent XSS attacks.
-	$allowed_svg_tags = array(
-		'svg'      => array(
-			'xmlns'       => true,
-			'fill'        => true,
-			'viewbox'     => true,
-			'role'        => true,
-			'aria-hidden' => true,
-			'focusable'   => true,
-			'width'       => true,
-			'height'      => true,
-			'class'       => true,
-		),
-		'path'     => array(
-			'd'           => true,
-			'fill'        => true,
-			'stroke'      => true,
-			'stroke-width' => true,
-			'stroke-linecap' => true,
-			'stroke-linejoin' => true,
-		),
-		'circle'   => array(
-			'cx'     => true,
-			'cy'     => true,
-			'r'      => true,
-			'fill'   => true,
-			'stroke' => true,
-		),
-		'rect'     => array(
-			'x'      => true,
-			'y'      => true,
-			'width'  => true,
-			'height' => true,
-			'fill'   => true,
-			'stroke' => true,
-		),
-		'polygon'  => array(
-			'points' => true,
-			'fill'   => true,
-			'stroke' => true,
-		),
-		'polyline' => array(
-			'points' => true,
-			'fill'   => true,
-			'stroke' => true,
-		),
-		'line'     => array(
-			'x1'     => true,
-			'y1'     => true,
-			'x2'     => true,
-			'y2'     => true,
-			'stroke' => true,
-		),
-		'g'        => array(
-			'fill'   => true,
-			'stroke' => true,
-		),
-	);
-
 	// Check if the first navigation content element already has an icon to avoid duplicates.
 	// Only check the first matching element, not the entire block content, so that
 	// child items with their own icons don't prevent the parent from getting its icon.
@@ -567,7 +581,7 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	// already sanitized by core at registration and again by wp_get_icon(), so
 	// it is used as-is; running it through this allowlist would only risk
 	// stripping attributes core deliberately adds.
-	$sanitized_icon = $is_registry_icon ? $icon : wp_kses( $icon, $allowed_svg_tags );
+	$sanitized_icon = $is_registry_icon ? $icon : wp_kses( $icon, enable_navigation_icons_allowed_svg_tags() );
 
 	// Flip classes mirror core's Icon block, so the same class names mean the
 	// same thing whether an icon renders here or in core/icon.
