@@ -47,9 +47,8 @@ const lines = [
 	'/**',
 	' * Generated icon manifest - do not edit.',
 	' *',
-	' * Produced by scripts/build-icon-manifest.cjs during the build. Consumed by',
-	' * enable_navigation_icons_register_icons() to publish the bundled icon set to',
-	' * the WordPress Icon API (WordPress 7.1+).',
+	' * Produced by scripts/build-icon-manifest.cjs during the build. Lists the',
+	" * bundled icons (name => label); each icon's SVG is in build/icons/<name>.svg.",
 	' *',
 	' * @package enable-navigation-icons',
 	' */',
@@ -61,10 +60,9 @@ const lines = [
 
 names.forEach( ( name ) => {
 	lines.push( `\t'${ toPhpString( name ) }' => array(` );
-	lines.push( `\t\t'label'   => '${ toPhpString( icons[ name ].label ) }',` );
-	lines.push(
-		`\t\t'content' => '${ toPhpString( icons[ name ].content ) }',`
-	);
+	// Markup is not repeated here: it lives only in build/icons/<name>.svg,
+	// which both the renderer and the Icon API registration read.
+	lines.push( `\t\t'label' => '${ toPhpString( icons[ name ].label ) }',` );
 	lines.push( '\t),' );
 } );
 
@@ -81,7 +79,10 @@ fs.writeFileSync( outputPath, lines.join( '\n' ) );
 fs.rmSync( iconsDir, { recursive: true, force: true } );
 fs.mkdirSync( iconsDir, { recursive: true } );
 names.forEach( ( name ) => {
-	fs.writeFileSync( path.join( iconsDir, `${ name }.svg` ), icons[ name ].content );
+	fs.writeFileSync(
+		path.join( iconsDir, `${ name }.svg` ),
+		icons[ name ].content
+	);
 } );
 
 // The bundle is an intermediate artifact only; PHP never loads it.

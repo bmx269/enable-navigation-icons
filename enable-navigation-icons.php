@@ -137,10 +137,37 @@ function enable_navigation_icons_get_manifest_icon( $icon_name ) {
 		return '';
 	}
 
+	static $cache = array();
+
 	$manifest = enable_navigation_icons_get_manifest();
 	$bare     = substr( $icon_name, strlen( ENABLE_NAVIGATION_ICONS_COLLECTION ) + 1 );
 
-	return isset( $manifest[ $bare ]['content'] ) ? $manifest[ $bare ]['content'] : '';
+	// Only names that are keys of the generated manifest reach the filesystem,
+	// so a stored attribute can never point outside build/icons/.
+	if ( ! isset( $manifest[ $bare ] ) ) {
+		return '';
+	}
+
+	if ( ! isset( $cache[ $bare ] ) ) {
+		$contents       = file_get_contents( enable_navigation_icons_icons_dir() . $bare . '.svg' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local, trusted build file.
+		$cache[ $bare ] = is_string( $contents ) ? $contents : '';
+	}
+
+	return $cache[ $bare ];
+}
+
+/**
+ * Directory holding one generated .svg file per bundled icon.
+ *
+ * The SVG markup lives only here; the manifest carries names and labels.
+ * Both the front-end renderer and the Icon API registration read these files,
+ * so each icon ships exactly once.
+ *
+ * @since 1.0.2
+ * @return string Absolute path with a trailing slash.
+ */
+function enable_navigation_icons_icons_dir() {
+	return plugin_dir_path( __FILE__ ) . 'build/icons/';
 }
 
 /**
@@ -186,9 +213,10 @@ function enable_navigation_icons_register_icons() {
 		return;
 	}
 
-	$manifest = enable_navigation_icons_get_manifest();
+	$manifest  = enable_navigation_icons_get_manifest();
+	$icons_dir = enable_navigation_icons_icons_dir();
 
-	if ( empty( $manifest ) ) {
+	if ( empty( $manifest ) || ! is_dir( $icons_dir ) ) {
 		return;
 	}
 
@@ -207,26 +235,16 @@ function enable_navigation_icons_register_icons() {
 	// Register by file so core defers reading and sanitizing each icon until it
 	// is requested. Inline `content` is sanitized at registration, which costs
 	// every request ~300 wp_kses() calls for icons that are almost never all
-	// used. The inline form remains a fallback for builds made before the
-	// per-icon files existed. One directory check instead of a stat per icon:
-	// core reports any individual missing file when it loads it.
-	$icons_dir = plugin_dir_path( __FILE__ ) . 'build/icons/';
-	$use_files = is_dir( $icons_dir );
-
+	// used. One directory check instead of a stat per icon: core reports any
+	// individual missing file when it loads it.
 	foreach ( $manifest as $name => $icon ) {
-		if ( empty( $icon['content'] ) ) {
-			continue;
-		}
-
-		$args = array( 'label' => isset( $icon['label'] ) ? $icon['label'] : $name );
-
-		if ( $use_files ) {
-			$args['file_path'] = $icons_dir . $name . '.svg';
-		} else {
-			$args['content'] = $icon['content'];
-		}
-
-		wp_register_icon( ENABLE_NAVIGATION_ICONS_COLLECTION . '/' . $name, $args );
+		wp_register_icon(
+			ENABLE_NAVIGATION_ICONS_COLLECTION . '/' . $name,
+			array(
+				'label'     => isset( $icon['label'] ) ? $icon['label'] : $name,
+				'file_path' => $icons_dir . $name . '.svg',
+			)
+		);
 	}
 }
 // Priority 11 so core has finished registering its own collections (init 0)
