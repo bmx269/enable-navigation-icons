@@ -16,6 +16,7 @@ const projectDir = path.resolve( __dirname, '..' );
 const buildDir = path.join( projectDir, 'build' );
 const bundlePath = path.join( projectDir, '.build-tmp', 'icon-manifest.cjs' );
 const outputPath = path.join( buildDir, 'icon-manifest.php' );
+const iconsDir = path.join( buildDir, 'icons' );
 
 if ( ! fs.existsSync( bundlePath ) ) {
 	// eslint-disable-next-line no-console
@@ -73,12 +74,22 @@ lines.push( '' );
 fs.mkdirSync( buildDir, { recursive: true } );
 fs.writeFileSync( outputPath, lines.join( '\n' ) );
 
+// One .svg per icon, registered with the Icon API by `file_path`. Core only
+// reads and sanitizes a file-backed icon when it is first requested, whereas
+// icons registered with inline `content` are all sanitized on every request.
+// Cleared first so icons removed from the set don't linger in the zip.
+fs.rmSync( iconsDir, { recursive: true, force: true } );
+fs.mkdirSync( iconsDir, { recursive: true } );
+names.forEach( ( name ) => {
+	fs.writeFileSync( path.join( iconsDir, `${ name }.svg` ), icons[ name ].content );
+} );
+
 // The bundle is an intermediate artifact only; PHP never loads it.
 fs.rmSync( path.dirname( bundlePath ), { recursive: true, force: true } );
 
 // eslint-disable-next-line no-console
 console.log(
-	`Icon manifest written to build/icon-manifest.php (${ names.length } icons).`
+	`Icon manifest written to build/icon-manifest.php and build/icons/ (${ names.length } icons).`
 );
 
 if ( skipped.length > 0 ) {

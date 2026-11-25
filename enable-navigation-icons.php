@@ -204,18 +204,29 @@ function enable_navigation_icons_register_icons() {
 		return;
 	}
 
+	// Register by file so core defers reading and sanitizing each icon until it
+	// is requested. Inline `content` is sanitized at registration, which costs
+	// every request ~300 wp_kses() calls for icons that are almost never all
+	// used. The inline form remains a fallback for builds made before the
+	// per-icon files existed. One directory check instead of a stat per icon:
+	// core reports any individual missing file when it loads it.
+	$icons_dir = plugin_dir_path( __FILE__ ) . 'build/icons/';
+	$use_files = is_dir( $icons_dir );
+
 	foreach ( $manifest as $name => $icon ) {
 		if ( empty( $icon['content'] ) ) {
 			continue;
 		}
 
-		wp_register_icon(
-			ENABLE_NAVIGATION_ICONS_COLLECTION . '/' . $name,
-			array(
-				'label'   => isset( $icon['label'] ) ? $icon['label'] : $name,
-				'content' => $icon['content'],
-			)
-		);
+		$args = array( 'label' => isset( $icon['label'] ) ? $icon['label'] : $name );
+
+		if ( $use_files ) {
+			$args['file_path'] = $icons_dir . $name . '.svg';
+		} else {
+			$args['content'] = $icon['content'];
+		}
+
+		wp_register_icon( ENABLE_NAVIGATION_ICONS_COLLECTION . '/' . $name, $args );
 	}
 }
 // Priority 11 so core has finished registering its own collections (init 0)
