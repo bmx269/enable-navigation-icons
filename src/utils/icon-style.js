@@ -1,5 +1,4 @@
-import { isValidElement } from '@wordpress/element';
-import ReactDOMServer from 'react-dom/server';
+import { isValidElement, renderToString } from '@wordpress/element';
 
 import { flattenIconsArray } from './icon-functions';
 import { getOwnRegistryName, isOwnCollectionName } from './use-core-icons';
@@ -93,7 +92,7 @@ export function getIconStyle( {
 		);
 		if ( namedIcon.length > 0 ) {
 			if ( isValidElement( namedIcon[ 0 ].icon ) ) {
-				svg = ReactDOMServer.renderToString( namedIcon[ 0 ].icon );
+				svg = renderToString( namedIcon[ 0 ].icon );
 			} else {
 				svg = namedIcon[ 0 ].icon;
 			}
