@@ -267,6 +267,28 @@ function enable_navigation_icons_enqueue_block_assets() {
 add_action( 'enqueue_block_assets', 'enable_navigation_icons_enqueue_block_assets' );
 
 /**
+ * Version string for the front-end stylesheet.
+ *
+ * Uses the content hash wp-scripts writes to build/style.asset.php, so the
+ * URL changes whenever the CSS does and browsers never keep a stale copy
+ * after a plugin update.
+ *
+ * @since 1.0.2
+ * @return string|false The version, or false to fall back to core's version.
+ */
+function enable_navigation_icons_style_version() {
+	static $version = null;
+
+	if ( null === $version ) {
+		$asset_path = plugin_dir_path( __FILE__ ) . 'build/style.asset.php';
+		$asset      = file_exists( $asset_path ) ? include $asset_path : array();
+		$version    = isset( $asset['version'] ) ? $asset['version'] : false;
+	}
+
+	return $version;
+}
+
+/**
  * Enqueue block styles for navigation-link block.
  * (Applies to both frontend and Editor)
  *
@@ -278,7 +300,7 @@ function enable_navigation_icons_block_styles_link() {
 		array(
 			'handle' => 'enable-navigation-icons-block-styles',
 			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => wp_get_theme()->get( 'Version' ),
+			'ver'    => enable_navigation_icons_style_version(),
 			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
 		)
 	);
@@ -297,7 +319,7 @@ function enable_navigation_icons_block_styles_submenu() {
 		array(
 			'handle' => 'enable-navigation-icons-block-styles-submenu',
 			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => wp_get_theme()->get( 'Version' ),
+			'ver'    => enable_navigation_icons_style_version(),
 			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
 		)
 	);
@@ -316,7 +338,7 @@ function enable_navigation_icons_block_styles_ollie_mega_menu() {
 		array(
 			'handle' => 'enable-navigation-icons-block-styles-ollie-mega-menu',
 			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => wp_get_theme()->get( 'Version' ),
+			'ver'    => enable_navigation_icons_style_version(),
 			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
 		)
 	);
