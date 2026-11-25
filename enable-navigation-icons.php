@@ -572,6 +572,26 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		? $parent_defaults['defaultIconOffset']
 		: ( isset( $block['attrs']['iconOffset'] ) ? $block['attrs']['iconOffset'] : '' );
 
+	$hide_label = $use_default_settings && isset( $parent_defaults['defaultHideLabel'] )
+		? $parent_defaults['defaultHideLabel']
+		: ( isset( $block['attrs']['hideLabel'] ) ? $block['attrs']['hideLabel'] : false );
+
+	$icon_hover_color = $use_default_settings && ! empty( $parent_defaults['defaultCustomIconHoverColor'] )
+		? $parent_defaults['defaultCustomIconHoverColor']
+		: ( isset( $block['attrs']['customIconHoverColor'] ) ? $block['attrs']['customIconHoverColor'] : '' );
+
+	// The hover colour lands in an inline style attribute, so run it through
+	// core's CSS declaration filter: anything that is not a single valid
+	// colour value (for example an injected `;` declaration) is dropped.
+	if ( is_string( $icon_hover_color ) && '' !== $icon_hover_color ) {
+		$hover_declaration = safecss_filter_attr( 'color:' . $icon_hover_color );
+		$icon_hover_color  = 0 === strpos( $hover_declaration, 'color:' ) && false === strpos( $hover_declaration, ';' )
+			? substr( $hover_declaration, strlen( 'color:' ) )
+			: '';
+	} else {
+		$icon_hover_color = '';
+	}
+
 	// Determine effective custom icon color.
 	$custom_icon_color = $use_default_settings && ! empty( $parent_defaults['defaultCustomIconColor'] )
 		? $parent_defaults['defaultCustomIconColor']
@@ -595,6 +615,9 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	}
 	if ( $icon_spacing ) {
 		$link_styles[] = '--icon-spacing:' . esc_attr( $icon_spacing );
+	}
+	if ( $icon_hover_color ) {
+		$link_styles[] = '--icon-hover-color:' . $icon_hover_color;
 	}
 	if ( $custom_icon_color ) {
 		$icon_styles[] = 'color:' . esc_attr( $custom_icon_color );
@@ -648,6 +671,12 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		}
 		if ( $icon_vertical_align && 'center' !== $icon_vertical_align ) {
 			$p->add_class( 'has-icon-align__' . sanitize_html_class( $icon_vertical_align ) );
+		}
+		if ( $hide_label ) {
+			$p->add_class( 'has-hidden-label' );
+		}
+		if ( $icon_hover_color ) {
+			$p->add_class( 'has-icon-hover-color' );
 		}
 	}
 

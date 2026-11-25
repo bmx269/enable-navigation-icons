@@ -85,6 +85,27 @@
 		}
 	}
 
+	// Icon-only items. The label is hidden visually but stays in the
+	// accessibility tree, so the link keeps its accessible name while the icon
+	// itself remains aria-hidden.
+	&.has-hidden-label > .wp-block-navigation-item__content .wp-block-navigation-item__label {
+		border: 0;
+		clip-path: inset(50%);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		overflow-wrap: normal !important;
+	}
+
+	// Icon colour on hover and keyboard focus. `!important` so it wins over
+	// both the inline custom colour and palette colour classes.
+	&.has-icon-hover-color > .wp-block-navigation-item__content:is(:hover, :focus-visible) .wp-block-navigation-item__icon {
+		color: var(--icon-hover-color) !important;
+	}
+
 	// Support for stroke-based icons (e.g., Lucide)
 	&.has-no-icon-fill {
 
