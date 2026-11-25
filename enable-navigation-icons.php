@@ -289,61 +289,28 @@ function enable_navigation_icons_style_version() {
 }
 
 /**
- * Enqueue block styles for navigation-link block.
+ * Attach the icon stylesheet to every supported navigation item block.
  * (Applies to both frontend and Editor)
+ *
+ * All blocks share one handle, so a menu that mixes links, submenus and mega
+ * menus loads the stylesheet once. With per-block handles the identical CSS
+ * was printed once per block type.
  *
  * @since 0.1.0
  */
-function enable_navigation_icons_block_styles_link() {
-	wp_enqueue_block_style(
-		'core/navigation-link',
-		array(
-			'handle' => 'enable-navigation-icons-block-styles',
-			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => enable_navigation_icons_style_version(),
-			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
-		)
+function enable_navigation_icons_block_styles() {
+	$args = array(
+		'handle' => 'enable-navigation-icons-block-styles',
+		'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
+		'ver'    => enable_navigation_icons_style_version(),
+		'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
 	);
-}
-add_action( 'init', 'enable_navigation_icons_block_styles_link' );
 
-/**
- * Enqueue block styles for navigation-submenu block.
- * (Applies to both frontend and Editor)
- *
- * @since 0.1.0
- */
-function enable_navigation_icons_block_styles_submenu() {
-	wp_enqueue_block_style(
-		'core/navigation-submenu',
-		array(
-			'handle' => 'enable-navigation-icons-block-styles-submenu',
-			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => enable_navigation_icons_style_version(),
-			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
-		)
-	);
+	foreach ( array( 'core/navigation-link', 'core/navigation-submenu', 'ollie/mega-menu' ) as $block_name ) {
+		wp_enqueue_block_style( $block_name, $args );
+	}
 }
-add_action( 'init', 'enable_navigation_icons_block_styles_submenu' );
-
-/**
- * Enqueue block styles for Ollie mega-menu block.
- * (Applies to both frontend and Editor)
- *
- * @since 0.1.0
- */
-function enable_navigation_icons_block_styles_ollie_mega_menu() {
-	wp_enqueue_block_style(
-		'ollie/mega-menu',
-		array(
-			'handle' => 'enable-navigation-icons-block-styles-ollie-mega-menu',
-			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => enable_navigation_icons_style_version(),
-			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
-		)
-	);
-}
-add_action( 'init', 'enable_navigation_icons_block_styles_ollie_mega_menu' );
+add_action( 'init', 'enable_navigation_icons_block_styles' );
 
 /**
  * The wp_kses() allowlist for custom and legacy SVG icons.
