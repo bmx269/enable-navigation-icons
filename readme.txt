@@ -2,9 +2,9 @@
 Contributors: bmx269
 Tags: navigation, icons, menu, block editor, gutenberg
 Requires at least: 6.9
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -33,12 +33,14 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 * Space between justification for full-width layouts
 * Vertical alignment options (top, center, bottom) for multi-line menu items
 * Fine-tune icon position with vertical offset (supports px, %, em, rem units)
+* Icon-only items: hide the label visually while keeping it available to screen readers
 
 **Icon Styling**
 
 * Adjust icon dimensions with a slider control (supports px, em, rem units)
 * Control the gap between icon and text (supports px, em, rem units)
 * Choose from theme colors or set a custom color
+* Set a separate icon color for hover and keyboard focus
 * Rotate icons in 15 degree steps
 * Flip icons horizontally or vertically
 * Support for stroke-based icons with "No Fill" option (e.g., Lucide icons)
@@ -47,7 +49,8 @@ Enable Navigation Icons makes it simple to add and customize icons for your Word
 
 Set default icon settings at the Navigation block level that apply to all child navigation items:
 
-* Configure size, spacing, color, position, vertical alignment, offset, rotation, flipping, and styling once for the entire navigation
+* Configure size, spacing, color, hover color, position, hidden labels, vertical alignment, offset, rotation, flipping, and styling once for the entire navigation
+* Settings panels work like core's block settings: common options are shown, the rest can be added from the panel menu, and each can be reset individually
 * Individual navigation items can inherit defaults or use custom settings
 * Works seamlessly with multiple and nested Navigation blocks
 * Applies to both inline navigation items and dynamically loaded WordPress menus
@@ -122,6 +125,35 @@ Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items wi
 3. The Add icon menu offers the icon library, the Media Library or custom SVG code. Select the Navigation block to set Default Icon Settings for every item.
 
 == Changelog ==
+
+= 1.0.2 =
+
+Adds icon-only menu items and an icon hover color, and makes the plugin lighter on every page. Existing icons render exactly as before; nothing needs to be migrated.
+
+**New**
+
+* Hide label (icon only): hide a navigation item's text visually while screen readers still announce it, so icon-only links such as social profiles stay accessible. Available per item and as a Navigation block default. In the editor the label is shown faded while the item is selected, so it can still be edited.
+* Icon hover color: give icons a different color on hover and keyboard focus, per item or as a Navigation block default.
+* The icon settings panels now work like core's block settings: common options are always visible, the rest can be added from the panel menu, every option can be reset on its own, and "Reset all" restores the defaults. Options you have already set are always shown.
+
+**Fixes**
+
+* Custom stroke-based SVG icons (such as Lucide) no longer disappear on the front end. Their stroke attributes were being removed by the SVG sanitizer, although the editor preview showed them correctly.
+* Custom SVG icons with cut-out shapes keep their holes (`fill-rule` is now preserved).
+* An icon color containing `$` followed by a digit no longer corrupts the menu markup.
+* After a plugin update, browsers now load the updated stylesheet instead of a cached copy (the stylesheet was versioned by the theme's version).
+* The icon stylesheet is printed once per page instead of once per navigation block type.
+* No more failed Icon API requests when opening the icon library on WordPress versions without the Icon API.
+* No more component deprecation warnings in the editor console on WordPress 6.9 and 7.0.
+
+**Performance**
+
+* Registering the bundled icons with the WordPress Icon API is about 50 times faster: icons are registered by file and only read and sanitized when used, instead of all ~300 being sanitized on every page load.
+* The editor script is about 25% smaller (308 KB to 238 KB): it now uses WordPress's built-in serializer instead of bundling React's server renderer, and no longer loads lodash.
+
+**Compatibility**
+
+* Requires WordPress 6.9 or later (previously 6.3). Tested up to WordPress 7.2.
 
 = 1.0.1 =
 

@@ -19,11 +19,13 @@ Easily add icons to Navigation Block items in WordPress.
 - **Space Between** - Justify content with space between icon and text for full-width layouts
 - **Vertical Alignment** - Align icons to top, center, or bottom for multi-line menu items
 - **Vertical Offset** - Fine-tune icon position with a vertical offset (supports px, %, em, rem units)
+- **Icon Only** - Hide the label visually while keeping it available to screen readers, for accessible icon-only links
 
 ### Icon Styling
 - **Icon Size** - Adjust icon dimensions with a slider control (supports px, em, rem units)
 - **Icon Spacing** - Control the gap between icon and text (supports px, em, rem units)
 - **Icon Color** - Choose from theme colors or set a custom color
+- **Hover Color** - Set a separate icon color for hover and keyboard focus
 - **Icon Rotation** - Rotate icons in 15 degree steps
 - **Icon Flipping** - Mirror icons horizontally or vertically, matching the core Icon block
 - **No Fill Option** - Support for stroke-based icons (e.g., Lucide icons)
@@ -41,7 +43,8 @@ This is entirely additive. Existing navigation icons keep working with no migrat
 
 ### Navigation Block Default Settings
 Set default icon settings at the Navigation block level that apply to all child navigation items:
-- **Global Defaults** - Configure size, spacing, color, position, vertical alignment, offset, rotation, flipping, and styling once for the entire navigation
+- **Global Defaults** - Configure size, spacing, color, hover color, position, hidden labels, vertical alignment, offset, rotation, flipping, and styling once for the entire navigation
+- **Core-style Panels** - Settings use the same panel pattern as core's block settings: common options shown, the rest added from the panel menu, each resettable
 - **Item-Level Overrides** - Individual navigation items can inherit defaults or use custom settings
 - **Nested Support** - Works seamlessly with multiple and nested Navigation blocks
 - **Menu Support** - Applies to both inline navigation items and dynamically loaded WordPress menus

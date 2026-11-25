@@ -32,6 +32,9 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 │   │   │   ├── icon-grid.js           # Grid of icon buttons inside the inserter
 │   │   │   ├── sidebar.js             # Category/type sidebar in the inserter
 │   │   │   └── content-header.js      # Header with search input inside the inserter
+│   │   ├── icon-settings-panel/
+│   │   │   └── index.js               # ICON_SETTINGS + IconSettingsItems — the ToolsPanel items shared by
+│   │   │                              #   the Navigation defaults panel and the per-item overrides panel
 │   │   ├── custom-inserter/
 │   │   │   └── index.js               # CustomInserterModal — paste/edit custom SVG code
 │   │   └── dimension-control/
@@ -86,6 +89,8 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 | `defaultIconRotate` | number | Rotation in degrees applied to all child icons (default: 0) |
 | `defaultFlipHorizontal` | boolean | Mirror all child icons on the X axis (default: false) |
 | `defaultFlipVertical` | boolean | Mirror all child icons on the Y axis (default: false) |
+| `defaultHideLabel` | boolean | Hide child labels visually, icon only (default: false) |
+| `defaultCustomIconHoverColor` | string | Icon color on hover/focus for all child icons |
 
 ### core/navigation-link, core/navigation-submenu, ollie/mega-menu (per-item settings)
 | Attribute | Type | Purpose |
@@ -104,6 +109,8 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 | `iconRotate` | number | Override default: rotation in degrees |
 | `flipHorizontal` | boolean | Override default: mirror the icon on the X axis |
 | `flipVertical` | boolean | Override default: mirror the icon on the Y axis |
+| `hideLabel` | boolean | Override default: hide the label visually (screen readers still read it) |
+| `customIconHoverColor` | string | Override default: icon color on hover/focus |
 | `useDefaultIconSettings` | boolean | When true (default), inherits parent Navigation block settings |
 
 ## PHP Hooks & Filters (enable-navigation-icons.php)
@@ -141,6 +148,8 @@ WordPress plugin that adds icon support to Navigation Block items (navigation-li
 | `has-no-icon-fill` | Stroke-only rendering |
 | `has-icon-align__top` | Vertical align top |
 | `has-icon-align__bottom` | Vertical align bottom |
+| `has-hidden-label` | Label visually hidden (icon only) |
+| `has-icon-hover-color` | Hover colour set; value in `--icon-hover-color` on the content element |
 
 Flip classes go on the icon `<span>`, not the `<li>`, and use core's names:
 
@@ -149,7 +158,7 @@ Flip classes go on the icon `<span>`, not the `<li>`, and use core's names:
 | `is-flip-horizontal` | Icon mirrored on the X axis |
 | `is-flip-vertical` | Icon mirrored on the Y axis |
 
-The icon `<span>` uses class `wp-block-navigation-item__icon` and is injected inside the first element with class `wp-block-navigation-item__content` (either `<a>` or `<button>`).
+The icon `<span>` uses class `wp-block-navigation-item__icon` and is injected inside the first element with class `wp-block-navigation-item__content` (either `<a>` or `<button>`). Injection goes through `Enable_Navigation_Icons_Processor`, a `WP_HTML_Tag_Processor` subclass that queues a `WP_HTML_Text_Replacement` (the pattern core's Interactivity API processor uses) — the HTML API has no public insert method as of 6.9. Don't go back to regex: `preg_replace()` treated `$n` in the markup as backreferences.
 
 ## Icon Registry
 
@@ -202,3 +211,11 @@ The plugin both **consumes** and **publishes** to core's SVG Icon API, guarded t
 - **Presentation is source-agnostic**: size, spacing, color, position, alignment, offset and rotation are applied to the wrapper `<span>` and `<li>` classes, never to the SVG, so every control works identically for bundled, custom and registry icons.
 - **Core parity**: rotation uses the standalone CSS `rotate` property (not `transform`), matching `render_block_core_icon()`; icon SVGs get `box-sizing: border-box` and `fill: currentcolor` like core's Icon block stylesheet. Flipping matches core's `flipHorizontal`/`flipVertical` attributes and `is-flip-horizontal`/`is-flip-vertical` class names. Flip uses `transform: scale*(-1)` while rotation uses `rotate`, so the two compose rather than overwrite — this is why rotation must stay on `rotate`.
 - **Core's sanitizer drops `clip-rule` and `version`** from published icons (37 and 3 icons respectively). Both are inert without `clipPath` elements, which the allowlist excludes anyway, so rendering is unaffected. `fill-rule` **is** allowed, so evenodd holes survive.
+
+## Settings UI and editor bundle
+- **ToolsPanel**: both settings panels use `__experimentalToolsPanel` (the only export on 6.9 and 7.2; core blocks use it too). Add a new presentation setting by adding one entry to `ICON_SETTINGS` in `src/components/icon-settings-panel/index.js` with its `navigation` and `item` attribute names, then handle it in PHP and in the `addClasses` editor preview.
+- **Hover colour** is a plugin attribute, not 7.2's style-state API: that API writes the block's own `style` attribute for block supports and generates no CSS for plugin attributes. The PHP value goes through `safecss_filter_attr()` before landing in an inline style.
+- **Editor bundle**: serialize icon elements with `renderToString` from `@wordpress/element` (externalized), never `react-dom/server`, which bundles ~70 KB. Don't add lodash back.
+- **Icon API REST gating**: PHP prints `window.enableNavigationIcons.hasIconApi`; `useCoreIcons()` skips the REST fetch when it is `false`.
+- **Lint in the sandbox**: `npm run lint:js` must run outside the Claude Code sandbox, which blocks paths matching `*secret*` (React's `ReactPropTypesSecret.js`).
+

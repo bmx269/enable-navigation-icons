@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Enable Navigation Icons 1.0.0\n"
+"Project-Id-Version: Enable Navigation Icons 1.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/enable-navigation-icons\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-20T16:58:14-07:00\n"
+"POT-Creation-Date: 2026-11-25T21:12:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: enable-navigation-icons\n"
@@ -51,38 +51,102 @@ msgstr ""
 msgid "Custom Icon"
 msgstr ""
 
-#: src/components/custom-inserter/index.js:72
+#: src/components/custom-inserter/index.js:73
 msgid "Custom icon"
 msgstr ""
 
-#: src/components/custom-inserter/index.js:76
+#: src/components/custom-inserter/index.js:77
 msgid "Paste the SVG code for your custom icon."
 msgstr ""
 
-#: src/components/custom-inserter/index.js:94
+#: src/components/custom-inserter/index.js:95
 #: src/components/inserter/content-header.js:29
 msgid "Preview size"
 msgstr ""
 
-#: src/components/custom-inserter/index.js:112
+#: src/components/custom-inserter/index.js:115
 msgid "The custom icon does not appear to be in a valid SVG format or contains non-SVG elements."
 msgstr ""
 
-#: src/components/custom-inserter/index.js:121
+#: src/components/custom-inserter/index.js:124
 msgid "Clear custom icon"
 msgstr ""
 
-#: src/components/custom-inserter/index.js:129
+#: src/components/custom-inserter/index.js:132
 msgid "Clear"
 msgstr ""
 
-#: src/components/custom-inserter/index.js:132
-#: src/components/custom-inserter/index.js:140
+#: src/components/custom-inserter/index.js:135
+#: src/components/custom-inserter/index.js:143
 msgid "Insert custom icon"
 msgstr ""
 
-#: src/components/dimension-control/index.js:107
+#: src/components/dimension-control/index.js:111
 msgid "Dimension"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:33
+msgid "Icon size"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:41
+msgid "Icon spacing"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:52
+msgid "Show icon on left"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:59
+msgid "Hide label (icon only)"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:60
+msgid "The label is hidden visually but still read by screen readers, so the link keeps an accessible name."
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:73
+msgid "Justify space between"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:82
+msgid "No icon fill (stroke only)"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:91
+msgid "Icon vertical alignment"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:94
+msgid "Top"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:96
+msgid "Center"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:100
+msgid "Bottom"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:109
+msgid "Icon offset"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:117
+msgid "Icon rotation"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:118
+msgid "Rotate the icon clockwise, in degrees."
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:130
+msgid "Flip horizontally"
+msgstr ""
+
+#: src/components/icon-settings-panel/index.js:136
+msgid "Flip vertically"
 msgstr ""
 
 #. translators: %1$s: Number of icons returned from search, %2$s: the search input
@@ -93,7 +157,7 @@ msgid_plural "%1$s search results for \"%2$s\""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/components/inserter/icon-grid.js:28
+#: src/components/inserter/icon-grid.js:27
 msgid "No results found."
 msgstr ""
 
@@ -865,7 +929,7 @@ msgid "Replace"
 msgstr ""
 
 #: src/icons/index.js:1644
-#: src/index.js:626
+#: src/index.js:477
 msgid "Reset"
 msgstr ""
 
@@ -1141,133 +1205,61 @@ msgstr ""
 msgid "Logos"
 msgstr ""
 
-#: src/index.js:262
+#: src/index.js:265
 msgid "Default Icon Settings"
 msgstr ""
 
-#: src/index.js:270
+#: src/index.js:280
 msgid "Set default icon settings for all navigation items. Individual items can override these settings."
 msgstr ""
 
-#: src/index.js:277
-#: src/index.js:716
-msgid "Icon size"
-msgstr ""
-
-#: src/index.js:288
-#: src/index.js:729
-msgid "Icon spacing"
-msgstr ""
-
-#: src/index.js:302
-msgid "Show icons on left"
-msgstr ""
-
-#: src/index.js:317
-#: src/index.js:702
-msgid "Justify space between"
-msgstr ""
-
-#: src/index.js:332
-msgid "No icon fill (stroke only)"
-msgstr ""
-
-#: src/index.js:346
-#: src/index.js:742
-msgid "Icon vertical alignment"
-msgstr ""
-
-#: src/index.js:353
-#: src/index.js:751
-msgid "Top"
-msgstr ""
-
-#: src/index.js:360
-#: src/index.js:758
-msgid "Center"
-msgstr ""
-
-#: src/index.js:367
-#: src/index.js:765
-msgid "Bottom"
-msgstr ""
-
-#: src/index.js:381
-#: src/index.js:779
-msgid "Icon offset"
-msgstr ""
-
-#: src/index.js:395
-#: src/index.js:793
-msgid "Icon rotation"
-msgstr ""
-
-#: src/index.js:399
-msgid "Rotate icons clockwise, in degrees."
-msgstr ""
-
-#: src/index.js:418
-msgid "Flip icons horizontally"
-msgstr ""
-
-#: src/index.js:433
-msgid "Flip icons vertically"
-msgstr ""
-
-#: src/index.js:453
+#: src/index.js:298
 msgid "Default Icon Color"
 msgstr ""
 
-#: src/index.js:539
+#: src/index.js:311
+msgid "Default Icon Hover Color"
+msgstr ""
+
+#: src/index.js:390
 msgid "Replace icon"
 msgstr ""
 
-#: src/index.js:540
+#: src/index.js:391
 msgid "Add icon"
 msgstr ""
 
-#: src/index.js:543
+#: src/index.js:394
 msgid "Add/edit custom icon"
 msgstr ""
 
-#: src/index.js:544
+#: src/index.js:395
 msgid "Add custom icon"
 msgstr ""
 
-#: src/index.js:571
+#: src/index.js:422
 msgid "Browse Icon Library"
 msgstr ""
 
-#: src/index.js:592
+#: src/index.js:443
 msgid "Open Media Library"
 msgstr ""
 
-#: src/index.js:657
+#: src/index.js:508
 msgid "Icon settings"
 msgstr ""
 
-#: src/index.js:666
+#: src/index.js:526
+#: src/index.js:542
 msgid "Use default icon settings"
 msgstr ""
 
-#: src/index.js:670
+#: src/index.js:546
 msgid "When enabled, this item will use the default settings from the Navigation block."
 msgstr ""
 
-#: src/index.js:687
-msgid "Show icon on left"
-msgstr ""
-
-#: src/index.js:797
-msgid "Rotate the icon clockwise, in degrees."
-msgstr ""
-
-#: src/index.js:816
-msgid "Flip horizontally"
-msgstr ""
-
-#: src/index.js:831
-msgid "Flip vertically"
+#: src/index.js:586
+msgid "Icon hover"
 msgstr ""
 
 #: src/utils/display-messages.js:15
