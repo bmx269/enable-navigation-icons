@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { isEmpty } from 'lodash';
 
 // Get all icon types.
 export function getIconTypes( icons ) {
@@ -12,7 +11,7 @@ export function getIconTypes( icons ) {
 		const typeTitle = type?.title ?? type?.type;
 		const isDefault = type?.isDefault ?? false;
 
-		if ( ! isEmpty( iconType ) ) {
+		if ( iconType ) {
 			iconTypes.push( {
 				type: iconType,
 				title: typeTitle,
@@ -32,7 +31,7 @@ export function flattenIconsArray( icons ) {
 		const iconType = type?.type;
 		const iconsOfType = type?.icons;
 
-		if ( ! isEmpty( iconsOfType ) ) {
+		if ( Array.isArray( iconsOfType ) && iconsOfType.length > 0 ) {
 			// Append the type to the icon name and add the type parameter.
 			iconsOfType.forEach( ( icon ) => {
 				// This temporarily fixes a recursion error.

@@ -6,7 +6,6 @@
 /**
  * External dependencies
  */
-import { intersection } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -47,7 +46,12 @@ export default function DimensionControl( {
 	let defaultUnits;
 
 	if ( units && themeJsonUnits ) {
-		defaultUnits = intersection( units, themeJsonUnits );
+		// Units allowed by both, in the component's order, without duplicates.
+		defaultUnits = units.filter(
+			( unit, index ) =>
+				themeJsonUnits.includes( unit ) &&
+				units.indexOf( unit ) === index
+		);
 	} else {
 		defaultUnits = units || themeJsonUnits;
 	}

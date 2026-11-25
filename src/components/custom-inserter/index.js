@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { isEmpty } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -54,7 +53,8 @@ export default function CustomInserterModal( props ) {
 	}
 
 	let iconToRender = parseIcon( customIcon );
-	const isSVG = ! isEmpty( iconToRender?.props );
+	const isSVG =
+		!! iconToRender?.props && Object.keys( iconToRender.props ).length > 0;
 
 	// Render the defualt lightning bolt if the icon is not a valid SVG.
 	iconToRender = isSVG ? iconToRender : bolt;
