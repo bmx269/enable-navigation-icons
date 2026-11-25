@@ -609,9 +609,18 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	// Inject icon inside the first element with wp-block-navigation-item__content class.
 	// Handles both <a> (hover mode) and <button> (click mode) tags.
 	// Limit to first match to avoid leaking into child navigation items.
-	$block_content = $position_left
-		? preg_replace( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', '$1' . $icon_markup . '$2$3', $block_content, 1 )
-		: preg_replace( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', '$1$2' . $icon_markup . '$3', $block_content, 1 );
+	// A callback rather than a replacement string: preg_replace() would treat
+	// any `$n` or `\n` sequence inside the icon markup as a backreference.
+	$block_content = preg_replace_callback(
+		'/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is',
+		static function ( $matches ) use ( $icon_markup, $position_left ) {
+			return $position_left
+				? $matches[1] . $icon_markup . $matches[2] . $matches[3]
+				: $matches[1] . $matches[2] . $icon_markup . $matches[3];
+		},
+		$block_content,
+		1
+	);
 
 	return $block_content;
 }
