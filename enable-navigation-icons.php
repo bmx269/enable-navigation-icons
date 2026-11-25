@@ -334,6 +334,82 @@ function enable_navigation_icons_block_styles() {
 add_action( 'init', 'enable_navigation_icons_block_styles' );
 
 /**
+ * Tag Processor that can insert the icon markup inside a navigation item.
+ *
+ * The HTML API has no public method for inserting markup (as of 6.9), so
+ * this follows the pattern core uses in WP_Interactivity_API_Directives_Processor:
+ * bookmark a tag and queue a zero-length WP_HTML_Text_Replacement on
+ * `lexical_updates`. The markup is never parsed for `$n`-style sequences,
+ * and only the matched element is touched.
+ *
+ * @since 1.0.2
+ */
+class Enable_Navigation_Icons_Processor extends WP_HTML_Tag_Processor {
+
+	/**
+	 * Insert markup just inside the current tag's opener or closer.
+	 *
+	 * Must be called while paused on an opening tag. When inserting at the
+	 * end, the processor moves to the matching closer; navigation items wrap
+	 * their content in <a> or <button>, neither of which can nest itself, so
+	 * the next closer of the same name is the matching one.
+	 *
+	 * Nothing is inserted when the element already contains an element with
+	 * `$guard_class`, which keeps the filter idempotent if it runs twice.
+	 *
+	 * @param string $markup      HTML to insert.
+	 * @param bool   $at_start    True to insert after the opening tag, false
+	 *                            to insert before the closing tag.
+	 * @param string $guard_class Class whose presence inside the element
+	 *                            means the markup is already there.
+	 * @return bool Whether the markup was queued for insertion.
+	 */
+	public function insert_inside( $markup, $at_start, $guard_class ) {
+		if ( $this->is_tag_closer() || null === $this->get_tag() ) {
+			return false;
+		}
+
+		$tag_name = $this->get_tag();
+
+		// Apply pending attribute changes first so bookmark offsets are
+		// computed against the final markup, as core does.
+		$this->get_updated_html();
+		$this->set_bookmark( 'enable-navigation-icons-opener' );
+
+		$closer_found = false;
+		while ( $this->next_tag( array( 'tag_closers' => 'visit' ) ) ) {
+			if ( ! $this->is_tag_closer() && $this->has_class( $guard_class ) ) {
+				$this->release_bookmark( 'enable-navigation-icons-opener' );
+				return false;
+			}
+			if ( $this->is_tag_closer() && $tag_name === $this->get_tag() ) {
+				$closer_found = true;
+				break;
+			}
+		}
+
+		if ( ! $closer_found ) {
+			$this->release_bookmark( 'enable-navigation-icons-opener' );
+			return false;
+		}
+
+		if ( $at_start ) {
+			$opener   = $this->bookmarks['enable-navigation-icons-opener'];
+			$position = $opener->start + $opener->length;
+		} else {
+			$this->set_bookmark( 'enable-navigation-icons-closer' );
+			$position = $this->bookmarks['enable-navigation-icons-closer']->start;
+			$this->release_bookmark( 'enable-navigation-icons-closer' );
+		}
+		$this->release_bookmark( 'enable-navigation-icons-opener' );
+
+		$this->lexical_updates[] = new WP_HTML_Text_Replacement( $position, 0, $markup );
+
+		return true;
+	}
+}
+
+/**
  * The wp_kses() allowlist for custom and legacy SVG icons.
  *
  * Presentation attributes are allowed on every element, including the root
@@ -538,55 +614,6 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 
 	$icon_style_attr = ! empty( $icon_styles ) ? ' style="' . esc_attr( implode( ';', $icon_styles ) ) . '"' : '';
 
-	// Append the icon class to the navigation item (<li> tag).
-	$p = new WP_HTML_Tag_Processor( $block_content );
-
-	// Find the <li> tag (navigation item container)
-	if ( $p->next_tag( 'li' ) ) {
-		$p->add_class( 'has-icon__' . enable_navigation_icons_icon_class_suffix( $icon_name ) );
-		if ( $justify_space_between ) {
-			$p->add_class( 'has-justified-space-between' );
-		}
-		if ( $has_no_icon_fill ) {
-			$p->add_class( 'has-no-icon-fill' );
-		}
-		if ( $position_left ) {
-			$p->add_class( 'has-icon-position__left' );
-		}
-		if ( $icon_vertical_align && 'center' !== $icon_vertical_align ) {
-			$p->add_class( 'has-icon-align__' . sanitize_html_class( $icon_vertical_align ) );
-		}
-	}
-	$block_content = $p->get_updated_html();
-
-	// Now apply custom properties to the element with class wp-block-navigation-item__content.
-	// This can be an <a> tag (navigation-link) or a <button> tag (navigation-submenu).
-	if ( ! empty( $link_styles ) ) {
-		$p     = new WP_HTML_Tag_Processor( $block_content );
-		$found = false;
-
-		while ( $p->next_tag() && ! $found ) {
-			$class_attr = $p->get_attribute( 'class' );
-			if ( $class_attr && strpos( $class_attr, 'wp-block-navigation-item__content' ) !== false ) {
-				$existing_style = $p->get_attribute( 'style' );
-				$new_styles     = esc_attr( implode( ';', $link_styles ) );
-				$final_style    = $existing_style ? $existing_style . ';' . $new_styles : $new_styles;
-				$p->set_attribute( 'style', $final_style );
-				$found = true;
-			}
-		}
-		$block_content = $p->get_updated_html();
-	}
-
-	// Check if the first navigation content element already has an icon to avoid duplicates.
-	// Only check the first matching element, not the entire block content, so that
-	// child items with their own icons don't prevent the parent from getting its icon.
-	if ( preg_match( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', $block_content, $first_element ) ) {
-		if ( strpos( $first_element[0], 'wp-block-navigation-item__icon' ) !== false ) {
-			return $block_content;
-		}
-	}
-
 	// Sanitize the icon SVG. Markup that came from the Icon API registry was
 	// already sanitized by core at registration and again by wp_get_icon(), so
 	// it is used as-is; running it through this allowlist would only risk
@@ -603,24 +630,48 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		$icon_flip_class .= ' is-flip-vertical';
 	}
 
-	// Add the SVG icon either to the left or right of the navigation item text.
 	$icon_markup = '<span class="wp-block-navigation-item__icon' . $icon_color_class . $icon_flip_class . '" aria-hidden="true"' . $icon_style_attr . '>' . $sanitized_icon . '</span>';
 
-	// Inject icon inside the first element with wp-block-navigation-item__content class.
-	// Handles both <a> (hover mode) and <button> (click mode) tags.
-	// Limit to first match to avoid leaking into child navigation items.
-	// A callback rather than a replacement string: preg_replace() would treat
-	// any `$n` or `\n` sequence inside the icon markup as a backreference.
-	$block_content = preg_replace_callback(
-		'/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is',
-		static function ( $matches ) use ( $icon_markup, $position_left ) {
-			return $position_left
-				? $matches[1] . $icon_markup . $matches[2] . $matches[3]
-				: $matches[1] . $matches[2] . $icon_markup . $matches[3];
-		},
-		$block_content,
-		1
-	);
+	$p = new Enable_Navigation_Icons_Processor( $block_content );
+
+	// The navigation item container.
+	if ( $p->next_tag( 'li' ) ) {
+		$p->add_class( 'has-icon__' . enable_navigation_icons_icon_class_suffix( $icon_name ) );
+		if ( $justify_space_between ) {
+			$p->add_class( 'has-justified-space-between' );
+		}
+		if ( $has_no_icon_fill ) {
+			$p->add_class( 'has-no-icon-fill' );
+		}
+		if ( $position_left ) {
+			$p->add_class( 'has-icon-position__left' );
+		}
+		if ( $icon_vertical_align && 'center' !== $icon_vertical_align ) {
+			$p->add_class( 'has-icon-align__' . sanitize_html_class( $icon_vertical_align ) );
+		}
+	}
+
+	// The first content element: an <a> for links (and hover-mode submenus) or
+	// a <button> for click-mode submenus. Only the first one is touched, so the
+	// icon never leaks into child navigation items.
+	while ( $p->next_tag( array( 'class_name' => 'wp-block-navigation-item__content' ) ) ) {
+		if ( ! in_array( $p->get_tag(), array( 'A', 'BUTTON' ), true ) ) {
+			continue;
+		}
+
+		if ( ! empty( $link_styles ) ) {
+			$existing_style = $p->get_attribute( 'style' );
+			$new_styles     = implode( ';', $link_styles );
+			$p->set_attribute( 'style', is_string( $existing_style ) && '' !== $existing_style ? $existing_style . ';' . $new_styles : $new_styles );
+		}
+
+		// Inserted verbatim through the HTML API: never parsed as a regex
+		// replacement, and skipped if this element already holds an icon.
+		$p->insert_inside( $icon_markup, $position_left, 'wp-block-navigation-item__icon' );
+		break;
+	}
+
+	$block_content = $p->get_updated_html();
 
 	return $block_content;
 }
