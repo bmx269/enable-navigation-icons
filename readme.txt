@@ -1,7 +1,7 @@
 === Enable Navigation Icons ===
 Contributors: bmx269
 Tags: navigation, icons, menu, block editor, gutenberg
-Requires at least: 6.3
+Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 1.0.1
@@ -72,7 +72,7 @@ On WordPress 7.1 and later the plugin integrates with the new SVG Icon API in bo
 
 Icons picked from the plugin's built-in library are also stored by name — resolved from data the plugin ships with, so this works on every supported WordPress version, not just 7.1. Your post content stays clean everywhere.
 
-All of this is additive. Existing navigation icons keep working exactly as before, with no migration required, and the plugin continues to run normally on WordPress 6.3 through 7.0.
+All of this is additive. Existing navigation icons keep working exactly as before, with no migration required, and the plugin continues to run normally on WordPress 6.9 through 7.0.
 
 = Supported Blocks =
 

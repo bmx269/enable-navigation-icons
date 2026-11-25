@@ -4,7 +4,7 @@
  * Plugin URI:          https://github.com/bmx269/enable-navigation-icons
  * Description:         Easily add icons to Navigation Block items.
  * Version:             1.0.1
- * Requires at least:   6.3
+ * Requires at least:   6.9
  * Requires PHP:        7.4
  * Author:              Trent Stromkins
  * Author URI:          https://smallrobot.co
@@ -30,7 +30,7 @@ const ENABLE_NAVIGATION_ICONS_COLLECTION = 'enable-navigation-icons';
  * Determine whether the WordPress Icon API is available.
  *
  * The registration and rendering helpers landed in WordPress 7.1. Every call
- * site guards on this so the plugin keeps working unchanged on 6.3 - 7.0.
+ * site guards on this so the plugin keeps working unchanged on 6.9 - 7.0.
  *
  * @since 1.0.0
  * @return bool True when the Icon API can be used.
@@ -125,7 +125,7 @@ function enable_navigation_icons_get_manifest() {
  * Resolve an own-collection icon name from the shipped manifest.
  *
  * This is the version-independent path: bundled icons stored by name render
- * from the plugin's own data on WordPress 6.3 just as on 7.1 — the Icon API
+ * from the plugin's own data on WordPress 6.9 just as on 7.1 — the Icon API
  * is never required for them.
  *
  * @since 1.0.0
@@ -147,7 +147,7 @@ function enable_navigation_icons_get_manifest_icon( $icon_name ) {
  * Resolve the SVG markup for an icon stored by registry name.
  *
  * The plugin's own collection is resolved from the shipped manifest first —
- * no Icon API needed, so those names work on WordPress 6.3+. Anything else
+ * no Icon API needed, so those names work on WordPress 6.9+. Anything else
  * (core and third-party collections) requires wp_get_icon() from 7.1.
  *
  * @since 1.0.0

@@ -37,7 +37,7 @@ The plugin integrates with core's SVG Icon API in both directions:
 - The plugin's own icon set is published as an `enable-navigation-icons` collection, making it available to the core Icon block, to other plugins, and over the REST API
 - Built-in library picks are stored by name and resolved from data the plugin ships with — post content stays free of SVG markup on every supported WordPress version, not just 7.1
 
-This is entirely additive. Existing navigation icons keep working with no migration, and the plugin still runs normally on WordPress 6.3 through 7.0.
+This is entirely additive. Existing navigation icons keep working with no migration, and the plugin still runs normally on WordPress 6.9 through 7.0.
 
 ### Navigation Block Default Settings
 Set default icon settings at the Navigation block level that apply to all child navigation items:
@@ -62,7 +62,7 @@ Full support for the Ollie Menu Designer plugin's mega menu dropdown items:
 
 ## Requirements
 
-- WordPress 6.3 or higher
+- WordPress 6.9 or higher
 - PHP 7.4 or higher
 
 ## Installation

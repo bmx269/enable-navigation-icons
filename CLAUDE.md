@@ -165,7 +165,7 @@ Icons not yet in the `@wordpress/icons` npm package go in `src/icons/wordpress/t
 
 ## Development Standards
 - Follow WordPress Coding Standards (WPCS) for PHP, JS, and CSS
-- PHP 7.4+ minimum, WordPress 6.3+ minimum
+- PHP 7.4+ minimum, WordPress 6.9+ minimum
 - All user-facing strings must use `__()` / `_e()` with text domain `enable-navigation-icons`
 - Sanitize all input (`sanitize_*`), escape all output (`esc_*`)
 - SVG content must be sanitized with `wp_kses()` using the allowed tags list in the main PHP file
@@ -188,10 +188,10 @@ Icons not yet in the `@wordpress/icons` npm package go in `src/icons/wordpress/t
 
 ## WordPress Icon API Integration (WordPress 7.1+)
 
-The plugin both **consumes** and **publishes** to core's SVG Icon API, guarded throughout by `enable_navigation_icons_has_icon_api()` so 6.3–7.0 behave exactly as before.
+The plugin both **consumes** and **publishes** to core's SVG Icon API, guarded throughout by `enable_navigation_icons_has_icon_api()` so 6.9–7.0 behave exactly as before.
 
 - **Consuming**: `useCoreIcons()` fetches `/wp/v2/icon-collections` and `/wp/v2/icons` once per editor session and exposes each collection as an extra inserter type. Note that `WP_REST_Icons_Controller::get_items()` **ignores `page`/`per_page`** and returns the full set in one response — do not paginate it, or every icon will be duplicated.
-- **Storage**: all library picks store only `iconName` with an empty `icon` attribute. Bundled icons store `enable-navigation-icons/<name>` — resolved from the shipped `build/icon-manifest.php` on the server and the bundled JS registry in the editor, so they render on WordPress 6.3+ with **no Icon API needed**. Core/third-party collection picks store their registry name, resolved by `wp_get_icon( $name, [ 'size' => null ] )` (7.1+). Third-party JS icon sets (`iconBlock.icons` filter) are not in the manifest and still embed raw SVG. Legacy content keeps its raw SVG in the `icon` attribute, which takes precedence.
+- **Storage**: all library picks store only `iconName` with an empty `icon` attribute. Bundled icons store `enable-navigation-icons/<name>` — resolved from the shipped `build/icon-manifest.php` on the server and the bundled JS registry in the editor, so they render on WordPress 6.9+ with **no Icon API needed**. Core/third-party collection picks store their registry name, resolved by `wp_get_icon( $name, [ 'size' => null ] )` (7.1+). Third-party JS icon sets (`iconBlock.icons` filter) are not in the manifest and still embed raw SVG. Legacy content keeps its raw SVG in the `icon` attribute, which takes precedence.
 - **Name normalization**: `src/utils/normalize-icon-name.js` maps JS registry names to manifest names (`wordpress-starFilled` → `wordpress-star-filled`). It is shared by the manifest build and the editor pick flow and MUST stay identical between them; shipped names are public API — never change normalization retroactively.
 - **CSS class continuity**: the own-collection prefix is stripped from `has-icon__*` classes, so a 1.0.0 bundled pick produces the same `has-icon__wordpress-github` class as 0.2.x. Only foreign collections get namespaced classes (`has-icon__core-plus`).
 - **No migration**: a slash in `iconName` is the discriminator between the two paths (`enable_navigation_icons_is_registry_icon()` / `isCoreIconName()`). Bundled names are always bare slugs, so old and new content can never be confused.

@@ -81,7 +81,7 @@ export function getIconStyle( {
 	// If we don't have the icon SVG string but we have an iconName, look it
 	// up in the bundled JS registry. Matches both legacy bare names and the
 	// plugin's own namespaced registry names, so own-collection icons resolve
-	// without the Icon API — on WordPress 6.3 just like 7.1.
+	// without the Icon API — on WordPress 6.9 just like 7.1.
 	if ( ! svg && iconName ) {
 		const iconsAll = flattenIconsArray( getIcons() );
 		const namedIcon = iconsAll.filter(
