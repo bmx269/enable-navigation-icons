@@ -255,6 +255,16 @@ function enable_navigation_icons_enqueue_block_editor_assets() {
 		plugin_dir_path( __FILE__ ) . 'languages'
 	);
 
+	// Tell the editor whether the Icon API REST routes exist, so it doesn't
+	// request them on WordPress versions where they would only 404.
+	wp_add_inline_script(
+		'enable-navigation-icons-editor-scripts',
+		'window.enableNavigationIcons = ' . wp_json_encode(
+			array( 'hasIconApi' => enable_navigation_icons_has_icon_api() )
+		) . ';',
+		'before'
+	);
+
 }
 add_action( 'enqueue_block_editor_assets', 'enable_navigation_icons_enqueue_block_editor_assets' );
 
