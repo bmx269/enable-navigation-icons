@@ -684,3 +684,26 @@ $wordpress: "data:image/svg+xml;utf8,<svg width='20' height='20' xmlns='http://w
 		}
 	}
 }
+
+// Icon-only items stay editable: while the item (or its text) is selected,
+// show the hidden label faded so it can still be typed into.
+// Matches the front-end rule's `[class*="has-icon__"]` so specificity is
+// higher regardless of which stylesheet loads first.
+.wp-block-navigation-item[class*="has-icon__"].has-hidden-label.is-selected > .wp-block-navigation-item__content .wp-block-navigation-item__label,
+.wp-block-navigation-item[class*="has-icon__"].has-hidden-label.has-child-selected > .wp-block-navigation-item__content .wp-block-navigation-item__label {
+	clip-path: none;
+	height: auto;
+	margin: 0;
+	opacity: 0.6;
+	overflow: visible;
+	position: static;
+	width: auto;
+}
+
+// The description in the Navigation block's icon settings spans the panel grid.
+.enable-navigation-icons__panel-description {
+	grid-column: 1 / -1;
+	margin: 0;
+	color: #757575;
+	font-size: 12px;
+}

@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { isEmpty } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -54,7 +53,8 @@ export default function CustomInserterModal( props ) {
 	}
 
 	let iconToRender = parseIcon( customIcon );
-	const isSVG = ! isEmpty( iconToRender?.props );
+	const isSVG =
+		!! iconToRender?.props && Object.keys( iconToRender.props ).length > 0;
 
 	// Render the defualt lightning bolt if the icon is not a valid SVG.
 	iconToRender = isSVG ? iconToRender : bolt;
@@ -69,6 +69,7 @@ export default function CustomInserterModal( props ) {
 			<div className="icon-custom-inserter">
 				<div className="icon-custom-inserter__content">
 					<TextareaControl
+						__nextHasNoMarginBottom
 						label={ __( 'Custom icon', 'enable-navigation-icons' ) }
 						hideLabelFromVision={ true }
 						value={ customIcon }
@@ -97,6 +98,8 @@ export default function CustomInserterModal( props ) {
 									) }
 								</span>
 								<RangeControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
 									min={ 24 }
 									max={ 400 }
 									initialPosition={ 100 }

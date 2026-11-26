@@ -3,8 +3,8 @@
  * Plugin Name:         Enable Navigation Icons
  * Plugin URI:          https://github.com/bmx269/enable-navigation-icons
  * Description:         Easily add icons to Navigation Block items.
- * Version:             1.0.1
- * Requires at least:   6.3
+ * Version:             1.0.2
+ * Requires at least:   6.9
  * Requires PHP:        7.4
  * Author:              Trent Stromkins
  * Author URI:          https://smallrobot.co
@@ -30,7 +30,7 @@ const ENABLE_NAVIGATION_ICONS_COLLECTION = 'enable-navigation-icons';
  * Determine whether the WordPress Icon API is available.
  *
  * The registration and rendering helpers landed in WordPress 7.1. Every call
- * site guards on this so the plugin keeps working unchanged on 6.3 - 7.0.
+ * site guards on this so the plugin keeps working unchanged on 6.9 - 7.0.
  *
  * @since 1.0.0
  * @return bool True when the Icon API can be used.
@@ -125,7 +125,7 @@ function enable_navigation_icons_get_manifest() {
  * Resolve an own-collection icon name from the shipped manifest.
  *
  * This is the version-independent path: bundled icons stored by name render
- * from the plugin's own data on WordPress 6.3 just as on 7.1 — the Icon API
+ * from the plugin's own data on WordPress 6.9 just as on 7.1 — the Icon API
  * is never required for them.
  *
  * @since 1.0.0
@@ -137,17 +137,44 @@ function enable_navigation_icons_get_manifest_icon( $icon_name ) {
 		return '';
 	}
 
+	static $cache = array();
+
 	$manifest = enable_navigation_icons_get_manifest();
 	$bare     = substr( $icon_name, strlen( ENABLE_NAVIGATION_ICONS_COLLECTION ) + 1 );
 
-	return isset( $manifest[ $bare ]['content'] ) ? $manifest[ $bare ]['content'] : '';
+	// Only names that are keys of the generated manifest reach the filesystem,
+	// so a stored attribute can never point outside build/icons/.
+	if ( ! isset( $manifest[ $bare ] ) ) {
+		return '';
+	}
+
+	if ( ! isset( $cache[ $bare ] ) ) {
+		$contents       = file_get_contents( enable_navigation_icons_icons_dir() . $bare . '.svg' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local, trusted build file.
+		$cache[ $bare ] = is_string( $contents ) ? $contents : '';
+	}
+
+	return $cache[ $bare ];
+}
+
+/**
+ * Directory holding one generated .svg file per bundled icon.
+ *
+ * The SVG markup lives only here; the manifest carries names and labels.
+ * Both the front-end renderer and the Icon API registration read these files,
+ * so each icon ships exactly once.
+ *
+ * @since 1.0.2
+ * @return string Absolute path with a trailing slash.
+ */
+function enable_navigation_icons_icons_dir() {
+	return plugin_dir_path( __FILE__ ) . 'build/icons/';
 }
 
 /**
  * Resolve the SVG markup for an icon stored by registry name.
  *
  * The plugin's own collection is resolved from the shipped manifest first —
- * no Icon API needed, so those names work on WordPress 6.3+. Anything else
+ * no Icon API needed, so those names work on WordPress 6.9+. Anything else
  * (core and third-party collections) requires wp_get_icon() from 7.1.
  *
  * @since 1.0.0
@@ -186,9 +213,10 @@ function enable_navigation_icons_register_icons() {
 		return;
 	}
 
-	$manifest = enable_navigation_icons_get_manifest();
+	$manifest  = enable_navigation_icons_get_manifest();
+	$icons_dir = enable_navigation_icons_icons_dir();
 
-	if ( empty( $manifest ) ) {
+	if ( empty( $manifest ) || ! is_dir( $icons_dir ) ) {
 		return;
 	}
 
@@ -204,16 +232,17 @@ function enable_navigation_icons_register_icons() {
 		return;
 	}
 
+	// Register by file so core defers reading and sanitizing each icon until it
+	// is requested. Inline `content` is sanitized at registration, which costs
+	// every request ~300 wp_kses() calls for icons that are almost never all
+	// used. One directory check instead of a stat per icon: core reports any
+	// individual missing file when it loads it.
 	foreach ( $manifest as $name => $icon ) {
-		if ( empty( $icon['content'] ) ) {
-			continue;
-		}
-
 		wp_register_icon(
 			ENABLE_NAVIGATION_ICONS_COLLECTION . '/' . $name,
 			array(
-				'label'   => isset( $icon['label'] ) ? $icon['label'] : $name,
-				'content' => $icon['content'],
+				'label'     => isset( $icon['label'] ) ? $icon['label'] : $name,
+				'file_path' => $icons_dir . $name . '.svg',
 			)
 		);
 	}
@@ -244,6 +273,16 @@ function enable_navigation_icons_enqueue_block_editor_assets() {
 		plugin_dir_path( __FILE__ ) . 'languages'
 	);
 
+	// Tell the editor whether the Icon API REST routes exist, so it doesn't
+	// request them on WordPress versions where they would only 404.
+	wp_add_inline_script(
+		'enable-navigation-icons-editor-scripts',
+		'window.enableNavigationIcons = ' . wp_json_encode(
+			array( 'hasIconApi' => enable_navigation_icons_has_icon_api() )
+		) . ';',
+		'before'
+	);
+
 }
 add_action( 'enqueue_block_editor_assets', 'enable_navigation_icons_enqueue_block_editor_assets' );
 
@@ -267,61 +306,199 @@ function enable_navigation_icons_enqueue_block_assets() {
 add_action( 'enqueue_block_assets', 'enable_navigation_icons_enqueue_block_assets' );
 
 /**
- * Enqueue block styles for navigation-link block.
- * (Applies to both frontend and Editor)
+ * Version string for the front-end stylesheet.
  *
- * @since 0.1.0
+ * Uses the content hash wp-scripts writes to build/style.asset.php, so the
+ * URL changes whenever the CSS does and browsers never keep a stale copy
+ * after a plugin update.
+ *
+ * @since 1.0.2
+ * @return string|false The version, or false to fall back to core's version.
  */
-function enable_navigation_icons_block_styles_link() {
-	wp_enqueue_block_style(
-		'core/navigation-link',
-		array(
-			'handle' => 'enable-navigation-icons-block-styles',
-			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => wp_get_theme()->get( 'Version' ),
-			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
-		)
-	);
+function enable_navigation_icons_style_version() {
+	static $version = null;
+
+	if ( null === $version ) {
+		$asset_path = plugin_dir_path( __FILE__ ) . 'build/style.asset.php';
+		$asset      = file_exists( $asset_path ) ? include $asset_path : array();
+		$version    = isset( $asset['version'] ) ? $asset['version'] : false;
+	}
+
+	return $version;
 }
-add_action( 'init', 'enable_navigation_icons_block_styles_link' );
 
 /**
- * Enqueue block styles for navigation-submenu block.
+ * Attach the icon stylesheet to every supported navigation item block.
  * (Applies to both frontend and Editor)
+ *
+ * All blocks share one handle, so a menu that mixes links, submenus and mega
+ * menus loads the stylesheet once. With per-block handles the identical CSS
+ * was printed once per block type.
  *
  * @since 0.1.0
  */
-function enable_navigation_icons_block_styles_submenu() {
-	wp_enqueue_block_style(
-		'core/navigation-submenu',
-		array(
-			'handle' => 'enable-navigation-icons-block-styles-submenu',
-			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => wp_get_theme()->get( 'Version' ),
-			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
-		)
+function enable_navigation_icons_block_styles() {
+	$args = array(
+		'handle' => 'enable-navigation-icons-block-styles',
+		'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
+		'ver'    => enable_navigation_icons_style_version(),
+		'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
 	);
+
+	foreach ( array( 'core/navigation-link', 'core/navigation-submenu', 'ollie/mega-menu' ) as $block_name ) {
+		wp_enqueue_block_style( $block_name, $args );
+	}
 }
-add_action( 'init', 'enable_navigation_icons_block_styles_submenu' );
+add_action( 'init', 'enable_navigation_icons_block_styles' );
 
 /**
- * Enqueue block styles for Ollie mega-menu block.
- * (Applies to both frontend and Editor)
+ * Tag Processor that can insert the icon markup inside a navigation item.
  *
- * @since 0.1.0
+ * The HTML API has no public method for inserting markup (as of 6.9), so
+ * this follows the pattern core uses in WP_Interactivity_API_Directives_Processor:
+ * bookmark a tag and queue a zero-length WP_HTML_Text_Replacement on
+ * `lexical_updates`. The markup is never parsed for `$n`-style sequences,
+ * and only the matched element is touched.
+ *
+ * @since 1.0.2
  */
-function enable_navigation_icons_block_styles_ollie_mega_menu() {
-	wp_enqueue_block_style(
-		'ollie/mega-menu',
-		array(
-			'handle' => 'enable-navigation-icons-block-styles-ollie-mega-menu',
-			'src'    => plugin_dir_url( __FILE__ ) . 'build/style.css',
-			'ver'    => wp_get_theme()->get( 'Version' ),
-			'path'   => plugin_dir_path( __FILE__ ) . 'build/style.css',
-		)
+class Enable_Navigation_Icons_Processor extends WP_HTML_Tag_Processor {
+
+	/**
+	 * Insert markup just inside the current tag's opener or closer.
+	 *
+	 * Must be called while paused on an opening tag. When inserting at the
+	 * end, the processor moves to the matching closer; navigation items wrap
+	 * their content in <a> or <button>, neither of which can nest itself, so
+	 * the next closer of the same name is the matching one.
+	 *
+	 * Nothing is inserted when the element already contains an element with
+	 * `$guard_class`, which keeps the filter idempotent if it runs twice.
+	 *
+	 * @param string $markup      HTML to insert.
+	 * @param bool   $at_start    True to insert after the opening tag, false
+	 *                            to insert before the closing tag.
+	 * @param string $guard_class Class whose presence inside the element
+	 *                            means the markup is already there.
+	 * @return bool Whether the markup was queued for insertion.
+	 */
+	public function insert_inside( $markup, $at_start, $guard_class ) {
+		if ( $this->is_tag_closer() || null === $this->get_tag() ) {
+			return false;
+		}
+
+		$tag_name = $this->get_tag();
+
+		// Apply pending attribute changes first so bookmark offsets are
+		// computed against the final markup, as core does.
+		$this->get_updated_html();
+		$this->set_bookmark( 'enable-navigation-icons-opener' );
+
+		$closer_found = false;
+		while ( $this->next_tag( array( 'tag_closers' => 'visit' ) ) ) {
+			if ( ! $this->is_tag_closer() && $this->has_class( $guard_class ) ) {
+				$this->release_bookmark( 'enable-navigation-icons-opener' );
+				return false;
+			}
+			if ( $this->is_tag_closer() && $tag_name === $this->get_tag() ) {
+				$closer_found = true;
+				break;
+			}
+		}
+
+		if ( ! $closer_found ) {
+			$this->release_bookmark( 'enable-navigation-icons-opener' );
+			return false;
+		}
+
+		if ( $at_start ) {
+			$opener   = $this->bookmarks['enable-navigation-icons-opener'];
+			$position = $opener->start + $opener->length;
+		} else {
+			$this->set_bookmark( 'enable-navigation-icons-closer' );
+			$position = $this->bookmarks['enable-navigation-icons-closer']->start;
+			$this->release_bookmark( 'enable-navigation-icons-closer' );
+		}
+		$this->release_bookmark( 'enable-navigation-icons-opener' );
+
+		$this->lexical_updates[] = new WP_HTML_Text_Replacement( $position, 0, $markup );
+
+		return true;
+	}
+}
+
+/**
+ * The wp_kses() allowlist for custom and legacy SVG icons.
+ *
+ * Presentation attributes are allowed on every element, including the root
+ * <svg> and <g>, because SVG inherits them: stroke-based sets such as Lucide
+ * declare `stroke`, `stroke-width` and friends once on the root, and icons
+ * with cut-outs depend on `fill-rule`. Dropping either makes the icon render
+ * invisible or solid on the front end while the editor preview looks fine.
+ *
+ * @since 1.0.2
+ * @return array The allowed tags and attributes.
+ */
+function enable_navigation_icons_allowed_svg_tags() {
+	$presentation = array(
+		'fill'              => true,
+		'fill-rule'         => true,
+		'fill-opacity'      => true,
+		'clip-rule'         => true,
+		'stroke'            => true,
+		'stroke-width'      => true,
+		'stroke-linecap'    => true,
+		'stroke-linejoin'   => true,
+		'stroke-miterlimit' => true,
+		'stroke-dasharray'  => true,
+		'stroke-dashoffset' => true,
+		'stroke-opacity'    => true,
+		'opacity'           => true,
+		'transform'         => true,
+	);
+
+	return array(
+		'svg'      => $presentation + array(
+			'xmlns'       => true,
+			'viewbox'     => true,
+			'role'        => true,
+			'aria-hidden' => true,
+			'focusable'   => true,
+			'width'       => true,
+			'height'      => true,
+			'class'       => true,
+		),
+		'g'        => $presentation,
+		'path'     => $presentation + array( 'd' => true ),
+		'circle'   => $presentation + array(
+			'cx' => true,
+			'cy' => true,
+			'r'  => true,
+		),
+		'ellipse'  => $presentation + array(
+			'cx' => true,
+			'cy' => true,
+			'rx' => true,
+			'ry' => true,
+		),
+		'rect'     => $presentation + array(
+			'x'      => true,
+			'y'      => true,
+			'width'  => true,
+			'height' => true,
+			'rx'     => true,
+			'ry'     => true,
+		),
+		'polygon'  => $presentation + array( 'points' => true ),
+		'polyline' => $presentation + array( 'points' => true ),
+		'line'     => $presentation + array(
+			'x1' => true,
+			'y1' => true,
+			'x2' => true,
+			'y2' => true,
+		),
 	);
 }
-add_action( 'init', 'enable_navigation_icons_block_styles_ollie_mega_menu' );
 
 /**
  * Render icons on the frontend for navigation items.
@@ -413,6 +590,26 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		? $parent_defaults['defaultIconOffset']
 		: ( isset( $block['attrs']['iconOffset'] ) ? $block['attrs']['iconOffset'] : '' );
 
+	$hide_label = $use_default_settings && isset( $parent_defaults['defaultHideLabel'] )
+		? $parent_defaults['defaultHideLabel']
+		: ( isset( $block['attrs']['hideLabel'] ) ? $block['attrs']['hideLabel'] : false );
+
+	$icon_hover_color = $use_default_settings && ! empty( $parent_defaults['defaultCustomIconHoverColor'] )
+		? $parent_defaults['defaultCustomIconHoverColor']
+		: ( isset( $block['attrs']['customIconHoverColor'] ) ? $block['attrs']['customIconHoverColor'] : '' );
+
+	// The hover colour lands in an inline style attribute, so run it through
+	// core's CSS declaration filter: anything that is not a single valid
+	// colour value (for example an injected `;` declaration) is dropped.
+	if ( is_string( $icon_hover_color ) && '' !== $icon_hover_color ) {
+		$hover_declaration = safecss_filter_attr( 'color:' . $icon_hover_color );
+		$icon_hover_color  = 0 === strpos( $hover_declaration, 'color:' ) && false === strpos( $hover_declaration, ';' )
+			? substr( $hover_declaration, strlen( 'color:' ) )
+			: '';
+	} else {
+		$icon_hover_color = '';
+	}
+
 	// Determine effective custom icon color.
 	$custom_icon_color = $use_default_settings && ! empty( $parent_defaults['defaultCustomIconColor'] )
 		? $parent_defaults['defaultCustomIconColor']
@@ -437,6 +634,9 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 	if ( $icon_spacing ) {
 		$link_styles[] = '--icon-spacing:' . esc_attr( $icon_spacing );
 	}
+	if ( $icon_hover_color ) {
+		$link_styles[] = '--icon-hover-color:' . $icon_hover_color;
+	}
 	if ( $custom_icon_color ) {
 		$icon_styles[] = 'color:' . esc_attr( $custom_icon_color );
 	}
@@ -455,10 +655,27 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 
 	$icon_style_attr = ! empty( $icon_styles ) ? ' style="' . esc_attr( implode( ';', $icon_styles ) ) . '"' : '';
 
-	// Append the icon class to the navigation item (<li> tag).
-	$p = new WP_HTML_Tag_Processor( $block_content );
+	// Sanitize the icon SVG. Markup that came from the Icon API registry was
+	// already sanitized by core at registration and again by wp_get_icon(), so
+	// it is used as-is; running it through this allowlist would only risk
+	// stripping attributes core deliberately adds.
+	$sanitized_icon = $is_registry_icon ? $icon : wp_kses( $icon, enable_navigation_icons_allowed_svg_tags() );
 
-	// Find the <li> tag (navigation item container)
+	// Flip classes mirror core's Icon block, so the same class names mean the
+	// same thing whether an icon renders here or in core/icon.
+	$icon_flip_class = '';
+	if ( $flip_horizontal ) {
+		$icon_flip_class .= ' is-flip-horizontal';
+	}
+	if ( $flip_vertical ) {
+		$icon_flip_class .= ' is-flip-vertical';
+	}
+
+	$icon_markup = '<span class="wp-block-navigation-item__icon' . $icon_color_class . $icon_flip_class . '" aria-hidden="true"' . $icon_style_attr . '>' . $sanitized_icon . '</span>';
+
+	$p = new Enable_Navigation_Icons_Processor( $block_content );
+
+	// The navigation item container.
 	if ( $p->next_tag( 'li' ) ) {
 		$p->add_class( 'has-icon__' . enable_navigation_icons_icon_class_suffix( $icon_name ) );
 		if ( $justify_space_between ) {
@@ -473,121 +690,35 @@ function enable_navigation_icons_render_block_navigation( $block_content, $block
 		if ( $icon_vertical_align && 'center' !== $icon_vertical_align ) {
 			$p->add_class( 'has-icon-align__' . sanitize_html_class( $icon_vertical_align ) );
 		}
+		if ( $hide_label ) {
+			$p->add_class( 'has-hidden-label' );
+		}
+		if ( $icon_hover_color ) {
+			$p->add_class( 'has-icon-hover-color' );
+		}
 	}
+
+	// The first content element: an <a> for links (and hover-mode submenus) or
+	// a <button> for click-mode submenus. Only the first one is touched, so the
+	// icon never leaks into child navigation items.
+	while ( $p->next_tag( array( 'class_name' => 'wp-block-navigation-item__content' ) ) ) {
+		if ( ! in_array( $p->get_tag(), array( 'A', 'BUTTON' ), true ) ) {
+			continue;
+		}
+
+		if ( ! empty( $link_styles ) ) {
+			$existing_style = $p->get_attribute( 'style' );
+			$new_styles     = implode( ';', $link_styles );
+			$p->set_attribute( 'style', is_string( $existing_style ) && '' !== $existing_style ? $existing_style . ';' . $new_styles : $new_styles );
+		}
+
+		// Inserted verbatim through the HTML API: never parsed as a regex
+		// replacement, and skipped if this element already holds an icon.
+		$p->insert_inside( $icon_markup, $position_left, 'wp-block-navigation-item__icon' );
+		break;
+	}
+
 	$block_content = $p->get_updated_html();
-
-	// Now apply custom properties to the element with class wp-block-navigation-item__content.
-	// This can be an <a> tag (navigation-link) or a <button> tag (navigation-submenu).
-	if ( ! empty( $link_styles ) ) {
-		$p     = new WP_HTML_Tag_Processor( $block_content );
-		$found = false;
-
-		while ( $p->next_tag() && ! $found ) {
-			$class_attr = $p->get_attribute( 'class' );
-			if ( $class_attr && strpos( $class_attr, 'wp-block-navigation-item__content' ) !== false ) {
-				$existing_style = $p->get_attribute( 'style' );
-				$new_styles     = esc_attr( implode( ';', $link_styles ) );
-				$final_style    = $existing_style ? $existing_style . ';' . $new_styles : $new_styles;
-				$p->set_attribute( 'style', $final_style );
-				$found = true;
-			}
-		}
-		$block_content = $p->get_updated_html();
-	}
-
-	// Sanitize SVG content to prevent XSS attacks.
-	$allowed_svg_tags = array(
-		'svg'      => array(
-			'xmlns'       => true,
-			'fill'        => true,
-			'viewbox'     => true,
-			'role'        => true,
-			'aria-hidden' => true,
-			'focusable'   => true,
-			'width'       => true,
-			'height'      => true,
-			'class'       => true,
-		),
-		'path'     => array(
-			'd'           => true,
-			'fill'        => true,
-			'stroke'      => true,
-			'stroke-width' => true,
-			'stroke-linecap' => true,
-			'stroke-linejoin' => true,
-		),
-		'circle'   => array(
-			'cx'     => true,
-			'cy'     => true,
-			'r'      => true,
-			'fill'   => true,
-			'stroke' => true,
-		),
-		'rect'     => array(
-			'x'      => true,
-			'y'      => true,
-			'width'  => true,
-			'height' => true,
-			'fill'   => true,
-			'stroke' => true,
-		),
-		'polygon'  => array(
-			'points' => true,
-			'fill'   => true,
-			'stroke' => true,
-		),
-		'polyline' => array(
-			'points' => true,
-			'fill'   => true,
-			'stroke' => true,
-		),
-		'line'     => array(
-			'x1'     => true,
-			'y1'     => true,
-			'x2'     => true,
-			'y2'     => true,
-			'stroke' => true,
-		),
-		'g'        => array(
-			'fill'   => true,
-			'stroke' => true,
-		),
-	);
-
-	// Check if the first navigation content element already has an icon to avoid duplicates.
-	// Only check the first matching element, not the entire block content, so that
-	// child items with their own icons don't prevent the parent from getting its icon.
-	if ( preg_match( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', $block_content, $first_element ) ) {
-		if ( strpos( $first_element[0], 'wp-block-navigation-item__icon' ) !== false ) {
-			return $block_content;
-		}
-	}
-
-	// Sanitize the icon SVG. Markup that came from the Icon API registry was
-	// already sanitized by core at registration and again by wp_get_icon(), so
-	// it is used as-is; running it through this allowlist would only risk
-	// stripping attributes core deliberately adds.
-	$sanitized_icon = $is_registry_icon ? $icon : wp_kses( $icon, $allowed_svg_tags );
-
-	// Flip classes mirror core's Icon block, so the same class names mean the
-	// same thing whether an icon renders here or in core/icon.
-	$icon_flip_class = '';
-	if ( $flip_horizontal ) {
-		$icon_flip_class .= ' is-flip-horizontal';
-	}
-	if ( $flip_vertical ) {
-		$icon_flip_class .= ' is-flip-vertical';
-	}
-
-	// Add the SVG icon either to the left or right of the navigation item text.
-	$icon_markup = '<span class="wp-block-navigation-item__icon' . $icon_color_class . $icon_flip_class . '" aria-hidden="true"' . $icon_style_attr . '>' . $sanitized_icon . '</span>';
-
-	// Inject icon inside the first element with wp-block-navigation-item__content class.
-	// Handles both <a> (hover mode) and <button> (click mode) tags.
-	// Limit to first match to avoid leaking into child navigation items.
-	$block_content = $position_left
-		? preg_replace( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', '$1' . $icon_markup . '$2$3', $block_content, 1 )
-		: preg_replace( '/(<(?:a|button)[^>]*class="[^"]*wp-block-navigation-item__content[^"]*"[^>]*>)(.*?)(<\/(?:a|button)>)/is', '$1$2' . $icon_markup . '$3', $block_content, 1 );
 
 	return $block_content;
 }

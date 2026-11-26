@@ -25,12 +25,9 @@ import {
 	MenuGroup,
 	MenuItem,
 	NavigableMenu,
-	PanelBody,
-	PanelRow,
-	RangeControl,
-	SelectControl,
 	ToggleControl,
 	ToolbarButton,
+	__experimentalToolsPanelItem as ToolsPanelItem, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 	__experimentalGrid as Grid, // eslint-disable-line
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
@@ -47,8 +44,11 @@ import {
  */
 import {
 	CustomInserterModal,
-	DimensionControl,
+	getResetAttributes,
+	ICON_SETTINGS,
+	IconSettingsItems,
 	InserterModal,
+	ToolsPanel,
 } from './components';
 import {
 	getCoreIconContent,
@@ -119,6 +119,13 @@ function addAttributes( settings ) {
 			defaultFlipVertical: {
 				type: 'boolean',
 				default: false,
+			},
+			defaultHideLabel: {
+				type: 'boolean',
+				default: false,
+			},
+			defaultCustomIconHoverColor: {
+				type: 'string',
 			},
 		};
 
@@ -196,6 +203,13 @@ function addAttributes( settings ) {
 			type: 'boolean',
 			default: false,
 		},
+		hideLabel: {
+			type: 'boolean',
+			default: false,
+		},
+		customIconHoverColor: {
+			type: 'string',
+		},
 	};
 
 	const newSettings = {
@@ -238,19 +252,8 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 		// Handle Navigation block (parent) - add default icon settings
 		if ( props.name === 'core/navigation' ) {
 			const { attributes, setAttributes } = props;
-			const {
-				defaultIconSize,
-				defaultIconSpacing,
-				defaultCustomIconColor,
-				defaultIconPositionLeft,
-				defaultJustifySpaceBetween,
-				defaultHasNoIconFill,
-				defaultIconVerticalAlign,
-				defaultIconOffset,
-				defaultIconRotate,
-				defaultFlipHorizontal,
-				defaultFlipVertical,
-			} = attributes;
+			const { defaultCustomIconColor, defaultCustomIconHoverColor } =
+				attributes;
 
 			const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
@@ -258,192 +261,34 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 				<>
 					<BlockEdit { ...props } />
 					<InspectorControls>
-						<PanelBody
-							title={ __(
+						<ToolsPanel
+							label={ __(
 								'Default Icon Settings',
 								'enable-navigation-icons'
 							) }
-							initialOpen={ false }
+							panelId={ props.clientId }
+							resetAll={ () =>
+								setAttributes(
+									getResetAttributes(
+										ICON_SETTINGS,
+										'navigation'
+									)
+								)
+							}
 						>
-							<PanelRow>
-								<p className="description">
-									{ __(
-										'Set default icon settings for all navigation items. Individual items can override these settings.',
-										'enable-navigation-icons'
-									) }
-								</p>
-							</PanelRow>
-							<DimensionControl
-								label={ __(
-									'Icon size',
+							<p className="enable-navigation-icons__panel-description">
+								{ __(
+									'Set default icon settings for all navigation items. Individual items can override these settings.',
 									'enable-navigation-icons'
 								) }
-								value={ defaultIconSize || '' }
-								onChange={ ( value ) => {
-									setAttributes( { defaultIconSize: value } );
-								} }
-								units={ [ 'px', 'em', 'rem' ] }
+							</p>
+							<IconSettingsItems
+								scope="navigation"
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								panelId={ props.clientId }
 							/>
-							<DimensionControl
-								label={ __(
-									'Icon spacing',
-									'enable-navigation-icons'
-								) }
-								value={ defaultIconSpacing || '' }
-								onChange={ ( value ) => {
-									setAttributes( {
-										defaultIconSpacing: value,
-									} );
-								} }
-								units={ [ 'px', 'em', 'rem' ] }
-							/>
-							<PanelRow>
-								<ToggleControl
-									label={ __(
-										'Show icons on left',
-										'enable-navigation-icons'
-									) }
-									checked={ defaultIconPositionLeft }
-									onChange={ () => {
-										setAttributes( {
-											defaultIconPositionLeft:
-												! defaultIconPositionLeft,
-										} );
-									} }
-								/>
-							</PanelRow>
-							<PanelRow>
-								<ToggleControl
-									label={ __(
-										'Justify space between',
-										'enable-navigation-icons'
-									) }
-									checked={ defaultJustifySpaceBetween }
-									onChange={ () => {
-										setAttributes( {
-											defaultJustifySpaceBetween:
-												! defaultJustifySpaceBetween,
-										} );
-									} }
-								/>
-							</PanelRow>
-							<PanelRow>
-								<ToggleControl
-									label={ __(
-										'No icon fill (stroke only)',
-										'enable-navigation-icons'
-									) }
-									checked={ defaultHasNoIconFill }
-									onChange={ () => {
-										setAttributes( {
-											defaultHasNoIconFill:
-												! defaultHasNoIconFill,
-										} );
-									} }
-								/>
-							</PanelRow>
-							<SelectControl
-								label={ __(
-									'Icon vertical alignment',
-									'enable-navigation-icons'
-								) }
-								value={ defaultIconVerticalAlign || 'center' }
-								options={ [
-									{
-										label: __(
-											'Top',
-											'enable-navigation-icons'
-										),
-										value: 'top',
-									},
-									{
-										label: __(
-											'Center',
-											'enable-navigation-icons'
-										),
-										value: 'center',
-									},
-									{
-										label: __(
-											'Bottom',
-											'enable-navigation-icons'
-										),
-										value: 'bottom',
-									},
-								] }
-								onChange={ ( value ) => {
-									setAttributes( {
-										defaultIconVerticalAlign: value,
-									} );
-								} }
-							/>
-							<DimensionControl
-								label={ __(
-									'Icon offset',
-									'enable-navigation-icons'
-								) }
-								value={ defaultIconOffset || '' }
-								onChange={ ( value ) => {
-									setAttributes( {
-										defaultIconOffset: value,
-									} );
-								} }
-								units={ [ 'px', '%', 'em', 'rem' ] }
-								min={ -100 }
-							/>
-							<RangeControl
-								label={ __(
-									'Icon rotation',
-									'enable-navigation-icons'
-								) }
-								help={ __(
-									'Rotate icons clockwise, in degrees.',
-									'enable-navigation-icons'
-								) }
-								value={ defaultIconRotate ?? 0 }
-								onChange={ ( value ) => {
-									setAttributes( {
-										defaultIconRotate: value ?? 0,
-									} );
-								} }
-								min={ -180 }
-								max={ 180 }
-								step={ 15 }
-								allowReset
-								resetFallbackValue={ 0 }
-								__nextHasNoMarginBottom
-							/>
-							<PanelRow>
-								<ToggleControl
-									label={ __(
-										'Flip icons horizontally',
-										'enable-navigation-icons'
-									) }
-									checked={ defaultFlipHorizontal }
-									onChange={ () => {
-										setAttributes( {
-											defaultFlipHorizontal:
-												! defaultFlipHorizontal,
-										} );
-									} }
-								/>
-							</PanelRow>
-							<PanelRow>
-								<ToggleControl
-									label={ __(
-										'Flip icons vertically',
-										'enable-navigation-icons'
-									) }
-									checked={ defaultFlipVertical }
-									onChange={ () => {
-										setAttributes( {
-											defaultFlipVertical:
-												! defaultFlipVertical,
-										} );
-									} }
-								/>
-							</PanelRow>
-						</PanelBody>
+						</ToolsPanel>
 					</InspectorControls>
 					<InspectorControls group="color">
 						<ColorGradientSettingsDropdown
@@ -459,6 +304,20 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 									onColorChange: ( value ) => {
 										setAttributes( {
 											defaultCustomIconColor: value,
+										} );
+									},
+								},
+								{
+									label: __(
+										'Default Icon Hover Color',
+										'enable-navigation-icons'
+									),
+									colorValue:
+										defaultCustomIconHoverColor ||
+										undefined,
+									onColorChange: ( value ) => {
+										setAttributes( {
+											defaultCustomIconHoverColor: value,
 										} );
 									},
 								},
@@ -484,17 +343,9 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 		const {
 			icon,
 			iconName,
-			iconPositionLeft,
 			customIconColor,
-			justifySpaceBetween,
-			iconSize,
-			iconSpacing,
+			customIconHoverColor,
 			useDefaultIconSettings,
-			iconVerticalAlign,
-			iconOffset,
-			iconRotate,
-			flipHorizontal,
-			flipVertical,
 		} = attributes;
 		const { allowedMimeTypes } = GetAllowedMimeTypes();
 		const isSVGUploadAllowed = allowedMimeTypes
@@ -653,16 +504,41 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 				{ ( icon || iconName ) && (
 					<>
 						<InspectorControls>
-							<PanelBody
-								title={ __(
+							<ToolsPanel
+								label={ __(
 									'Icon settings',
 									'enable-navigation-icons'
 								) }
 								className="button-icon-picker"
-								initialOpen={ true }
+								panelId={ clientId }
+								resetAll={ () =>
+									setAttributes( {
+										...getResetAttributes(
+											ICON_SETTINGS,
+											'item'
+										),
+										useDefaultIconSettings: true,
+									} )
+								}
 							>
-								<PanelRow>
+								<ToolsPanelItem
+									panelId={ clientId }
+									label={ __(
+										'Use default icon settings',
+										'enable-navigation-icons'
+									) }
+									isShownByDefault
+									hasValue={ () =>
+										useDefaultIconSettings === false
+									}
+									onDeselect={ () =>
+										setAttributes( {
+											useDefaultIconSettings: true,
+										} )
+									}
+								>
 									<ToggleControl
+										__nextHasNoMarginBottom
 										label={ __(
 											'Use default icon settings',
 											'enable-navigation-icons'
@@ -679,171 +555,16 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 											} );
 										} }
 									/>
-								</PanelRow>
+								</ToolsPanelItem>
 								{ ! useDefaultIconSettings && (
-									<>
-										<PanelRow>
-											<ToggleControl
-												label={ __(
-													'Show icon on left',
-													'enable-navigation-icons'
-												) }
-												checked={ iconPositionLeft }
-												onChange={ () => {
-													setAttributes( {
-														iconPositionLeft:
-															! iconPositionLeft,
-													} );
-												} }
-											/>
-										</PanelRow>
-										<PanelRow>
-											<ToggleControl
-												label={ __(
-													'Justify space between',
-													'enable-navigation-icons'
-												) }
-												checked={ justifySpaceBetween }
-												onChange={ () => {
-													setAttributes( {
-														justifySpaceBetween:
-															! justifySpaceBetween,
-													} );
-												} }
-											/>
-										</PanelRow>
-										<DimensionControl
-											label={ __(
-												'Icon size',
-												'enable-navigation-icons'
-											) }
-											value={ iconSize || '' }
-											onChange={ ( value ) => {
-												setAttributes( {
-													iconSize: value,
-												} );
-											} }
-											units={ [ 'px', 'em', 'rem' ] }
-										/>
-										<DimensionControl
-											label={ __(
-												'Icon spacing',
-												'enable-navigation-icons'
-											) }
-											value={ iconSpacing || '' }
-											onChange={ ( value ) => {
-												setAttributes( {
-													iconSpacing: value,
-												} );
-											} }
-											units={ [ 'px', 'em', 'rem' ] }
-										/>
-										<SelectControl
-											label={ __(
-												'Icon vertical alignment',
-												'enable-navigation-icons'
-											) }
-											value={
-												iconVerticalAlign || 'center'
-											}
-											options={ [
-												{
-													label: __(
-														'Top',
-														'enable-navigation-icons'
-													),
-													value: 'top',
-												},
-												{
-													label: __(
-														'Center',
-														'enable-navigation-icons'
-													),
-													value: 'center',
-												},
-												{
-													label: __(
-														'Bottom',
-														'enable-navigation-icons'
-													),
-													value: 'bottom',
-												},
-											] }
-											onChange={ ( value ) => {
-												setAttributes( {
-													iconVerticalAlign: value,
-												} );
-											} }
-										/>
-										<DimensionControl
-											label={ __(
-												'Icon offset',
-												'enable-navigation-icons'
-											) }
-											value={ iconOffset || '' }
-											onChange={ ( value ) => {
-												setAttributes( {
-													iconOffset: value,
-												} );
-											} }
-											units={ [ 'px', '%', 'em', 'rem' ] }
-											min={ -100 }
-										/>
-										<RangeControl
-											label={ __(
-												'Icon rotation',
-												'enable-navigation-icons'
-											) }
-											help={ __(
-												'Rotate the icon clockwise, in degrees.',
-												'enable-navigation-icons'
-											) }
-											value={ iconRotate ?? 0 }
-											onChange={ ( value ) => {
-												setAttributes( {
-													iconRotate: value ?? 0,
-												} );
-											} }
-											min={ -180 }
-											max={ 180 }
-											step={ 15 }
-											allowReset
-											resetFallbackValue={ 0 }
-											__nextHasNoMarginBottom
-										/>
-										<PanelRow>
-											<ToggleControl
-												label={ __(
-													'Flip horizontally',
-													'enable-navigation-icons'
-												) }
-												checked={ flipHorizontal }
-												onChange={ () => {
-													setAttributes( {
-														flipHorizontal:
-															! flipHorizontal,
-													} );
-												} }
-											/>
-										</PanelRow>
-										<PanelRow>
-											<ToggleControl
-												label={ __(
-													'Flip vertically',
-													'enable-navigation-icons'
-												) }
-												checked={ flipVertical }
-												onChange={ () => {
-													setAttributes( {
-														flipVertical:
-															! flipVertical,
-													} );
-												} }
-											/>
-										</PanelRow>
-									</>
+									<IconSettingsItems
+										scope="item"
+										attributes={ attributes }
+										setAttributes={ setAttributes }
+										panelId={ clientId }
+									/>
 								) }
-							</PanelBody>
+							</ToolsPanel>
 						</InspectorControls>
 						{ ! useDefaultIconSettings && (
 							<InspectorControls group="color">
@@ -858,6 +579,20 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 
 												setAttributes( {
 													customIconColor: value,
+												} );
+											},
+										},
+										{
+											label: __(
+												'Icon hover',
+												'enable-navigation-icons'
+											),
+											colorValue:
+												customIconHoverColor ||
+												undefined,
+											onColorChange: ( value ) => {
+												setAttributes( {
+													customIconHoverColor: value,
 												} );
 											},
 										},
@@ -983,6 +718,15 @@ function addClasses( BlockListBlock ) {
 			parentNavigationDefaults?.defaultFlipVertical !== undefined
 				? parentNavigationDefaults.defaultFlipVertical
 				: attributes?.flipVertical;
+		const effectiveHideLabel =
+			useDefaults &&
+			parentNavigationDefaults?.defaultHideLabel !== undefined
+				? parentNavigationDefaults.defaultHideLabel
+				: attributes?.hideLabel;
+		const effectiveIconHoverColor =
+			useDefaults && parentNavigationDefaults?.defaultCustomIconHoverColor
+				? parentNavigationDefaults.defaultCustomIconHoverColor
+				: attributes?.customIconHoverColor;
 
 		// Icons stored by registry name have no SVG in the block attributes,
 		// so the preview resolves their markup from the Icon API instead.
@@ -1018,6 +762,7 @@ function addClasses( BlockListBlock ) {
 			iconRotate: effectiveIconRotate,
 			flipHorizontal: effectiveFlipHorizontal,
 			flipVertical: effectiveFlipVertical,
+			iconHoverColor: effectiveIconHoverColor,
 		} );
 
 		const classes = classnames( props?.className, {
@@ -1029,6 +774,7 @@ function addClasses( BlockListBlock ) {
 			'has-no-icon-fill': effectiveHasNoIconFill,
 			'has-icon-align__top': effectiveIconVerticalAlign === 'top',
 			'has-icon-align__bottom': effectiveIconVerticalAlign === 'bottom',
+			'has-hidden-label': effectiveHideLabel,
 			[ `${ selectorClassname }` ]: true,
 		} );
 

@@ -1,5 +1,4 @@
-import { isValidElement } from '@wordpress/element';
-import ReactDOMServer from 'react-dom/server';
+import { isValidElement, renderToString } from '@wordpress/element';
 
 import { flattenIconsArray } from './icon-functions';
 import { getOwnRegistryName, isOwnCollectionName } from './use-core-icons';
@@ -59,6 +58,7 @@ function svgToDataUri( svg ) {
  * @param {number}  params.iconRotate      Icon rotation in degrees.
  * @param {boolean} params.flipHorizontal  Whether to mirror the icon on the X axis.
  * @param {boolean} params.flipVertical    Whether to mirror the icon on the Y axis.
+ * @param {string}  params.iconHoverColor  Icon colour while the item is hovered or focused.
  * @return {string} CSS string for the icon.
  */
 export function getIconStyle( {
@@ -74,6 +74,7 @@ export function getIconStyle( {
 	iconRotate,
 	flipHorizontal,
 	flipVertical,
+	iconHoverColor,
 } ) {
 	let output = '';
 	const rules = [];
@@ -82,7 +83,7 @@ export function getIconStyle( {
 	// If we don't have the icon SVG string but we have an iconName, look it
 	// up in the bundled JS registry. Matches both legacy bare names and the
 	// plugin's own namespaced registry names, so own-collection icons resolve
-	// without the Icon API — on WordPress 6.3 just like 7.1.
+	// without the Icon API — on WordPress 6.9 just like 7.1.
 	if ( ! svg && iconName ) {
 		const iconsAll = flattenIconsArray( getIcons() );
 		const namedIcon = iconsAll.filter(
@@ -93,7 +94,7 @@ export function getIconStyle( {
 		);
 		if ( namedIcon.length > 0 ) {
 			if ( isValidElement( namedIcon[ 0 ].icon ) ) {
-				svg = ReactDOMServer.renderToString( namedIcon[ 0 ].icon );
+				svg = renderToString( namedIcon[ 0 ].icon );
 			} else {
 				svg = namedIcon[ 0 ].icon;
 			}
@@ -156,6 +157,25 @@ export function getIconStyle( {
 		const linkSelector = selector.split( '::' )[ 0 ];
 		output += `\n${ linkSelector } {
 			gap: ${ iconSpacing } !important;
+		}`;
+	}
+
+	// Hover colour applies to the icon only. `!important` so it also wins over
+	// palette colour classes, which core declares with `!important`.
+	if ( iconHoverColor ) {
+		const hoverSelector = selector
+			.split( ',' )
+			.map( ( part ) =>
+				part
+					.trim()
+					.replace(
+						/::(before|after)$/,
+						':is(:hover, :focus-visible)::$1'
+					)
+			)
+			.join( ', ' );
+		output += `\n${ hoverSelector } {
+			color: ${ iconHoverColor } !important;
 		}`;
 	}
 

@@ -29,6 +29,7 @@ export default function ContentHeader( props ) {
 						{ __( 'Preview size', 'enable-navigation-icons' ) }
 					</span>
 					<RangeControl
+						__next40pxDefaultSize
 						min={ 24 }
 						max={ 72 }
 						value={ iconSize }

@@ -16,6 +16,7 @@ const projectDir = path.resolve( __dirname, '..' );
 const buildDir = path.join( projectDir, 'build' );
 const bundlePath = path.join( projectDir, '.build-tmp', 'icon-manifest.cjs' );
 const outputPath = path.join( buildDir, 'icon-manifest.php' );
+const iconsDir = path.join( buildDir, 'icons' );
 
 if ( ! fs.existsSync( bundlePath ) ) {
 	// eslint-disable-next-line no-console
@@ -46,9 +47,8 @@ const lines = [
 	'/**',
 	' * Generated icon manifest - do not edit.',
 	' *',
-	' * Produced by scripts/build-icon-manifest.cjs during the build. Consumed by',
-	' * enable_navigation_icons_register_icons() to publish the bundled icon set to',
-	' * the WordPress Icon API (WordPress 7.1+).',
+	' * Produced by scripts/build-icon-manifest.cjs during the build. Lists the',
+	" * bundled icons (name => label); each icon's SVG is in build/icons/<name>.svg.",
 	' *',
 	' * @package enable-navigation-icons',
 	' */',
@@ -60,10 +60,9 @@ const lines = [
 
 names.forEach( ( name ) => {
 	lines.push( `\t'${ toPhpString( name ) }' => array(` );
-	lines.push( `\t\t'label'   => '${ toPhpString( icons[ name ].label ) }',` );
-	lines.push(
-		`\t\t'content' => '${ toPhpString( icons[ name ].content ) }',`
-	);
+	// Markup is not repeated here: it lives only in build/icons/<name>.svg,
+	// which both the renderer and the Icon API registration read.
+	lines.push( `\t\t'label' => '${ toPhpString( icons[ name ].label ) }',` );
 	lines.push( '\t),' );
 } );
 
@@ -73,12 +72,25 @@ lines.push( '' );
 fs.mkdirSync( buildDir, { recursive: true } );
 fs.writeFileSync( outputPath, lines.join( '\n' ) );
 
+// One .svg per icon, registered with the Icon API by `file_path`. Core only
+// reads and sanitizes a file-backed icon when it is first requested, whereas
+// icons registered with inline `content` are all sanitized on every request.
+// Cleared first so icons removed from the set don't linger in the zip.
+fs.rmSync( iconsDir, { recursive: true, force: true } );
+fs.mkdirSync( iconsDir, { recursive: true } );
+names.forEach( ( name ) => {
+	fs.writeFileSync(
+		path.join( iconsDir, `${ name }.svg` ),
+		icons[ name ].content
+	);
+} );
+
 // The bundle is an intermediate artifact only; PHP never loads it.
 fs.rmSync( path.dirname( bundlePath ), { recursive: true, force: true } );
 
 // eslint-disable-next-line no-console
 console.log(
-	`Icon manifest written to build/icon-manifest.php (${ names.length } icons).`
+	`Icon manifest written to build/icon-manifest.php and build/icons/ (${ names.length } icons).`
 );
 
 if ( skipped.length > 0 ) {

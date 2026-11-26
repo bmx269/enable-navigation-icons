@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { isEmpty } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -83,7 +82,7 @@ export default function IconGrid( props ) {
 
 	return (
 		<div className="icon-inserter__content-grid">
-			{ isEmpty( shownIcons ) ? noResults : searchResults }
+			{ shownIcons.length === 0 ? noResults : searchResults }
 		</div>
 	);
 }

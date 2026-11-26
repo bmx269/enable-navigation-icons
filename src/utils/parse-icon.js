@@ -1,8 +1,12 @@
 /**
+ * WordPress dependencies
+ */
+import { renderToString } from '@wordpress/element';
+
+/**
  * External dependencies
  */
 import parse, { attributesToProps, domToReact } from 'html-react-parser';
-import ReactDOMServer from 'react-dom/server';
 
 /**
  * Parse the icon sting into a React object.
@@ -102,5 +106,5 @@ function parseStyles( stylesString ) {
  * @return {string}   The icons as an HTML string.
  */
 export function parseIconComponent( icon ) {
-	return ReactDOMServer.renderToString( icon );
+	return renderToString( icon );
 }

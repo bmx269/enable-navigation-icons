@@ -43,6 +43,18 @@ let cache = null;
 let pending = null;
 
 /**
+ * Whether the server has the Icon API, as reported by PHP before this script
+ * loads. Only an explicit `false` disables the fetch, so a missing flag (for
+ * example a cached older page) falls back to trying the request.
+ *
+ * @since 1.0.2
+ * @return {boolean} False when the Icon API is known to be unavailable.
+ */
+function mayHaveIconApi() {
+	return window.enableNavigationIcons?.hasIconApi !== false;
+}
+
+/**
  * Determine whether an icon name refers to the core Icon API registry.
  *
  * Core icon names are always namespaced as `collection/icon-name`. The
@@ -234,7 +246,11 @@ export function useCoreIcons( { enabled = true } = {} ) {
 		let isStale = false;
 
 		if ( ! pending ) {
-			pending = loadCoreIconTypes()
+			pending = (
+				mayHaveIconApi()
+					? loadCoreIconTypes()
+					: Promise.reject( new Error( 'No Icon API' ) )
+			)
 				.then( ( coreIconTypes ) => ( {
 					coreIconTypes,
 					isResolving: false,
