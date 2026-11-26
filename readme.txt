@@ -8,121 +8,154 @@ Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-Easily add icons to Navigation Block items in WordPress.
+Add icons to Navigation block links and submenus. Pick from 297 built-in icons, the WordPress Icon API or your own SVG.
 
 == Description ==
 
-Enable Navigation Icons makes it simple to add and customize icons for your WordPress Navigation Block items. Whether you're building a simple menu or complex mega menu navigation, this plugin provides intuitive controls for adding beautiful icons to your navigation links.
+Enable Navigation Icons adds an icon option to the items in the core Navigation block. Select a link or submenu, click **Add icon** in the block toolbar, and pick an icon. Then set its size, spacing, position and colors for that item, or once on the Navigation block for the whole menu.
 
-**[Try it in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bmx269/enable-navigation-icons/main/blueprint.json)** — test the plugin instantly in your browser, no installation required.
+Icons are added when the page is rendered, not saved into your content, so your menus stay clean and portable. Deactivate the plugin and the menus go back to plain text links.
 
-**Recommended Companion Plugin:** Use the [Icon Block](https://wordpress.org/plugins/icon-block/) plugin to add custom icon sets and expand your icon library options. Icon Block is a powerful companion that allows you to register additional icon libraries for use with Enable Navigation Icons.
+**[Try it in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/bmx269/enable-navigation-icons/main/blueprint.json)** to test the plugin in your browser, with nothing to install.
 
-= Key Features =
+= Getting started =
 
-**Icon Selection**
+1. **Select a menu item.** In the Site Editor or the block editor, select a link or submenu inside a Navigation block.
+2. **Add an icon.** Click **Add icon** in the block toolbar and choose from the icon library, paste SVG code, or pick an SVG from the Media Library if your site allows SVG uploads.
+3. **Style the whole menu.** Select the Navigation block and set **Default Icon Settings** in the sidebar: size, spacing, position, label visibility and more. Every item follows them.
+4. **Override where needed.** On any item, turn off **Use default icon settings** to give it its own settings and colors.
 
-* Browse and select from a curated collection of WordPress icons
-* Browse icons registered with the WordPress Icon API on WordPress 7.1+, including core's icon set and any collection added by your theme or other plugins
-* Upload and use custom SVG icons from your media library
-* Paste custom SVG code directly for complete flexibility
+= Key features =
 
-**Icon Positioning**
+**Icons from anywhere**
 
-* Position icons before or after navigation link text (left/right)
-* Space between justification for full-width layouts
-* Vertical alignment options (top, center, bottom) for multi-line menu items
-* Fine-tune icon position with vertical offset (supports px, %, em, rem units)
-* Icon-only items: hide the label visually while keeping it available to screen readers
+* 297 built-in icons, from WordPress's own icon set plus social and brand logos, searchable by name and category
+* On WordPress 7.1 and later, icons registered with the WordPress Icon API, including core's icons and any collection added by your theme or another plugin
+* Paste your own SVG code, with a live preview
+* Pick an SVG from the Media Library, on sites that allow SVG uploads
+* Icon sets added with the [Icon Block](https://wordpress.org/plugins/icon-block/) plugin appear in the library too
 
-**Icon Styling**
+**Layout**
 
-* Adjust icon dimensions with a slider control (supports px, em, rem units)
-* Control the gap between icon and text (supports px, em, rem units)
-* Choose from theme colors or set a custom color
-* Set a separate icon color for hover and keyboard focus
-* Rotate icons in 15 degree steps
-* Flip icons horizontally or vertically
-* Support for stroke-based icons with "No Fill" option (e.g., Lucide icons)
+* Icon before or after the label
+* Icon-only items: hide the label visually while screen readers still announce it, for social links and other compact menus
+* Space-between layout for full-width menus
+* Top, center or bottom alignment for labels that wrap onto several lines, plus a fine vertical offset
+* Icon size and gap in px, em or rem
 
-**Navigation Block Default Settings**
+**Style**
 
-Set default icon settings at the Navigation block level that apply to all child navigation items:
+* Icon color from the theme palette or any custom color
+* A separate icon color on hover and keyboard focus
+* Rotation in 15 degree steps, and horizontal or vertical flipping
+* "No icon fill" for stroke-based icon sets such as Lucide
 
-* Configure size, spacing, color, hover color, position, hidden labels, vertical alignment, offset, rotation, flipping, and styling once for the entire navigation
-* Settings panels work like core's block settings: common options are shown, the rest can be added from the panel menu, and each can be reset individually
-* Individual navigation items can inherit defaults or use custom settings
-* Works seamlessly with multiple and nested Navigation blocks
-* Applies to both inline navigation items and dynamically loaded WordPress menus
+**Menu-wide defaults**
 
-This feature streamlines icon management for large navigation menus by eliminating repetitive configuration while maintaining flexibility for individual items.
+* Set every option once on the Navigation block and all of its items follow, including submenu items and menus loaded from a saved Navigation menu
+* Items can keep the defaults or use their own settings
+* Settings panels work like core's: common options are shown, the rest are added from the panel menu, and each can be reset on its own
 
-**Ollie Menu Designer Integration**
+= WordPress Icon API (WordPress 7.1+) =
 
-Full support for the Ollie Menu Designer plugin's mega menu dropdown items:
+On WordPress 7.1 and later the plugin works with core's SVG Icon API in both directions:
 
-* Add icons to Ollie mega menu dropdown navigation items
-* Same icon selection and styling options as standard navigation items
-* Works seamlessly with Ollie themes and the Menu Designer plugin
+* Icons registered with the Icon API appear in the icon library next to the built-in set
+* The built-in set is published as the `enable-navigation-icons` collection, so the core Icon block, other plugins and the REST API can use it too
 
-**WordPress Icon API Support (WordPress 7.1+)**
+On WordPress 6.9 and 7.0 everything else works the same, using the icons the plugin ships with.
 
-On WordPress 7.1 and later the plugin integrates with the new SVG Icon API in both directions:
+= How icons are stored =
 
-* Icons registered with the Icon API appear in the icon library alongside the plugin's bundled icons
-* Icons chosen from the registry are stored by name and rendered server-side, so no SVG markup is written into your post content
-* The plugin's own icon set is published as an `enable-navigation-icons` collection, making it available to the core Icon block, to other plugins, and over the REST API
+An icon picked from a library is stored by name, such as `enable-navigation-icons/wordpress-github` or `core/plus`, and turned into SVG when the page is rendered. Only custom SVG code and Media Library uploads are stored as markup, and that markup is sanitized before it is output.
 
-Icons picked from the plugin's built-in library are also stored by name — resolved from data the plugin ships with, so this works on every supported WordPress version, not just 7.1. Your post content stays clean everywhere.
+Settings become CSS classes on the menu item, such as `has-icon__wordpress-github`, `has-icon-position__left` and `has-hidden-label`, so themes can target them.
 
-All of this is additive. Existing navigation icons keep working exactly as before, with no migration required, and the plugin continues to run normally on WordPress 6.9 through 7.0.
+= Supported blocks =
 
-= Supported Blocks =
+* `core/navigation`: default icon settings for the whole menu
+* `core/navigation-link`: menu links
+* `core/navigation-submenu`: submenu items
+* `ollie/mega-menu`: dropdown items from the Ollie Menu Designer plugin
 
-* `core/navigation` - Navigation block (for setting default icon settings)
-* `core/navigation-link` - Standard navigation links
-* `core/navigation-submenu` - Submenu/dropdown navigation items
-* `ollie/mega-menu` - Ollie Menu Designer dropdown menu items (requires Ollie Menu Designer plugin)
+= Support & Contribute =
+
+* **Support:** ask questions and report problems in the [support forum](https://wordpress.org/support/plugin/enable-navigation-icons/).
+* **Contribute:** the code lives on [GitHub](https://github.com/bmx269/enable-navigation-icons). Bug reports and pull requests are welcome in the [issue tracker](https://github.com/bmx269/enable-navigation-icons/issues).
+
+Enable Navigation Icons is written and maintained by Trent Stromkins.
 
 = Credits =
 
-This plugin was inspired by and incorporates code and ideas from the [enable-button-icons](https://github.com/ndiego/enable-button-icons) project. Special thanks to @ndiego for his excellent work on button icon functionality, which served as a foundation for implementing navigation icon features.
+Inspired by, and built on code and ideas from, [Enable Button Icons](https://github.com/ndiego/enable-button-icons) by Nick Diego.
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/enable-navigation-icons` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress.
-3. Add or edit a Navigation block in the block editor.
-4. Select a navigation link or submenu item.
-5. Click "Add icon" in the block toolbar to get started.
+1. Install the plugin from *Plugins → Add New Plugin* by searching for "Enable Navigation Icons", or upload the `enable-navigation-icons` folder to `/wp-content/plugins/`.
+2. Activate the plugin through the *Plugins* screen.
+3. Open a template, template part or post that contains a Navigation block, in the Site Editor or the block editor.
+4. Select a menu item and click **Add icon** in the block toolbar.
 
 == Frequently Asked Questions ==
 
-= Does this work with any theme? =
+= Where are the icon settings? =
 
-Yes! Enable Navigation Icons works with any WordPress theme that supports the block editor and Navigation blocks.
+Select a menu item and look for **Icon settings** in the block sidebar's Settings tab. Menu-wide defaults are under **Default Icon Settings** on the Navigation block itself. Colors are in the Styles tab: **Default Icon Color** and **Default Icon Hover Color** on the Navigation block, and **Icon** and **Icon hover** on an item that doesn't use the defaults.
 
-= Can I use custom SVG icons? =
+= Some options are missing from the settings panel =
 
-Absolutely! You can use icons from the built-in library, upload SVG files from your media library, or paste custom SVG code directly.
+Only the most common options are shown at first. Open the panel's **⋮** menu to add the others: space between, no icon fill, vertical alignment, offset, rotation and flipping. Any option that already has a value is always shown.
 
-= Does this work with WordPress menus? =
+= Why is there no "Open Media Library" option? =
 
-Yes! The plugin works with both inline navigation items and dynamically loaded WordPress menus.
+WordPress blocks SVG uploads by default, so the option only appears on sites that allow them, for example with an SVG upload plugin. You can still paste SVG code with **Add custom icon**.
 
-= Can I set default icon settings for the entire navigation? =
+= Are icon-only links accessible? =
 
-Yes! Select the Navigation block (parent container) and configure default icon settings that will apply to all child navigation items. Individual items can still override these defaults if needed.
+Yes. **Hide label (icon only)** hides the text visually but keeps it in the page, so screen readers still announce the link by its label. In the editor the label shows faded while the item is selected, so you can still edit it.
+
+= Does the hover color work for keyboard users? =
+
+Yes. The hover color also applies when the item has keyboard focus.
+
+= Does it work with any theme? =
+
+It works with any theme that uses the Navigation block, which includes all block themes.
+
+= Does it work with menus saved as Navigation menus? =
+
+Yes. Icons work on items inside a saved Navigation menu as well as on items added directly to a Navigation block, and the Navigation block's defaults apply to both.
+
+= Do I need WordPress 7.1? =
+
+No. The plugin requires WordPress 6.9. WordPress 7.1 adds the Icon API, which brings more icons into the library and shares the plugin's icons with the rest of the site.
+
+= Is SVG code saved into my posts and templates? =
+
+Not for icons picked from a library: those are stored by name and rendered when the page loads. Custom SVG code and Media Library icons are stored with the item, because there is nothing else to look them up from.
+
+= What happens if I deactivate the plugin? =
+
+Icons stop being shown and the menu items show just their labels. The icon settings stay in the block attributes, so icons come back if you reactivate the plugin.
+
+= Can I add my own icon sets? =
+
+Yes. Icon sets registered for the [Icon Block](https://wordpress.org/plugins/icon-block/) plugin appear in the library, and on WordPress 7.1 and later so does any collection registered with the WordPress Icon API.
 
 = Does it work with the Ollie Menu Designer plugin? =
 
-Yes! The plugin fully supports Ollie Menu Designer's mega menu dropdown items with the same functionality as standard navigation items.
+Yes. Its mega menu dropdown items get the same icon options as standard menu items, and follow the Navigation block's defaults.
 
 == Screenshots ==
 
 1. How it works: add an icon from the block toolbar, pick one from the library, the Media Library or your own SVG, then style it per item or for the whole menu from the Navigation block.
-2. Navigation items with icons in the editor. The block toolbar shows Replace icon once an item has one.
-3. The Add icon menu offers the icon library, the Media Library or custom SVG code. Select the Navigation block to set Default Icon Settings for every item.
+2. A header menu with icons before each label, icon-only social links, and the hover color on Events.
+3. Select a menu item and click Add icon in the block toolbar to browse the icon library or paste SVG code.
+4. The Icon Library: 297 built-in icons by category, plus icons registered with the WordPress Icon API on WordPress 7.1 and later.
+5. Icon settings for one item. The Instagram link hides its label, so only the icon shows on the site while screen readers still announce "Instagram".
+6. Default Icon Settings on the Navigation block apply to every item in the menu.
+7. Default icon and hover colors in the Navigation block's Styles tab.
+8. Paste your own SVG, such as a Lucide icon, and check it in the preview before inserting it.
 
 == Changelog ==
 
@@ -226,6 +259,9 @@ First stable release. Adds support for the WordPress Icon API introduced in Word
 * Support for Ollie Menu Designer mega menu blocks
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Adds icon-only menu items and an icon hover color, and makes the plugin lighter on every page. Requires WordPress 6.9 or later. Existing icons are unaffected.
 
 = 1.0.1 =
 Packaging fix only, reducing the download size. No functional changes from 1.0.0.
